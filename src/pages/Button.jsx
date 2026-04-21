@@ -4,7 +4,6 @@ import Section from '../components/Section'
 import { DemoCanvas, CodeBlock, UsageSection, PropsTable } from '../components/Demo'
 import { Spinner } from '../components/Spinner'
 import { SplitButton } from '../components/SplitButton'
-import { IconButton } from '../components/IconButton'
 import { Icon } from '../components/Icon'
 import styles from './Button.module.css'
 
@@ -119,14 +118,6 @@ const [value, setValue] = useState('')
     { value: 'pdf',  label: 'Export as PDF'  },
   ]}
 />`
-
-const iconOnlyCode = `import { IconButton } from '@/components/IconButton'
-
-<IconButton variant="primary"   size="md" icon={<IconPlus />}       aria-label="Add" />
-<IconButton variant="secondary" size="lg" icon={<IconDownload />}   aria-label="Download" />
-<IconButton variant="danger"    size="sm" icon={<IconTrash />}      aria-label="Delete" />
-<IconButton variant="ghost"     size="md" icon={<IconArrowRight />} aria-label="Next" />
-<IconButton variant="outline"   size="md" icon={<IconCheck />}      aria-label="Confirm" />`
 
 const loadingCode = `<Button loading>Saving…</Button>
 <Button variant="secondary" loading>Loading</Button>
@@ -252,20 +243,6 @@ export default function ButtonPage() {
         <CodeBlock code={iconCode} />
       </Section>
 
-      <Section title="Icon-only buttons" description="Square buttons with a single icon — width equals height at every size. Always pass aria-label for accessibility.">
-        <DemoCanvas style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '24px' }}>
-          {sizes.map(s => (
-            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', minWidth: 28 }}>{s}</span>
-              {variants.map(v => (
-                <IconButton key={v} variant={v} size={s} icon={<IconPlus />} aria-label="Add" />
-              ))}
-            </div>
-          ))}
-        </DemoCanvas>
-        <CodeBlock code={iconOnlyCode} />
-      </Section>
-
       <Section title="Loading states" description="Pass loading to disable the button and show a spinner before the label. Spinner size adapts to the button size; color adapts to the variant.">
         <DemoCanvas style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '24px' }}>
           {sizes.map(s => (
@@ -303,15 +280,6 @@ export default function ButtonPage() {
           { name: 'items', type: '{ value, label, icon?, onClick?, disabled? }[]', default: '[]', description: 'Options shown in the dropdown panel. Optional icon renders a 24×24 slot before the label (same pattern as Dropdown).' },
           { name: 'value', type: 'string', default: '—', description: 'Currently selected item value (highlighted in the panel).' },
           { name: 'onChange', type: '(value: string) => void', default: '—', description: 'Called with the selected item value when an option is clicked.' },
-        ]} />
-        <h3 style={{ fontSize: 16, fontWeight: 700, margin: '24px 0 16px' }}>IconButton props</h3>
-        <PropsTable props={[
-          { name: 'variant', type: "'primary' | 'secondary' | 'danger' | 'ghost' | 'outline'", default: "'primary'", description: 'Visual style — same variants as Button.' },
-          { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Width and height are equal at every size.' },
-          { name: 'icon', type: 'ReactNode', default: '—', description: 'Single icon element rendered centered. Use a 16×16 SVG with stroke="currentColor".' },
-          { name: 'aria-label', type: 'string', default: '—', description: 'Accessible label describing the action (required, since there is no visible text).' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button.' },
-          { name: 'onClick', type: '() => void', default: '—', description: 'Click handler.' },
         ]} />
       </UsageSection>
     </div>

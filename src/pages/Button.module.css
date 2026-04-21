@@ -61,12 +61,12 @@
 }
 
 .lg .icon svg {
-  width: 21.6px;
-  height: 21.6px;
+  width: 24px;
+  height: 24px;
 }
 
 .lg .icon > span[aria-hidden] {
-  font-size: 19px !important;
+  font-size: 21px !important;
 }
 
 .loading {

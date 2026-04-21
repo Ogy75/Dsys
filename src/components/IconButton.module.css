@@ -17,12 +17,10 @@
   line-height: 0;
 }
 
-.md .iconWrap svg {
-  width: 19.2px;
-  height: 19.2px;
+.md .iconWrap span {
+  font-size: 17px !important;
 }
 
-.lg .iconWrap svg {
-  width: 21.6px;
-  height: 21.6px;
+.lg .iconWrap span {
+  font-size: 22px !important;
 }
