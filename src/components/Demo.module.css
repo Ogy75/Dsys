@@ -1,0 +1,108 @@
+.canvas {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.codeWrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.codeHeader {
+  background-color: var(--color-gray-50);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+}
+
+.codeLanguage {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.pre {
+  background-color: var(--color-gray-900);
+  color: #e2e8f0;
+  padding: var(--space-6);
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.7;
+  font-family: var(--font-mono);
+}
+
+.pre code {
+  font-family: inherit;
+}
+
+.usageSection {
+  margin-top: var(--space-8);
+}
+
+.usageTitle {
+  font-size: var(--text-h5-size);
+  font-weight: var(--text-h5-weight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-4);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-small-size);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-gray-50);
+  font-weight: var(--text-body-medium-weight);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  vertical-align: top;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background-color: var(--color-bg-subtle);
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background-color: var(--color-gray-100);
+  padding: var(--space-0-5) var(--space-1);
+  border-radius: var(--radius-sm);
+  color: var(--color-blue-600);
+}

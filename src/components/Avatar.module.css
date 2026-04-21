@@ -1,0 +1,106 @@
+/* Outer wrapper — holds the circle + badge together */
+.wrapper {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* The actual circle */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-sans);
+}
+
+.default {
+  background: #333333;
+  color: #ffffff;
+}
+
+.inverse {
+  background: var(--color-grey-300);
+  color: var(--color-grey-800);
+}
+
+.photo {
+  background: var(--color-grey-600);
+}
+
+/* Size — applied to the wrapper so badge inherits the coordinate space */
+.xsm {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sm {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.md {
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.xl {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.xxl {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.initials {
+  line-height: 1;
+}
+
+.iconWrapper {
+  width: 60%;
+  height: 60%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Status badge */
+.badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-sizing: content-box;
+}
+
+.badgeXsm { width: 5px;  height: 5px;  border-width: 1.5px; }
+.badgeSm  { width: 6px;  height: 6px;  border-width: 1.5px; }
+.badgeMd  { width: 8px;  height: 8px;  border-width: 2px; }
+.badgeXl  { width: 10px; height: 10px; border-width: 2px; }
+.badgeXxl { width: 13px; height: 13px; border-width: 2px; }
+
+.online  { background: #84cc16; }
+.away    { background: #f59e0b; }
+.busy    { background: #ef4444; }

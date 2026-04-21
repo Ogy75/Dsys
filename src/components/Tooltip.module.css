@@ -1,0 +1,75 @@
+/* ── Trigger wrapper ────────────────────────────── */
+.triggerWrap {
+  display: inline-block;
+}
+
+/* ── Panel ──────────────────────────────────────── */
+.panel {
+  position: fixed;
+  min-width: 200px;
+  max-width: 280px;
+  padding: var(--space-4) var(--space-4) var(--space-4);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  box-sizing: border-box;
+  /* Figma Shadow L: two layered drop shadows */
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.10), 0 8px 15px -3px rgba(0, 0, 0, 0.10);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 50ms ease;
+  z-index: 9000;
+}
+
+.panelVisible {
+  opacity: 1;
+}
+
+/* ── Variants ───────────────────────────────────── */
+.dark {
+  --tooltip-text: var(--color-grey-50);
+  background-color: var(--color-grey-800);
+}
+
+.light {
+  --tooltip-text: var(--color-grey-800);
+  background-color: var(--color-grey-50);
+}
+
+/* ── Arrow ──────────────────────────────────────── */
+.arrow {
+  position: fixed;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 50ms ease;
+  z-index: 9001;
+}
+
+.arrowVisible {
+  opacity: 1;
+}
+
+/* ── Content ────────────────────────────────────── */
+/* Title: Figma Bold 16px, lineHeight 140% */
+.title {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+  line-height: var(--line-height-base);
+  color: var(--tooltip-text);
+}
+
+/* Badge row */
+.badgeRow {
+  display: flex;
+}
+
+/* Body: Figma SemiBold 14px, lineHeight 140% */
+.body {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-body-medium-weight);
+  line-height: var(--line-height-base);
+  color: var(--tooltip-text);
+}

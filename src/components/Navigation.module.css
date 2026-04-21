@@ -1,0 +1,169 @@
+/* ── Nav bar ───────────────────────────────── */
+.nav {
+  position: relative;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  position: relative;
+}
+
+/* ── Trigger ───────────────────────────────── */
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 40px;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-medium-weight);
+  color: var(--color-grey-800);
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: -0.013em;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.trigger:hover:not(.active) {
+  background-color: var(--color-grey-100);
+}
+
+.active {
+  background-color: var(--color-grey-700);
+  color: var(--color-white);
+}
+
+.hasMenu {
+  padding-right: var(--space-3);
+}
+
+/* ── Chevron ───────────────────────────────── */
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Submenu panel ─────────────────────────── */
+.submenu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  min-width: 260px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--space-3);
+  background: var(--color-white);
+  border: 1px solid var(--color-grey-100);
+  border-radius: 32px;
+  padding: var(--space-4);
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+}
+
+/* Vertical divider between L2 and L3 columns */
+.divider {
+  display: block;
+  width: 1px;
+  flex-shrink: 0;
+  align-self: stretch;
+  background-color: var(--color-grey-100);
+}
+
+.submenuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+/* ── L3 stack — all lists in same grid cell ── */
+.l3Stack {
+  display: grid;
+}
+
+.l3List {
+  grid-row: 1;
+  grid-column: 1;
+  visibility: hidden;
+  gap: 4px;
+}
+
+.l3ListVisible {
+  visibility: visible;
+}
+
+/* ── Sub item ──────────────────────────────── */
+.subItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-medium-weight);
+  color: var(--color-grey-800);
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: left;
+  letter-spacing: -0.013em;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.subItem:hover:not(.subItemActive) {
+  background-color: var(--color-grey-100);
+}
+
+/* L2 hover state (mouse is over this L2, showing its L3 on the right) */
+.subItemHover:not(.subItemActive) {
+  background-color: var(--color-grey-100);
+}
+
+.subItemActive {
+  background-color: var(--color-grey-700);
+  color: var(--color-white);
+}
+
+.itemIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: #999999;
+}
+
+.itemIconActive {
+  color: #fffafa;
+}
+
+:global(body[data-keyboard-nav]) .trigger:focus,
+:global(body[data-keyboard-nav]) .subItem:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

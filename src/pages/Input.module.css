@@ -1,0 +1,139 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-0-5);
+}
+
+/* Named inputLabel (not .label) to avoid clashing with global `label` element styles */
+.inputLabel {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+}
+
+.inputLabelDisabled {
+  color: var(--color-grey-500);
+}
+
+.required {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-red-600);
+}
+
+/* Input + messages (5px between input and error per Figma) */
+.controlStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+/* Wrapper holds input + icon */
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey-300);
+  border-radius: var(--radius-sm); /* 4px */
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.input::placeholder {
+  color: var(--color-grey-300);
+}
+
+.input:focus:not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+/* Disabled */
+.inputDisabled {
+  background-color: var(--color-grey-100);
+  border-color: var(--color-grey-300);
+  color: var(--color-grey-300);
+  cursor: not-allowed;
+}
+
+.inputDisabled::placeholder {
+  color: var(--color-grey-300);
+}
+
+/* Error */
+.inputError {
+  border-color: var(--color-red-600);
+  padding-right: var(--space-8);
+}
+
+.inputError:focus:not(:disabled) {
+  border-color: var(--color-red-600);
+}
+
+/* Sizes */
+.lg {
+  padding: var(--space-2-5);
+}
+
+.md {
+  padding: var(--space-1-5) var(--space-2);
+}
+
+/* Error state needs more right padding for icon */
+.lg.inputError {
+  padding-right: var(--space-10);
+}
+
+.md.inputError {
+  padding-right: var(--space-8);
+}
+
+/* Icon slot */
+.iconRight {
+  position: absolute;
+  right: var(--space-2-5);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Messages */
+.errorMsg {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-black);
+  text-align: right;
+}
+
+.helperText {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+}

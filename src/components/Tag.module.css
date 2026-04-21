@@ -1,0 +1,73 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  background-color: #e6e6e6;
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: 1;
+  color: var(--color-grey-800);
+  white-space: nowrap;
+  transition: opacity 60ms linear;
+}
+
+.dismissing {
+  opacity: 0;
+}
+
+/* Sizes — padding: top/bottom left right (right reduced when dismiss present) */
+.sm {
+  padding: var(--space-0-5) var(--space-2);
+  gap: var(--space-0-5);
+}
+
+.md {
+  padding: var(--space-1) var(--space-3);
+  gap: var(--space-1);
+}
+
+.lg {
+  padding: var(--space-1-5) var(--space-3);
+  gap: var(--space-1);
+}
+
+/* Reduce right padding when dismiss button is present */
+.sm.hasDismiss { padding-right: var(--space-1-5); }
+.md.hasDismiss { padding-right: var(--space-2); }
+.lg.hasDismiss { padding-right: var(--space-2); }
+
+/* Disabled */
+.disabled {
+  color: var(--color-grey-400);
+}
+
+/* Icon slot */
+.icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--space-4);
+  height: var(--space-4);
+  color: inherit;
+}
+
+/* Dismiss button */
+.dismissBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--space-4);
+  height: var(--space-4);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  line-height: 0;
+}
+
+.dismissBtn:disabled {
+  cursor: not-allowed;
+}

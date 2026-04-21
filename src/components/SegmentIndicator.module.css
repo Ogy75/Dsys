@@ -1,0 +1,30 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: var(--space-1-5);
+}
+
+.segment {
+  display: block;
+  width: 12px;
+  height: 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.inactive {
+  background: var(--color-grey-300);
+}
+
+.colorRed {
+  background: #dc2626;
+}
+
+.colorAmber {
+  background: #f59e0b;
+}
+
+.colorGreen {
+  background: #488929;
+}

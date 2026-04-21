@@ -1,0 +1,28 @@
+.comingSoon {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-16) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+}
+
+.icon {
+  color: var(--color-gray-300);
+  margin-bottom: var(--space-1);
+}
+
+.label {
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-medium-weight);
+  color: var(--color-text-secondary);
+}
+
+.sub {
+  font-size: var(--text-small-size);
+  color: var(--color-text-tertiary);
+  max-width: 360px;
+}

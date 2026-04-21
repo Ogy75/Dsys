@@ -1,0 +1,128 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-0-5);
+}
+
+.inputLabel {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+}
+
+.inputLabelDisabled {
+  color: var(--color-grey-500);
+}
+
+.required {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-red-600);
+}
+
+.controlStack {
+  position: relative;
+  width: 100%;
+}
+
+.textareaWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.textarea {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey-300);
+  border-radius: var(--radius-sm);
+  outline: none;
+  width: 100%;
+  max-width: 100%;
+  padding: var(--space-2-5) var(--space-5) var(--space-5) var(--space-2-5);
+  resize: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c4c4c4 transparent;
+  transition: border-color 0.15s;
+  display: block;
+}
+
+.textarea::-webkit-scrollbar { width: var(--space-0-5); }
+.textarea::-webkit-scrollbar-track { background: transparent; }
+.textarea::-webkit-scrollbar-thumb { background-color: var(--color-gray-300); border-radius: var(--space-0-5); }
+.textarea::-webkit-scrollbar-thumb:hover { background-color: var(--color-gray-400); }
+
+.textarea::placeholder {
+  color: var(--color-grey-300);
+}
+
+.textarea:focus:not(:disabled) {
+  border-color: var(--color-grey-700);
+}
+
+:global(body[data-keyboard-nav]) .textarea:focus:not(:disabled) {
+  box-shadow: var(--focus-ring);
+}
+
+.resizeNone {
+  resize: none;
+}
+
+.resizeHorizontal {
+  resize: horizontal;
+}
+
+.resizeVertical {
+  resize: vertical;
+}
+
+.resizeBoth {
+  resize: both;
+}
+
+.textareaError {
+  border-width: 2px;
+  border-color: var(--color-red-600);
+}
+
+.textareaError:focus:not(:disabled) {
+  border-color: var(--color-red-600);
+}
+
+.textareaDisabled {
+  background-color: var(--color-grey-100);
+  border-color: var(--color-grey-300);
+  color: var(--color-grey-300);
+  cursor: not-allowed;
+}
+
+.textareaDisabled::placeholder {
+  color: var(--color-grey-300);
+}
+
+.errorMsg {
+  position: absolute;
+  top: calc(100% + var(--space-0-5));
+  right: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-red-600);
+  white-space: nowrap;
+}

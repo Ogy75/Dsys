@@ -1,0 +1,216 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  width: 100%;
+}
+
+.wrapperBelow {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+/* Track */
+.track {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  background-color: var(--color-grey-100);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.trackBelow {
+  flex: none;
+  align-self: stretch;
+}
+
+/* Determined fill */
+.fill {
+  height: 100%;
+  background-color: var(--color-brand);
+  border-radius: var(--radius-full);
+}
+
+.fillError {
+  background-color: var(--color-red-600);
+}
+
+.trackError {
+  background-color: var(--color-red-100);
+}
+
+/* Segmented fills */
+.segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.15s linear;
+}
+
+/* Error message */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  width: 100%;
+}
+
+.errorMessage {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-red-600);
+}
+
+/* Percentage label */
+.label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  min-width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.labelBelow {
+  min-width: 0;
+  width: 100%;
+}
+
+.labelAlignLeft   { text-align: left; }
+.labelAlignCenter { text-align: center; }
+.labelAlignRight  { text-align: right; }
+
+/* Inverted track & fill */
+.trackInverted {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.fillInverted {
+  background-color: var(--color-white);
+}
+
+.labelInverted {
+  color: var(--color-white);
+}
+
+/* Indeterminate bars */
+.bar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+.bar1 {
+  animation: bar1 1.6s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.bar2 {
+  animation: bar2 1.6s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: -0.8s;
+}
+
+@keyframes bar1 {
+  0% {
+    left: -35%;
+    right: 100%;
+    background-color: var(--color-grey-300);
+  }
+  50%, 100% {
+    left: 100%;
+    right: -90%;
+    background-color: var(--color-brand);
+  }
+}
+
+@keyframes bar2 {
+  0% {
+    left: -200%;
+    right: 100%;
+    background-color: var(--color-grey-300);
+  }
+  50%, 100% {
+    left: 107%;
+    right: -8%;
+    background-color: var(--color-brand);
+  }
+}
+
+/* Error indeterminate bars */
+.bar1Error {
+  animation: bar1Error 1.6s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.bar2Error {
+  animation: bar2Error 1.6s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: -0.8s;
+}
+
+@keyframes bar1Error {
+  0% {
+    left: -35%;
+    right: 100%;
+    background-color: var(--color-red-100);
+  }
+  50%, 100% {
+    left: 100%;
+    right: -90%;
+    background-color: var(--color-red-600);
+  }
+}
+
+@keyframes bar2Error {
+  0% {
+    left: -200%;
+    right: 100%;
+    background-color: var(--color-red-100);
+  }
+  50%, 100% {
+    left: 107%;
+    right: -8%;
+    background-color: var(--color-red-600);
+  }
+}
+
+/* Inverted indeterminate bars */
+.bar1Inverted {
+  animation: bar1Inverted 1.6s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.bar2Inverted {
+  animation: bar2Inverted 1.6s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: -0.8s;
+}
+
+@keyframes bar1Inverted {
+  0% {
+    left: -35%;
+    right: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  50%, 100% {
+    left: 100%;
+    right: -90%;
+    background-color: var(--color-white);
+  }
+}
+
+@keyframes bar2Inverted {
+  0% {
+    left: -200%;
+    right: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  50%, 100% {
+    left: 107%;
+    right: -8%;
+    background-color: var(--color-white);
+  }
+}

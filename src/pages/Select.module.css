@@ -1,0 +1,398 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  position: relative;
+}
+
+.controlWrap {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+/* Label row */
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-0-5);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  white-space: nowrap;
+}
+
+.labelDisabled {
+  color: var(--color-grey-500);
+}
+
+.required {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-red-600);
+}
+
+/* Trigger */
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  width: 100%;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey-300);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  text-align: left;
+  transition: border-color 0.15s;
+}
+
+.lg {
+  height: var(--space-10);
+  padding: 0 var(--space-2-5);
+}
+
+.md {
+  height: var(--space-8);
+  padding: 0 var(--space-2);
+}
+
+:global(body[data-keyboard-nav]) .trigger:focus {
+  outline: none;
+  border-color: var(--color-grey-700);
+  box-shadow: var(--focus-ring);
+}
+
+.triggerOpen {
+  border-color: var(--color-grey-700);
+}
+
+.triggerDisabled {
+  background-color: var(--color-grey-100);
+  border-color: var(--color-grey-300);
+  cursor: not-allowed;
+}
+
+.triggerError {
+  border-width: 2px;
+  border-color: var(--color-red-600);
+}
+
+:global(body[data-keyboard-nav]) .triggerError:focus {
+  outline: none;
+  border-color: var(--color-red-600);
+  box-shadow: var(--focus-ring);
+}
+
+/* Error message */
+.controlStack {
+  position: relative;
+  width: 100%;
+}
+
+.errorMsg {
+  position: absolute;
+  top: calc(100% + var(--space-0-5));
+  right: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-red-600);
+  white-space: nowrap;
+}
+
+.triggerText {
+  flex: 1;
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--color-grey-300);
+}
+
+.triggerTextDisabled {
+  color: var(--color-grey-300);
+}
+
+/* Chevron */
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Dropdown — anchored to trigger via .controlWrap */
+.dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-0-5));
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey-300);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 100;
+  min-height: 80px;
+  box-shadow: var(--shadow-xl);
+  box-sizing: border-box;
+}
+
+/* Scrollable list inside the dropdown — only this part scrolls */
+.dropdownList {
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: #c4c4c4 transparent;
+}
+
+.dropdownList::-webkit-scrollbar {
+  width: 3px;
+}
+
+.dropdownList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdownList::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: var(--radius-sm);
+}
+
+.dropdownList::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-gray-400);
+}
+
+.dropdownAbove {
+  top: auto;
+  bottom: calc(100% + var(--space-0-5));
+}
+
+.dropdownRight {
+  top: 0;
+  left: 100%;
+  right: auto;
+  width: 100%;
+  min-width: 100%;
+  margin-left: var(--space-2);
+  bottom: auto;
+}
+
+.dropdownLeft {
+  top: 0;
+  right: 100%;
+  left: auto;
+  width: 100%;
+  min-width: 100%;
+  margin-right: var(--space-2);
+  bottom: auto;
+}
+
+/* Search input header — sits above the scrollable list */
+.searchRow {
+  flex-shrink: 0;
+  background-color: var(--color-white);
+  list-style: none;
+}
+
+.searchWrap {
+  padding: var(--space-1-5);
+}
+
+.searchField {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding: var(--space-1-5) var(--space-2);
+  border: 1px solid var(--color-grey-300);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-white);
+  transition: border-color 0.15s;
+}
+
+.searchFieldFocused {
+  border-color: var(--color-grey-700);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  background: transparent;
+}
+
+.searchInput::placeholder {
+  color: var(--color-grey-300);
+}
+
+.searchIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.searchClear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--space-4);
+  height: var(--space-4);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-grey-800);
+  line-height: 0;
+}
+
+/* No results empty state */
+.noResults {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10);
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  list-style: none;
+}
+
+/* Clear item — sits above the scrollable list in multiselect */
+.clearItem {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--space-2-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-blue-600);
+  background-color: var(--color-white);
+  cursor: pointer;
+  white-space: nowrap;
+  list-style: none;
+}
+
+.clearItem:hover {
+  background-color: var(--color-grey-100);
+}
+
+/* Items */
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding: var(--space-2-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  background-color: var(--color-white);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.1s;
+}
+
+.itemIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: inherit;
+}
+
+.item:hover:not(.itemDisabled):not(.itemActive) {
+  background-color: var(--color-grey-100);
+}
+
+.itemActive {
+  background-color: var(--color-grey-700);
+  color: var(--color-white);
+}
+
+.itemActive:hover {
+  background-color: var(--color-grey-700);
+}
+
+.itemDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Item state preview */
+.itemPreview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2-5) var(--space-6);
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.itemPreview:last-child {
+  border-bottom: none;
+}
+
+.itemPreviewHint {
+  font-size: 11px;
+  font-weight: var(--text-small-weight);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.itemPreviewHover {
+  background-color: var(--color-grey-100);
+}
+
+.itemPreviewActive {
+  background-color: var(--color-grey-700);
+  color: var(--color-white);
+}
+
+.itemPreviewActive .itemPreviewHint {
+  color: rgba(255,255,255,0.6);
+}
+
+.itemPreviewDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

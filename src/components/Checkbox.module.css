@@ -1,0 +1,166 @@
+/* ── Wrapper (label element) ────────────────── */
+.wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.wrapperDisabled {
+  cursor: not-allowed;
+}
+
+/* ── Hidden native input + custom box ────────── */
+.controlWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Custom box ─────────────────────────────── */
+.box {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-grey-300);
+  background-color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: border-color 0.15s, background-color 0.15s;
+  pointer-events: none;
+}
+
+/* Focus — keyboard only, shown on the visual box */
+:global(body[data-keyboard-nav]) .input:focus + .box {
+  box-shadow: var(--focus-ring);
+}
+
+/* Hover — unchecked, interactive */
+.wrapper:not(.wrapperDisabled):hover .box:not(.boxChecked):not(.boxError) {
+  border-color: var(--color-grey-600);
+}
+
+/* Hover — checked */
+.wrapper:not(.wrapperDisabled):hover .boxChecked {
+  background-color: var(--color-grey-600);
+  border-color: var(--color-grey-600);
+}
+
+/* Checked / indeterminate */
+.boxChecked {
+  background-color: var(--color-grey-700);
+  border-color: var(--color-grey-700);
+}
+
+/* Error (unchecked only) */
+.boxError {
+  border-color: var(--color-red-600);
+}
+
+/* Disabled unchecked */
+.boxDisabled {
+  background-color: var(--color-grey-100);
+  border-color: var(--color-grey-300);
+}
+
+/* Disabled checked */
+.boxDisabledChecked {
+  background-color: var(--color-grey-300);
+  border-color: var(--color-grey-300);
+}
+
+/* ── Label text ─────────────────────────────── */
+.labelWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: 500;
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+}
+
+.labelDisabled {
+  color: var(--color-grey-400);
+}
+
+.helperText {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-500);
+}
+
+.helperTextDisabled {
+  color: var(--color-grey-300);
+}
+
+.helperTextError {
+  color: var(--color-red-600);
+}
+
+/* ── CheckboxGroup ──────────────────────────── */
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.legend {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+  margin-bottom: var(--space-2);
+  float: left;
+  width: 100%;
+}
+
+.group {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.errorMsg {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-red-600);
+}

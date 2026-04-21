@@ -1,0 +1,94 @@
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Arc grows from a dot → 75% of the circle while sweeping forward,
+   then the tail catches up — identical to the MUI indeterminate pattern */
+@keyframes dash {
+  0% {
+    stroke-dasharray: var(--dash-min) var(--gap);
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: var(--dash-max) var(--gap);
+    stroke-dashoffset: var(--offset-mid);
+  }
+  100% {
+    stroke-dasharray: var(--dash-max) var(--gap);
+    stroke-dashoffset: var(--offset-end);
+  }
+}
+
+.spinner {
+  flex-shrink: 0;
+  animation: spin 1.4s linear infinite;
+  transform-origin: center;
+}
+
+/* Track — always a lighter version of the arc color */
+.track {
+  fill: none;
+}
+
+/* Arc — grow/sweep cycle synced to one rotation */
+.arc {
+  fill: none;
+  animation: dash 1.4s ease-in-out infinite;
+}
+
+/* ── Group (spinner + text) ──────────────────── */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.text {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── Backdrop ────────────────────────────────── */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+}
+
+.backdrop-white { background: rgba(255, 255, 255, 0.4); }
+.backdrop-black { background: rgba(0, 0, 0, 0.4); }
+
+/* ── Color variants ──────────────────────────── */
+
+.dark .track { stroke: var(--color-grey-100); }
+.dark .arc   { stroke: var(--color-grey-800); }
+
+.gray .track { stroke: var(--color-grey-100); }
+.gray .arc   { stroke: var(--color-grey-400); }
+
+.white .track { stroke: rgba(255, 255, 255, 0.25); }
+.white .arc   { stroke: #ffffff; }
+
+.blue .track   { stroke: var(--color-blue-100); }
+.blue .arc     { stroke: var(--color-blue-700); }
+
+.green .track  { stroke: var(--color-green-100); }
+.green .arc    { stroke: var(--color-green-700); }
+
+.red .track    { stroke: var(--color-red-100); }
+.red .arc      { stroke: var(--color-red-700); }
+
+.yellow .track { stroke: var(--color-yellow-100); }
+.yellow .arc   { stroke: var(--color-yellow-700); }
+
+.purple .track { stroke: var(--color-purple-100); }
+.purple .arc   { stroke: var(--color-purple-700); }

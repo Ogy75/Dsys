@@ -1,0 +1,97 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+/* ── Tab bar ─────────────────────────────────── */
+.bar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ── Individual tab button ───────────────────── */
+.tab {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  max-width: 300px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 40px;
+  border: none;
+  background: transparent;
+  color: var(--color-grey-800);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-medium-weight);
+  line-height: 1;
+  letter-spacing: -0.013em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tab:hover:not(:disabled):not(.tabActive) {
+  color: var(--color-grey-500);
+}
+
+:global(body[data-keyboard-nav]) .tab:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.tabActive {
+  background-color: var(--color-text-primary);
+  color: var(--color-white);
+}
+
+.tabActive:hover:not(:disabled) {
+  color: var(--color-white);
+}
+
+.tabDisabled {
+  color: var(--color-grey-300);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Ripple ──────────────────────────────────── */
+@keyframes ripple {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.3;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  animation: ripple 0.6s ease-out forwards;
+}
+
+.rippleActive {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Panel ───────────────────────────────────── */
+.panel {
+  padding: var(--space-4) var(--space-1);
+}

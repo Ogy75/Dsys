@@ -1,0 +1,221 @@
+/* ─── Container ──────────────────────────────────────────────── */
+.stepper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Horizontal ─────────────────────────────────────────────── */
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+
+.stepHorizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Last step with text — fills equally so all steps are the same width */
+.stepLast {
+  flex: 1;
+}
+
+/* Last step without text — only as wide as the circle */
+.stepLastNoDesc {
+  flex: none;
+}
+
+.iconRowH {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Wrapper gives the 10px breathing room Figma specifies (padding: 10px on connector) */
+.connectorWrapperH {
+  flex: 1;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.connectorH {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-grey-300);
+}
+
+/* Text sits below the icon row; right padding matches Figma 12px */
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 12px;
+  min-width: 0;
+}
+
+/* ─── Vertical ───────────────────────────────────────────────── */
+.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepVertical {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+/* In vertical-with-text the icon row is already tall enough;
+   no extra gap should separate the circle from the connector below it */
+.stepVerticalWithText {
+  gap: 0;
+}
+
+/* Last step with text — fills equally so all steps are the same height */
+.stepVerticalLast {
+  flex: 1;
+}
+
+/* Last step without text — only as tall as the circle */
+.stepVerticalLastNoDesc {
+  flex: none;
+}
+
+.iconRowV {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* Text beside circle; Figma: padding 6px 12px 0 0 */
+.textBlockVertical {
+  padding: 6px 12px 0 0;
+  gap: 0;
+  min-width: 0;
+}
+
+/* Connector offset: 15px left = centers the 1px line under the 32px circle (32/2 - 0.5 ≈ 15px) */
+.connectorWrapperV {
+  padding-left: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.connectorV {
+  width: 1px;
+  flex: 1;
+  min-height: 24px;
+  background-color: var(--color-grey-300);
+}
+
+/* ─── Circle ─────────────────────────────────────────────────── */
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circleNumber {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.completed {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+}
+
+.active {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+}
+
+.upcoming {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey-300);
+  color: var(--color-grey-300);
+}
+
+/* Error — red fill, white icon */
+.circleError {
+  background-color: var(--color-red-600);
+  border: none;
+  color: var(--color-white);
+}
+
+/* Warning — yellow fill, white icon */
+.circleWarning {
+  background-color: var(--color-yellow-500);
+  border: none;
+  color: var(--color-white);
+}
+
+/* ─── Clickable circle button ────────────────────────────────── */
+.circleBtn {
+  all: unset;
+  cursor: pointer;
+  border-radius: 999px;
+  display: flex;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.circleBtn:hover {
+  opacity: 0.75;
+}
+
+/* ─── Labels ─────────────────────────────────────────────────── */
+.stepName {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-brand);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stepDesc {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-grey-500);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Upcoming steps dim to grey-300 in horizontal */
+.dimmed {
+  color: var(--color-grey-300);
+}
+
+/* Error / warning label colours */
+.nameError {
+  color: var(--color-red-600);
+}
+
+.nameWarning {
+  color: var(--color-yellow-600);
+}

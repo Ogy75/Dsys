@@ -1,0 +1,232 @@
+/* ─── Container ─────────────────────────────────────────────────────────────── */
+
+.container {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+/* ─── Positions ──────────────────────────────────────────────────────────────── */
+
+.topLeft {
+  top: var(--space-6);
+  left: var(--space-6);
+  align-items: flex-start;
+}
+
+.topCenter {
+  top: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.topRight {
+  top: var(--space-6);
+  right: var(--space-6);
+  align-items: flex-end;
+}
+
+.centerCenter {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+}
+
+.bottomLeft {
+  bottom: var(--space-6);
+  left: var(--space-6);
+  align-items: flex-start;
+}
+
+.bottomCenter {
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.bottomRight {
+  bottom: var(--space-6);
+  right: var(--space-6);
+  align-items: flex-end;
+}
+
+/* ─── Toast ─────────────────────────────────────────────────────────────────── */
+
+.toast {
+  position: relative;
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  width: 360px;
+  background: var(--color-bg-surface);
+  border-radius: 6px;
+  box-shadow:
+    0 8px 10px -6px rgba(0, 0, 0, 0.1),
+    0 16px 25px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 120ms ease;
+}
+
+.toast.closing {
+  opacity: 0;
+}
+
+/* ─── Content area (padded) ──────────────────────────────────────────────────── */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  padding: var(--space-4) var(--space-4) 0 var(--space-4);
+}
+
+/* ─── Header row ─────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  /* Reserve right space so title never slides under the absolute close button (16px button + 8px gap) */
+  padding-right: var(--space-6);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-medium-weight);
+  line-height: 1.3;
+  color: var(--color-grey-800);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Message body ───────────────────────────────────────────────────────────── */
+
+/* paddingLeft aligns text under title: icon 24px + gap 8px = 32px */
+.body {
+  padding-left: var(--space-8);
+  padding-bottom: var(--space-2);
+}
+
+.message {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+}
+
+/* ─── Close button ───────────────────────────────────────────────────────────── */
+
+.close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-4);
+  height: var(--space-4);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #323232;
+  transition: opacity 0.15s;
+}
+
+.close:hover {
+  opacity: 0.6;
+}
+
+/* ─── Action button ──────────────────────────────────────────────────────────── */
+
+.actionArea {
+  padding: 0 var(--space-4) var(--space-3) var(--space-8);
+}
+
+.actionBtn {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-body-medium-weight);
+  line-height: 1;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border-radius: 40px;
+  border: 1px solid var(--color-brand);
+  background-color: transparent;
+  color: var(--color-brand);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.actionBtn:hover {
+  background-color: var(--color-grey-50);
+}
+
+/* ─── Loader bar ─────────────────────────────────────────────────────────────── */
+
+.loaderTrack {
+  height: var(--space-1);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.loaderBar {
+  height: var(--space-1);
+  width: 100%;
+  transform-origin: left center;
+}
+
+/* Draining animation for non-dismissible toasts */
+.loaderBar.draining {
+  animation: drain linear forwards;
+}
+
+@keyframes drain {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* Variant colors */
+.loaderBar.info    { background: #06b6d4; }
+.loaderBar.success { background: var(--color-green-ap-500); }
+.loaderBar.warning { background: #f59e0b; }
+.loaderBar.danger  { background: var(--color-red-600); }
+
+/* ─── Directional enter animations ──────────────────────────────────────────── */
+
+.animTop    { animation: slideFromTop    180ms cubic-bezier(0.16, 1, 0.3, 1); }
+.animBottom { animation: slideFromBottom 180ms cubic-bezier(0.16, 1, 0.3, 1); }
+.animCenter { animation: fadeIn          180ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes slideFromTop {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideFromBottom {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}

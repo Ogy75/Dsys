@@ -1,0 +1,626 @@
+/* ── CONTAINER ──────────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fill {
+  flex: 1;
+  min-height: 0;
+}
+
+.fillWrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-1);
+}
+
+.footerCount {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* ── TABLE WRAPPER ───────────────────────────────────────────── */
+
+.tableWrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerScroll {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bodyScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c4c4c4 transparent;
+}
+
+.bodyScroll::-webkit-scrollbar { width: var(--space-0-5); height: var(--space-0-5); }
+.bodyScroll::-webkit-scrollbar-track { background: transparent; }
+.bodyScroll::-webkit-scrollbar-thumb { background-color: var(--color-gray-300); border-radius: var(--space-0-5); }
+.bodyScroll::-webkit-scrollbar-thumb:hover { background-color: var(--color-gray-400); }
+
+/* ── TABLE ───────────────────────────────────────────────────── */
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-base);
+}
+
+/* ── HEADER CELLS ────────────────────────────────────────────── */
+
+.th {
+  position: relative;
+  background: var(--color-gray-50);
+  border-bottom: 1.5px solid var(--color-gray-200);
+  vertical-align: top;
+  padding: 0;
+  overflow: visible;
+}
+
+.thInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 0 var(--space-4);
+  padding-right: calc(var(--space-4) + 6px);
+  min-height: 40px;
+  overflow: hidden;
+  user-select: none;
+}
+
+.sortable .thInner {
+  cursor: pointer;
+  padding-left: var(--space-2);
+}
+
+.sortable .thInner:hover {
+  background: var(--color-gray-100);
+}
+
+/* Wrapper takes the flex growth; label + pencil sit inline together */
+.thLabelWrap {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  overflow: hidden;
+}
+
+.thLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gray-600);
+  text-align: left;
+}
+
+/* Sort icon — hidden by default, revealed on sortable hover, always on active */
+.sortIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-gray-400);
+  transition: color 0.12s;
+  order: -1; /* always left of label */
+}
+
+/* Drag handle — hidden by default, revealed on header hover */
+.dragHandle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-tertiary);
+  opacity: 0;
+  transition: opacity 0.15s;
+  cursor: grab;
+  margin-left: auto;
+  padding-left: var(--space-1-5);
+}
+
+.th:hover .dragHandle {
+  opacity: 1;
+}
+
+/* Drop target indicator */
+.dropTarget {
+  box-shadow: inset 2px 0 0 var(--color-blue-500);
+}
+
+
+/* Filter row cells */
+.filterTh {
+  background: var(--color-gray-50);
+  border-bottom: 1.5px solid var(--color-gray-200);
+  padding: 0;
+  vertical-align: middle;
+}
+
+.sorted .sortIcon {
+  opacity: 1;
+  color: var(--color-brand);
+}
+
+/* ── SEARCH ROW ──────────────────────────────────────────────── */
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  margin: 3px var(--space-3) 3px var(--space-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-grey-300);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s;
+}
+
+.sortable .searchRow {
+  margin-left: var(--space-2);
+}
+
+.searchRow:focus-within {
+  border-color: var(--color-grey-700);
+}
+
+.searchIconWrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-text-tertiary);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.clearBtn {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-text-tertiary);
+  border-radius: var(--radius-sm);
+  transition: color 0.1s, background 0.1s;
+}
+
+.clearBtn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-gray-200);
+}
+
+/* ── RESIZE HANDLE ───────────────────────────────────────────── */
+
+.resizeHandle {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  bottom: 0;
+  width: 7px;
+  cursor: col-resize;
+  z-index: 3;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.resizeHandle::after {
+  content: '';
+  width: 2px;
+  background: transparent;
+  border-radius: 1px;
+  transition: background 0.15s;
+  margin: 8px 0;
+}
+
+.th:hover .resizeHandle::after {
+  background: var(--color-gray-300);
+}
+
+.resizeHandle:hover::after {
+  background: var(--color-gray-500) !important;
+}
+
+/* ── CHECKBOX COLUMN ─────────────────────────────────────────── */
+
+.checkboxTh,
+.checkboxTd {
+  width: 44px;
+  padding: 14px !important; /* equal on all sides → 14+16+14 = 44px, always square */
+  text-align: center;
+  vertical-align: middle;
+}
+
+.filterTh.checkboxTh {
+  padding: 7px 14px !important;
+}
+
+.checkboxWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.checkboxInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.checkboxBox {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: border-color 0.12s, background 0.12s;
+  flex-shrink: 0;
+}
+
+.checkboxWrap:hover .checkboxBox:not(.checkboxBoxChecked) {
+  border-color: var(--color-gray-400);
+}
+
+.checkboxBoxChecked {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+}
+
+.checkboxInput:focus-visible + .checkboxBox {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  border-color: var(--color-blue-500);
+}
+
+/* ── ROWS ────────────────────────────────────────────────────── */
+
+.tr {
+  /* Hover = full-row tint, principle: visible interactive feedback */
+}
+
+.tr:hover .td {
+  background: var(--color-gray-50);
+}
+
+
+/* Selected row: blue tint + left accent border */
+.trSelected .td {
+  background: var(--color-blue-50) !important;
+}
+
+
+.trSelected:hover .td {
+  background: #dbeafe !important; /* blue-100 */
+}
+
+/* ── DATA CELLS ──────────────────────────────────────────────── */
+
+.td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  vertical-align: middle;
+  transition: background 0.1s;
+  outline: none;
+  position: relative;
+}
+
+.tr:last-child .td {
+  border-bottom: none;
+}
+
+
+/* Focus ring — inset so it doesn't shift layout */
+.td:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-grey-700);
+  z-index: 1;
+  background: var(--color-grey-50) !important;
+}
+
+/* ── DENSITY ─────────────────────────────────────────────────── */
+
+.table[data-density="compact"] .td {
+  padding: var(--space-1-5) var(--space-4);
+  font-size: 13px;
+}
+
+.table[data-density="compact"] .cellPrimary {
+  font-size: 13px;
+}
+
+.table[data-density="compact"] .thInner {
+  min-height: 32px;
+}
+
+.table[data-density="comfortable"] .td {
+  padding: var(--space-4) var(--space-5);
+  font-size: 15px;
+}
+
+.table[data-density="comfortable"] .cellPrimary {
+  font-size: 15px;
+}
+
+.table[data-density="comfortable"] .thInner {
+  min-height: 48px;
+}
+
+
+/* ── ALIGNMENT ───────────────────────────────────────────────── */
+
+.alignCenter.td {
+  text-align: center;
+}
+
+/* ── SORTABLE COLUMN CELLS ───────────────────────────────────── */
+
+.sortableCol.td {
+  padding-left: var(--space-2);
+}
+
+/* ── AVATAR COLUMN CELLS ─────────────────────────────────────── */
+
+.avatarCol.td {
+  padding-left: var(--space-1);
+}
+
+/* Numbers: tabular figures for vertical alignment of values */
+.typeNumber .cellPrimary {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ── CELL CONTENT ────────────────────────────────────────────── */
+
+/* Primary text */
+.cellPrimary {
+  display: block;
+  font-size: var(--text-small-size);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+/* Secondary text — lighter, smaller, for sub-info (email, role, etc.) */
+.cellSecondary {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-top: 1px;
+  line-height: 1.3;
+}
+
+/* Single-line ellipsis mode */
+.cellEllipsis {
+  overflow: hidden;
+  max-width: 0; /* forces ellipsis within fixed-width table-layout:fixed */
+}
+
+.cellEllipsis .cellPrimary,
+.cellEllipsis .cellSecondary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Multiline mode */
+.cellWrap .cellPrimary,
+.cellWrap .cellSecondary {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Editable cells — pencil icon on hover */
+.editable {
+  cursor: pointer;
+}
+
+.editableIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-tertiary);
+}
+
+/* ── CELL ICON / AVATAR ──────────────────────────────────────── */
+
+.cellWithIcon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  width: 100%;
+}
+
+.cellTextStack {
+  min-width: 0;
+  flex: 1;
+}
+
+.cellTextStack .cellPrimary,
+.cellTextStack .cellSecondary {
+  display: block;
+}
+
+.cellAvatar {
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  user-select: none;
+  overflow: hidden;
+}
+
+.cellAvatarSm {
+  width: 20px;
+  height: 20px;
+  font-size: 8px;
+}
+
+.cellAvatarMd {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+}
+
+.cellAvatarLg {
+  width: 36px;
+  height: 36px;
+  font-size: 13px;
+}
+
+.cellAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.cellIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+}
+
+.cellIconLg {
+  width: 24px;
+  height: 24px;
+}
+
+.cellIconLg svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── STICKY COLUMNS ──────────────────────────────────────────── */
+
+.stickyCell {
+  background: var(--color-bg-surface);
+}
+
+/* Header sticky cells must use the header background */
+.th.stickyCell,
+.filterTh.stickyCell {
+  background: var(--color-gray-50);
+}
+
+/* Selected row: keep sticky cell in sync with selection tint */
+.trSelected .stickyCell {
+  background: var(--color-blue-50) !important;
+}
+
+.trSelected:hover .stickyCell {
+  background: #dbeafe !important;
+}
+
+.tr:hover .stickyCell {
+  background: var(--color-gray-50);
+}
+
+/* Separator on the rightmost sticky column */
+.stickyLast {
+  border-right: 1px solid var(--color-border);
+}
+
+/* ── EMPTY STATE ─────────────────────────────────────────────── */
+
+.emptyState {
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  color: var(--color-text-tertiary);
+}
+
+.emptyTitle {
+  font-size: var(--text-small-size);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-top: var(--space-3);
+}
+
+.emptySubtitle {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-1);
+}
+

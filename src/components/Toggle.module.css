@@ -1,0 +1,96 @@
+/* Wrapper */
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  cursor: pointer;
+}
+
+.wrapperDisabled {
+  cursor: not-allowed;
+}
+
+/* Label */
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: 500;
+  line-height: var(--line-height-base);
+  color: var(--color-grey-800);
+}
+
+/* Track — base */
+.track {
+  position: relative;
+  width: 38px;
+  height: 24px;
+  padding: var(--space-0-5);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.track:disabled {
+  cursor: not-allowed;
+}
+
+:global(body[data-keyboard-nav]) .track:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Rounded variant */
+.rounded {
+  border-radius: var(--radius-full);
+}
+
+/* Square variant */
+.square {
+  border-radius: var(--radius-sm);
+}
+
+/* Track colors */
+.trackOn {
+  background-color: var(--color-green-ap-500);
+}
+
+.trackOff {
+  background-color: var(--color-grey-300);
+}
+
+.trackDisabled {
+  background-color: var(--color-grey-300);
+}
+
+/* Thumb — base */
+.thumb {
+  position: absolute;
+  top: var(--space-0-5);
+  left: var(--space-0-5);
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-white);
+  transition: transform 0.2s ease;
+}
+
+/* Rounded thumb */
+.roundedThumb {
+  border-radius: 50%;
+}
+
+/* Square thumb */
+.squareThumb {
+  border-radius: var(--space-0-5);
+}
+
+/* Thumb moved to right when on */
+.thumbOn {
+  transform: translateX(14px); /* 38 - 2*2 - 20 = 14 */
+}
+
+/* Disabled thumb */
+.thumbDisabled {
+  background-color: #e6e6e6;
+}

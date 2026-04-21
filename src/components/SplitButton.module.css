@@ -1,0 +1,158 @@
+/* ── Root ────────────────────────────────────────── */
+.root {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ── Left half ───────────────────────────────────── */
+.left {
+  border-radius: 40px 0 0 40px !important;
+  border-right: none !important;
+  padding: 0 var(--space-3) 0 var(--space-4) !important;
+}
+
+/* ── Separator ───────────────────────────────────── */
+/* Outer: stretches full button height, filled with button bg so no bleed */
+.separatorWrap {
+  width: 1px;
+  align-self: stretch;
+  flex-shrink: 0;
+  pointer-events: none;
+  position: relative;
+}
+
+.sepWrap_primary   { background-color: var(--color-brand); }
+.sepWrap_secondary { background-color: var(--color-grey-500); }
+.sepWrap_outline   {
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-grey-500);
+  border-bottom: 1px solid var(--color-grey-500);
+}
+
+/* Inner: absolutely centered, height set via inline style from JS */
+.separatorLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.sep_primary   { background-color: rgba(255, 255, 255, .6); }
+.sep_secondary { background-color: rgba(255, 255, 255, .6); }
+.sep_outline   { background-color: var(--color-grey-400); }
+
+/* ── Right half (chevron) ────────────────────────── */
+.right {
+  border-radius: 0 40px 40px 0 !important;
+  border-left: none !important;
+  min-width: unset !important;
+  padding-left: var(--space-2) !important;
+  padding-right: var(--space-3) !important;
+}
+
+/* Pressed/open state for chevron side */
+.open_primary   { background-color: var(--color-brand-hover) !important; }
+.open_secondary { background-color: var(--color-grey-600) !important; }
+.open_outline   { background-color: var(--color-grey-50) !important; }
+
+/* Chevron rotation */
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Panel ───────────────────────────────────────── */
+.panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 180px;
+  background: var(--color-white);
+  border: 1px solid #e6e6e6;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.panelAbove {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
+.panelLeft {
+  right: auto;
+  left: 0;
+}
+
+/* ── List ────────────────────────────────────────── */
+.list {
+  list-style: none;
+  padding: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 0;
+}
+
+/* ── Item ────────────────────────────────────────── */
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2-5) var(--space-2);
+  border-radius: 6px;
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 0.1s;
+  list-style: none;
+  min-width: 0;
+}
+
+.item:hover:not(.itemDisabled):not(.itemActive) {
+  background-color: var(--color-grey-100);
+}
+
+.itemActive {
+  background-color: var(--color-grey-700);
+}
+
+.itemDisabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.itemIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: #999999;
+}
+
+.itemIconActive {
+  color: #fffafa;
+}
+
+.itemLabel {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: 500;
+  line-height: 1.375;
+  color: var(--color-grey-600);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemLabelActive {
+  color: var(--color-white);
+}

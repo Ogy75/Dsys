@@ -1,0 +1,28 @@
+.iconBtn {
+  padding: 0 !important;
+  min-width: unset !important;
+  max-width: unset !important;
+}
+
+/* Width matches height from Button.module.css per size */
+.lg { width: var(--space-10); }
+.md { width: var(--space-8); }
+.sm { width: 28px; }
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.md .iconWrap svg {
+  width: 19.2px;
+  height: 19.2px;
+}
+
+.lg .iconWrap svg {
+  width: 21.6px;
+  height: 21.6px;
+}
