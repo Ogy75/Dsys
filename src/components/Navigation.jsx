@@ -141,8 +141,8 @@ export function Navigation({ items = [], value, onChange }) {
     setOpenMenu(null)
   }
 
-  function handleL2Click(id) {
-    onChange?.(id)
+  function handleL2Click(_id) {
+    // L2 just reveals the L3 panel — it does not select anything
   }
 
   return (
@@ -154,7 +154,10 @@ export function Navigation({ items = [], value, onChange }) {
           const allDescendants = hasMenu
             ? item.children.flatMap(c => [c, ...(c.children ?? [])])
             : []
-          const isActive = value === item.id || allDescendants.some(c => c.id === value)
+          const hasGrandchildren = hasMenu && item.children.some(c => c.children?.length > 0)
+          const isActive = hasGrandchildren
+            ? item.children.flatMap(c => c.children ?? []).some(l3 => l3.id === value)
+            : value === item.id || allDescendants.some(c => c.id === value)
 
           return (
             <li key={item.id} className={styles.item}>
@@ -163,6 +166,7 @@ export function Navigation({ items = [], value, onChange }) {
                 className={[
                   styles.trigger,
                   isActive ? styles.active : '',
+                  isOpen ? styles.triggerOpen : '',
                   hasMenu ? styles.hasMenu : '',
                 ].filter(Boolean).join(' ')}
                 onClick={() => handleItemClick(item)}

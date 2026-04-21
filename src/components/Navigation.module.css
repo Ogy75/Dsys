@@ -36,7 +36,8 @@
   transition: background-color 0.15s, color 0.15s;
 }
 
-.trigger:hover:not(.active) {
+.trigger:hover:not(.active),
+.triggerOpen:not(.active) {
   background-color: var(--color-grey-100);
 }
 
