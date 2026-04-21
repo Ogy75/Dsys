@@ -75,7 +75,7 @@ function ToastItem({ id, variant, title, message, dismissible, action, position,
     return () => clearTimeout(timer)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const Icon = ICONS[variant]
+  const StatusIconForVariant = ICONS[variant]
 
   return (
     <div
@@ -90,7 +90,7 @@ function ToastItem({ id, variant, title, message, dismissible, action, position,
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <Icon />
+            <StatusIconForVariant />
             {title && <span className={styles.title}>{title}</span>}
           </div>
         </div>
@@ -109,7 +109,7 @@ function ToastItem({ id, variant, title, message, dismissible, action, position,
           onClick={dismiss}
           aria-label="Dismiss notification"
         >
-          <Icon name="close" size={16} />
+          <Icon name="close" size={20} />
         </button>
       )}
 

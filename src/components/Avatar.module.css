@@ -85,6 +85,12 @@
   justify-content: center;
 }
 
+.xsm .iconWrapper > span { font-size: 12px !important; }
+.sm  .iconWrapper > span { font-size: 14px !important; }
+.md  .iconWrapper > span { font-size: 19px !important; }
+.xl  .iconWrapper > span { font-size: 24px !important; }
+.xxl .iconWrapper > span { font-size: 29px !important; }
+
 /* Status badge */
 .badge {
   position: absolute;
