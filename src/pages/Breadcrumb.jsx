@@ -48,7 +48,8 @@ const itemProps = [
 ]
 
 const breadcrumbProps = [
-  { name: 'items', type: 'BreadcrumbItem[]', default: '[]', description: 'Ordered list of crumbs. The last item is treated as the current page.' },
+  { name: 'items', type: 'BreadcrumbItem[]', default: '[]',    description: 'Ordered list of crumbs. The last item is treated as the current page.' },
+  { name: 'size',  type: '"md" | "lg"',      default: '"lg"',  description: 'lg uses body font size; md uses 14px.' },
 ]
 
 export default function BreadcrumbPage() {
@@ -58,6 +59,19 @@ export default function BreadcrumbPage() {
         title="Breadcrumb"
         description="A navigation aid that shows the user's current location within a hierarchy. The last item represents the current page and is rendered as bold text; all preceding items are rendered as underlined links."
       />
+
+      <Section title="Sizes" description="lg uses the body font size (default); md uses 14px for denser layouts.">
+        <DemoCanvas style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 24 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-grey-400)' }}>LG</span>
+            <Breadcrumb items={deepItems} size="lg" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-grey-400)' }}>MD</span>
+            <Breadcrumb items={deepItems} size="md" />
+          </div>
+        </DemoCanvas>
+      </Section>
 
       <Section title="Basic">
         <DemoCanvas>

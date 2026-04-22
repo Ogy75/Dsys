@@ -41,3 +41,9 @@
   font-weight: 700;
   color: var(--color-grey-800);
 }
+
+/* ── Sizes ──────────────────────────────────── */
+.md .link,
+.md .current {
+  font-size: var(--text-small-size);
+}

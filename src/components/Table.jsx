@@ -3,6 +3,7 @@ import { Modal } from './Modal'
 import { Textarea } from './Textarea'
 import { Button } from '../pages/Button'
 import { Pagination } from './Pagination'
+import { Icon } from './Icon'
 import styles from './Table.module.css'
 
 function SortAscIcon() {
@@ -29,13 +30,6 @@ function SortNeutralIcon() {
   )
 }
 
-function SearchIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-    </svg>
-  )
-}
 
 function PencilIcon() {
   return (
@@ -53,13 +47,6 @@ function GripIcon() {
   )
 }
 
-function EmptyIcon() {
-  return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
-    </svg>
-  )
-}
 
 function TableCheckbox({ checked, indeterminate, onChange, ariaLabel }) {
   return (
@@ -104,6 +91,7 @@ export function Table({
   fill = false,
   selectable = false,
   density = 'default',
+  zebra = false,
   pageSize = 10,
 }) {
   const [rows, setRows] = useState(() => dataProp)
@@ -302,7 +290,8 @@ export function Table({
   // ── Keyboard nav ───────────────────────────────────────────
   function handleCellKeyDown(e, ri, ci) {
     const numRows = filteredRows.length
-    const numCols = orderedColumns.length
+    const colOffset = selectable ? 1 : 0
+    const numCols = orderedColumns.length + colOffset
     let next = null
 
     switch (e.key) {
@@ -314,7 +303,13 @@ export function Table({
       case 'End':        e.preventDefault(); next = { row: ri, col: numCols - 1 }; break
       case 'Enter':
       case ' ':
-        if (orderedColumns[ci].editable) { e.preventDefault(); openEdit(ri, ci) }
+        if (selectable && ci === 0) {
+          e.preventDefault()
+          toggleSelectRow(rows.indexOf(pagedRows[ri]))
+        } else {
+          const colIdx = ci - colOffset
+          if (orderedColumns[colIdx]?.editable) { e.preventDefault(); openEdit(ri, colIdx) }
+        }
         break
       default: return
     }
@@ -388,6 +383,7 @@ export function Table({
       {orderedColumns.map(col => (
         <col key={col.key} style={{ width: colWidths[col.key] }} />
       ))}
+      <col />
     </colgroup>
   )
 
@@ -399,7 +395,7 @@ export function Table({
             className={styles.table}
             data-density={density}
             role="presentation"
-            style={{ width: totalTableWidth }}
+            style={{ minWidth: totalTableWidth }}
           >
             {colgroup}
             <thead>
@@ -489,6 +485,7 @@ export function Table({
                   </th>
                 )
               })}
+              <th className={styles.spacerTh} />
             </tr>
 
             {/* ── Filter row ── */}
@@ -528,7 +525,7 @@ export function Table({
                     >
                       {col.searchable ? (
                         <div className={styles.searchRow}>
-                          <span className={styles.searchIconWrap}><SearchIcon /></span>
+                          <span className={styles.searchIconWrap}><Icon name="search" size={16} /></span>
                           <input
                             type="text"
                             className={styles.searchInput}
@@ -542,45 +539,52 @@ export function Table({
                               className={styles.clearBtn}
                               onClick={() => setSearches(prev => ({ ...prev, [col.key]: '' }))}
                               aria-label="Clear filter"
-                            >×</button>
+                            >
+                              <Icon name="close" size={16} />
+                            </button>
                           )}
                         </div>
                       ) : null}
                     </th>
                   )
                 })}
+                <th className={styles.spacerTh} />
               </tr>
             )}
             </thead>
           </table>
         </div>
         <div
-          className={styles.bodyScroll}
+          className={[styles.bodyScroll, filteredRows.length === 0 ? styles.bodyScrollEmpty : ''].filter(Boolean).join(' ')}
           ref={tableWrapperRef}
           onScroll={handleBodyScroll}
         >
+          {filteredRows.length === 0 && (
+            <div className={styles.emptyOverlay}>
+              <Icon name="search_off" size={40} style={{ color: 'var(--color-grey-400)' }} />
+              <p className={styles.emptyTitle}>No results found</p>
+              <p className={styles.emptySubtitle}>Try adjusting or clearing your filters.</p>
+              <button
+                className={styles.emptyResetBtn}
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => setSearches({})}
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
           <table
             className={styles.table}
             data-density={density}
+            data-zebra={zebra || undefined}
             role="grid"
             aria-rowcount={filteredRows.length + 1}
             aria-colcount={orderedColumns.length}
-            style={{ width: totalTableWidth }}
+            style={{ minWidth: totalTableWidth }}
           >
             {colgroup}
             <tbody>
-              {filteredRows.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={orderedColumns.length + (selectable ? 1 : 0)}
-                    className={styles.emptyState}
-                  >
-                    <EmptyIcon />
-                    <p className={styles.emptyTitle}>No results found</p>
-                    <p className={styles.emptySubtitle}>Try adjusting or clearing your filters.</p>
-                  </td>
-                </tr>
-              ) : (
+              {filteredRows.length > 0 && (
                 <>
                 {pagedRows.map((row, ri) => {
                   const origIdx = rows.indexOf(row)
@@ -600,6 +604,13 @@ export function Table({
                             stickyMeta.checkboxIsLastSticky ? styles.stickyLast : '',
                           ].filter(Boolean).join(' ')}
                           style={{ position: 'sticky', left: 0, zIndex: 1 }}
+                          ref={el => { cellRefs.current[`${ri}-0`] = el }}
+                          tabIndex={focused.row === ri && focused.col === 0 ? 0 : -1}
+                          role="gridcell"
+                          aria-rowindex={ri + 2}
+                          aria-colindex={1}
+                          onFocus={() => setFocused({ row: ri, col: 0 })}
+                          onKeyDown={e => handleCellKeyDown(e, ri, 0)}
                         >
                           <TableCheckbox
                             checked={isSelected}
@@ -610,9 +621,10 @@ export function Table({
                       )}
 
                       {orderedColumns.map((col, ci) => {
-                        const isFocused = focused.row === ri && focused.col === ci
+                        const focusCI = ci + (selectable ? 1 : 0)
+                        const isFocused = focused.row === ri && focused.col === focusCI
                         const raw = row[col.key]
-                        const displayed = col.render ? col.render(raw, row) : (raw ?? '—')
+                        const displayed = col.render ? col.render(raw, row, density) : (raw ?? '—')
                         const secondaryRaw = col.secondary ? row[col.secondary] : null
                         const align = resolveAlign(col)
                         const isSticky = col.sticky && stickyMeta.map[col.key] !== undefined
@@ -621,7 +633,7 @@ export function Table({
                         return (
                           <td
                             key={col.key}
-                            ref={el => { cellRefs.current[`${ri}-${ci}`] = el }}
+                            ref={el => { cellRefs.current[`${ri}-${focusCI}`] = el }}
                             className={[
                               styles.td,
                               col.wrap ? styles.cellWrap : styles.cellEllipsis,
@@ -638,8 +650,8 @@ export function Table({
                             aria-rowindex={ri + 2}
                             aria-colindex={ci + 1}
                             aria-readonly={!col.editable || undefined}
-                            onFocus={() => setFocused({ row: ri, col: ci })}
-                            onKeyDown={e => handleCellKeyDown(e, ri, ci)}
+                            onFocus={() => setFocused({ row: ri, col: focusCI })}
+                            onKeyDown={e => handleCellKeyDown(e, ri, focusCI)}
                             onClick={col.editable ? () => openEdit(ri, ci) : undefined}
                             title={!col.wrap && !col.render && raw != null ? String(raw) : undefined}
                             style={isSticky ? { position: 'sticky', left: stickyMeta.map[col.key], zIndex: 1 } : undefined}
@@ -685,6 +697,7 @@ export function Table({
                           </td>
                         )
                       })}
+                      <td className={styles.spacerTd} />
                     </tr>
                   )
                 })}
@@ -693,6 +706,7 @@ export function Table({
             </tbody>
           </table>
         </div>
+
       </div>
 
       <div className={styles.footer}>

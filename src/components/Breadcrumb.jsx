@@ -8,10 +8,10 @@ function ChevronIcon() {
   )
 }
 
-export function Breadcrumb({ items = [] }) {
+export function Breadcrumb({ items = [], size = 'lg' }) {
   return (
     <nav aria-label="Breadcrumb">
-      <ol className={styles.list}>
+      <ol className={[styles.list, styles[size]].join(' ')}>
         {items.map((item, i) => {
           const isCurrent = i === items.length - 1
           return [

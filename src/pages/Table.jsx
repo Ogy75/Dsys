@@ -3,6 +3,7 @@ import PageHeader from '../components/PageHeader'
 import Section from '../components/Section'
 import { DemoCanvas, CodeBlock, UsageSection, PropsTable } from '../components/Demo'
 import { Table } from '../components/Table'
+import { Badge } from '../components/Badge'
 import { SegmentIndicator } from '../components/SegmentIndicator'
 
 /* ── Sparkline ──────────────────────────────────────────────── */
@@ -32,24 +33,11 @@ function Sparkline({ data }) {
 
 /* ── Status badge ───────────────────────────────────────────── */
 
-function StatusBadge({ value }) {
-  const map = {
-    Active:     { bg: 'var(--color-green-100)',  color: 'var(--color-green-700)' },
-    Inactive:   { bg: 'var(--color-gray-100)',   color: 'var(--color-gray-600)'  },
-    Pending:    { bg: 'var(--color-yellow-100)', color: 'var(--color-yellow-700)' },
-    'On Leave': { bg: 'var(--color-blue-100)',   color: 'var(--color-blue-700)'  },
-  }
-  const { bg, color } = map[value] ?? map.Inactive
-  return (
-    <span style={{
-      display: 'inline-flex', alignItems: 'center',
-      padding: '2px 8px', borderRadius: 100,
-      fontSize: 12, fontWeight: 600,
-      background: bg, color,
-    }}>
-      {value}
-    </span>
-  )
+const STATUS_VARIANT = {
+  Active:     'green',
+  Inactive:   'gray',
+  Pending:    'yellow',
+  'On Leave': 'blue',
 }
 
 /* ── Column definitions ─────────────────────────────────────── */
@@ -137,7 +125,10 @@ const COLUMNS = [
     sortable: true,
     width: 120,
     minWidth: 90,
-    render: (value) => <StatusBadge value={value} />,
+    render: (value, _row, density) => {
+      const size = density === 'comfortable' ? 'lg' : density === 'compact' ? 'sm' : 'md'
+      return <Badge variant={STATUS_VARIANT[value] ?? 'gray'} size={size}>{value}</Badge>
+    },
   },
   {
     key: 'location',
@@ -219,7 +210,10 @@ const columns = [
     key: 'status',
     label: 'Status',
     sortable: true,
-    render: (value) => <StatusBadge value={value} />,
+    render: (value, _row, density) => {
+      const size = density === 'comfortable' ? 'lg' : density === 'compact' ? 'sm' : 'md'
+      return <Badge variant={STATUS_VARIANT[value] ?? 'gray'} size={size}>{value}</Badge>
+    },
   },
   {
     key: 'notes',
@@ -249,6 +243,7 @@ const TABLE_PROPS = [
   { name: 'onSelectionChange', type: '(rows: object[]) => void', default: 'undefined', description: 'Called with the current selected rows array.' },
   { name: 'onRowChange',       type: '(index, key, value) => void', default: 'undefined', description: 'Called when an editable cell is saved.' },
   { name: 'pageSize',          type: 'number',                      default: '10',        description: 'Rows per page. Footer always shows item count and pagination.' },
+  { name: 'zebra',            type: 'boolean',                     default: 'false',     description: 'Alternates odd row backgrounds with grey-50 for easier row scanning.' },
 ]
 
 const COLDEF_PROPS = [
@@ -263,10 +258,11 @@ const COLDEF_PROPS = [
   { name: 'secondary', type: 'string',                    default: 'undefined', description: 'A second data key rendered as smaller secondary text below the primary value.' },
   { name: 'width',     type: 'number',                    default: '160',       description: 'Initial column width in pixels.' },
   { name: 'minWidth',  type: 'number',                    default: '80',        description: 'Minimum column width when resizing.' },
-  { name: 'render',    type: '(value, row) => ReactNode', default: 'undefined', description: 'Custom cell renderer.' },
+  { name: 'render',    type: '(value, row, density) => ReactNode', default: 'undefined', description: "Custom cell renderer. density is 'compact' | 'default' | 'comfortable' — use it to scale embedded components." },
   { name: 'avatar',    type: 'string',                    default: 'undefined', description: 'Data key used to derive initials for the avatar fallback (always shown in compact; used as fallback in default/comfortable).' },
   { name: 'avatarSrc', type: 'string',                    default: 'undefined', description: 'Data key containing an image URL. Shown at all densities when present; falls back to initials if absent.' },
   { name: 'icon',      type: '(value, row) => ReactNode', default: 'undefined', description: 'Returns a 20×20 icon rendered before the cell text. Cannot be combined with avatar.' },
+  { name: 'sticky',   type: 'boolean',                   default: 'false',     description: 'Freezes the column to the left edge while the table scrolls horizontally.' },
 ]
 
 export default function TablePage() {
@@ -341,6 +337,20 @@ export default function TablePage() {
             </span>
           )}
         </div>
+      </Section>
+
+      <Section title="Zebra stripes" description="Alternates odd row backgrounds with grey-50 to improve row scanning in dense tables.">
+        <DemoCanvas style={{ padding: 'var(--space-4)', display: 'block', background: 'var(--color-bg-page)' }}>
+          <Table
+            columns={COLUMNS.slice(0, 5)}
+            data={INITIAL_DATA}
+            selectable
+            zebra
+            maxHeight={440}
+            pageSize={8}
+          />
+        </DemoCanvas>
+        <CodeBlock code={`<Table columns={columns} data={data} selectable zebra />`} language="jsx" />
       </Section>
 
       <UsageSection>

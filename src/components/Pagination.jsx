@@ -34,9 +34,6 @@ export function Pagination({
   page = 1,
   total = 1,
   onChange,
-  pageSize,
-  pageSizeOptions = [10, 25, 50, 100],
-  onPageSizeChange,
   size = 'lg',
 }) {
   if (total <= 1) return null
@@ -50,21 +47,7 @@ export function Pagination({
   }
 
   return (
-    <div className={[styles.root, isMd ? styles.rootMd : ''].filter(Boolean).join(' ')}>
-      {onPageSizeChange && (
-        <label className={[styles.sizeLabel, isMd ? styles.sizeLabelMd : ''].filter(Boolean).join(' ')}>
-          Rows per page
-          <select
-            className={styles.sizeSelect}
-            value={pageSize}
-            onChange={e => { onPageSizeChange(Number(e.target.value)); onChange?.(1) }}
-          >
-            {pageSizeOptions.map(o => <option key={o} value={o}>{o}</option>)}
-          </select>
-        </label>
-      )}
-
-      <nav aria-label="Pagination">
+    <nav aria-label="Pagination">
         <ul className={[styles.list, isMd ? styles.listMd : ''].filter(Boolean).join(' ')} role="list">
           <li>
             <button
@@ -108,7 +91,6 @@ export function Pagination({
             </button>
           </li>
         </ul>
-      </nav>
-    </div>
+    </nav>
   )
 }

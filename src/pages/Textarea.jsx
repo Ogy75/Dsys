@@ -66,6 +66,9 @@ const textareaProps = [
   { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabled state: grey bg, grey border, grey text, no asterisk.' },
   { name: 'resize', type: "'none' | 'horizontal' | 'vertical' | 'both'", default: "'none'", description: 'Controls which axes the user can resize the textarea.' },
   { name: 'rows', type: 'number', default: '6', description: 'Number of visible text rows. Controls initial height.' },
+  { name: 'hideLabel', type: 'boolean', default: 'false', description: 'Visually hides the label while keeping it accessible for screen readers.' },
+  { name: 'inputRef', type: 'React.Ref', default: '—', description: 'Ref forwarded to the underlying textarea DOM element.' },
+  { name: 'onKeyDown', type: '(e) => void', default: '—', description: 'Keydown handler on the textarea. Useful for shortcuts like Cmd+Enter to submit.' },
 ]
 
 export default function TextareaPage() {

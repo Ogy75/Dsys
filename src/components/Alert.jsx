@@ -38,13 +38,13 @@ export function Alert({
     onDismiss?.()
   }
 
-  const Icon = ICONS[variant]
+  const VariantIcon = ICONS[variant]
 
   return (
     <div className={[styles.alert, styles[variant]].join(' ')} role="alert">
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-          <Icon />
+          <VariantIcon />
           {title && <span className={styles.title}>{title}</span>}
         </div>
         {dismissable && (

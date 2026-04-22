@@ -43,6 +43,8 @@ const modalProps = [
   { name: 'footer', type: 'ReactNode', default: '—', description: 'Action buttons rendered at the bottom right.' },
   { name: 'showClose', type: 'boolean', default: 'true', description: 'Shows the X button. When false, top padding is set to 32px to match the footer bottom padding.' },
   { name: 'closeOnBackdrop', type: 'boolean', default: 'true', description: 'Whether clicking the backdrop calls onClose.' },
+  { name: 'bodyStyle', type: 'CSSProperties', default: '—', description: 'Inline styles applied directly to the scrollable body element. Use for fixed heights or custom overflow.' },
+  { name: 'stretch', type: 'boolean', default: 'false', description: 'Makes the modal panel fill the full available viewport height.' },
 ]
 
 function StatusBadge({ value }) {

@@ -34,6 +34,7 @@ import NavigationPage from './pages/Navigation'
 import BreadcrumbPage from './pages/Breadcrumb'
 import PaginationPage from './pages/Pagination'
 import TablePage from './pages/Table'
+import ListPage from './pages/List'
 import Placeholder from './pages/Placeholder'
 
 function PlaceholderPage({ title }) {
@@ -80,7 +81,7 @@ export default function App() {
           <Route path="/banner" element={<PlaceholderPage title="Banner" />} />
           <Route path="/card" element={<CardPage />} />
           <Route path="/table" element={<TablePage />} />
-          <Route path="/list" element={<PlaceholderPage title="List" />} />
+          <Route path="/list" element={<ListPage />} />
           <Route path="/tabs" element={<TabsPage />} />
           <Route path="/accordion" element={<AccordionPage />} />
           <Route path="/navigation" element={<NavigationPage />} />

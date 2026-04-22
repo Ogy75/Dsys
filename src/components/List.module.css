@@ -1,0 +1,155 @@
+/* ── Container ─────────────────────────────────── */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Divider between items */
+.withDivider .item + .item {
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Item ─────────────────────────────────────── */
+.item {
+  position: relative;
+  list-style: none;
+  transition: background-color 0.15s;
+}
+
+.item:hover {
+  background-color: var(--color-grey-50);
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  background-color: var(--color-grey-100);
+}
+
+.selected {
+  background-color: var(--color-grey-50);
+}
+
+.selected.interactive:hover,
+.selected:hover {
+  background-color: var(--color-grey-100);
+}
+
+.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ── Inner layout ──────────────────────────────── */
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+  height: 56px;
+  overflow: hidden;
+}
+
+.sm .inner {
+  padding: 0 var(--space-3);
+  height: 40px;
+  gap: var(--space-2);
+}
+
+.lg .inner {
+  padding: 0 var(--space-4);
+  height: 64px;
+}
+
+/* ── Leading ────────────────────────────────────── */
+.leading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--color-grey-500);
+}
+
+.sm .leading {
+  width: 20px;
+  height: 20px;
+}
+
+.lg .leading {
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Content ────────────────────────────────────── */
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-base);
+}
+
+.sm .label {
+  font-size: var(--text-small-size);
+}
+
+.description {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+}
+
+/* ── Trailing ───────────────────────────────────── */
+.trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  white-space: nowrap;
+}
+
+/* ── Controls ───────────────────────────────────── */
+.controls {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Actions (icon button group) ───────────────── */
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.item:hover .actions,
+.item:focus-within .actions {
+  opacity: 1;
+  pointer-events: all;
+}
