@@ -5,7 +5,7 @@
   border: 2px solid transparent;
   font-family: var(--font-sans);
   font-size: var(--text-small-size);
-  font-weight: var(--text-small-weight);
+  font-weight: var(--text-label-weight);
   line-height: 1;
   color: var(--color-grey-800);
   white-space: nowrap;
