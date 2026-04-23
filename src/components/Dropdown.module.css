@@ -70,6 +70,12 @@
   /* size matches icon size */
   width: 24px;
   height: 24px;
+  color: var(--color-grey-400);
+  transition: color 0.15s;
+}
+
+button.searchAction:hover {
+  color: var(--color-grey-800);
 }
 
 /* ── Multiselect header ──────────────────────────── */
@@ -245,15 +251,48 @@
 /* ── No results ──────────────────────────────────── */
 /* Figma: padding 32px top/bottom, 16px left/right; icon + text, rgb(115,115,115), 16px */
 .noResults {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2-5);
+  gap: var(--space-1);
   padding: var(--space-8) var(--space-4);
   font-family: var(--font-sans);
-  font-size: var(--text-body-size);
-  font-weight: 500;
-  color: var(--color-grey-500);
   list-style: none;
+  min-height: 0;
+}
+
+.noResultsTitle {
+  font-size: var(--text-small-size);
+  font-weight: var(--text-label-weight);
+  color: var(--color-grey-600);
+  margin: 0;
+  margin-top: var(--space-2);
+}
+
+.noResultsSubtitle {
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  color: var(--color-grey-400);
+  margin: 0;
+}
+
+.noResultsClearBtn {
+  margin-top: var(--space-3);
+  height: 40px;
+  padding: 0 var(--space-4);
+  background: var(--color-grey-800);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.noResultsClearBtn:hover {
+  background: var(--color-grey-900);
 }

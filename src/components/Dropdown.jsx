@@ -8,7 +8,7 @@ function SearchIcon() {
 }
 
 function CloseIcon() {
-  return <Icon name="close" style={{ color: 'rgb(115,115,115)' }} />
+  return <Icon name="close" size={16} />
 }
 
 /* ── Placement hook ─────────────────────────────── */
@@ -138,6 +138,7 @@ function DropdownPanel({
   const [searchActive, setSearchActive] = useState(false)
   const [focusedIdx, setFocusedIdx] = useState(-1)
   const [lockedWidth, setLockedWidth] = useState(null)
+  const [lockedHeight, setLockedHeight] = useState(null)
   const inputRef = useRef(null)
   const listRef = useRef(null)
   const itemRefs = useRef([])
@@ -157,20 +158,21 @@ function DropdownPanel({
   }, [])
 
   useEffect(() => {
-    if (!open) { setQuery(''); setSearchActive(false); setFocusedIdx(-1); setLockedWidth(null) }
+    if (!open) { setQuery(''); setSearchActive(false); setFocusedIdx(-1); setLockedWidth(null); setLockedHeight(null) }
     else if (searchable) setTimeout(() => inputRef.current?.focus(), 0)
   }, [open, searchable])
 
-  // Lock panel width to its initial measured width so filtering doesn't shrink it.
-  // Wait until placement has applied min/max width so we capture the correct value.
+  // Lock panel width + height to their initial measured values so filtering doesn't resize them.
+  // Wait until placement has applied min/max width so we capture the correct values.
   useLayoutEffect(() => {
-    if (!open || lockedWidth != null) return
+    if (!open || (lockedWidth != null && lockedHeight != null)) return
     if (!panelStyle || panelStyle.minWidth == null) return
     if (panelRef.current) {
-      const w = panelRef.current.getBoundingClientRect().width
-      if (w > 0) setLockedWidth(w)
+      const rect = panelRef.current.getBoundingClientRect()
+      if (lockedWidth == null && rect.width > 0) setLockedWidth(rect.width)
+      if (lockedHeight == null && rect.height > 0) setLockedHeight(rect.height)
     }
-  }, [open, lockedWidth, panelRef, panelStyle])
+  }, [open, lockedWidth, lockedHeight, panelRef, panelStyle])
 
   // Reset focus when filtered list changes
   useEffect(() => { setFocusedIdx(-1) }, [query])
@@ -247,9 +249,11 @@ function DropdownPanel({
     <div
       ref={panelRef}
       className={[styles.panel, above ? styles.panelAbove : ''].filter(Boolean).join(' ')}
-      style={lockedWidth != null
-        ? { ...panelStyle, width: lockedWidth, minWidth: lockedWidth, maxWidth: lockedWidth }
-        : panelStyle}
+      style={{
+        ...panelStyle,
+        ...(lockedWidth != null ? { width: lockedWidth, minWidth: lockedWidth, maxWidth: lockedWidth } : {}),
+        ...(lockedHeight != null ? { height: lockedHeight } : {}),
+      }}
       role="dialog"
       onKeyDown={handleKeyDown}
     >
@@ -283,7 +287,7 @@ function DropdownPanel({
       )}
 
       {/* Multiselect header */}
-      {multiselect && (
+      {multiselect && filteredItems.length > 0 && (
         <div className={styles.multiHeader}>
           {selected.length === 0 ? (
             <button type="button" className={styles.ghostBtn} onClick={handleSelectAll}>
@@ -300,8 +304,18 @@ function DropdownPanel({
       {/* List */}
       {filteredItems.length === 0 ? (
         <div className={styles.noResults}>
-          <SearchIcon />
-          No results found
+          <Icon name="search_off" size={40} style={{ color: 'var(--color-grey-400)' }} />
+          <p className={styles.noResultsTitle}>No results found</p>
+          <p className={styles.noResultsSubtitle}>Try adjusting or clearing your filters.</p>
+          {query && (
+            <button
+              type="button"
+              className={styles.noResultsClearBtn}
+              onClick={() => setQuery('')}
+            >
+              Clear filter
+            </button>
+          )}
         </div>
       ) : (
         <div className={styles.listWrap}>
