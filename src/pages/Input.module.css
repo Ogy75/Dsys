@@ -64,7 +64,7 @@
 }
 
 .input::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .input:focus:not(:disabled) {
@@ -80,7 +80,7 @@
 }
 
 .inputDisabled::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 /* Error */

@@ -68,18 +68,18 @@ const palettes = [
 ]
 
 const semanticColors = [
-  { name: 'text-primary', value: '#171717', desc: 'Primary text' },
-  { name: 'text-secondary', value: '#737373', desc: 'Secondary / subdued text' },
-  { name: 'text-tertiary', value: '#a3a3a3', desc: 'Placeholder, hints' },
-  { name: 'text-disabled', value: '#d4d4d4', desc: 'Disabled state text' },
-  { name: 'text-inverse', value: '#ffffff', desc: 'Text on dark surfaces', border: true },
+  { name: 'text-primary', value: '#1a1a1a', desc: 'Primary text — Grey 800' },
+  { name: 'text-secondary', value: '#4d4d4d', desc: 'Secondary / subdued text — Grey 600' },
+  { name: 'text-tertiary', value: '#737373', desc: 'Placeholder, hints — Grey 500' },
+  { name: 'text-disabled', value: '#a3a3a3', desc: 'Disabled state text — Grey 400' },
+  { name: 'text-inverse', value: '#f7f7f7', desc: 'Text on dark surfaces — Grey 50', border: true },
   { name: 'text-link', value: '#2563eb', desc: 'Clickable links' },
-  { name: 'bg-page', value: '#f2f2f2', desc: 'Page background', border: true },
+  { name: 'bg-page', value: '#f2f2f2', desc: 'Page background — Grey 100', border: true },
   { name: 'bg-surface', value: '#ffffff', desc: 'Cards, panels', border: true },
-  { name: 'bg-subtle', value: '#f9f9f9', desc: 'Subtle backgrounds', border: true },
-  { name: 'bg-muted', value: '#f3f3f3', desc: 'Muted backgrounds', border: true },
-  { name: 'border', value: '#e5e5e5', desc: 'Default border' },
-  { name: 'brand', value: '#2563eb', desc: 'Primary brand color' },
+  { name: 'bg-subtle', value: '#f7f7f7', desc: 'Subtle backgrounds — Grey 50', border: true },
+  { name: 'bg-muted', value: '#f7f7f7', desc: 'Muted backgrounds — Grey 50', border: true },
+  { name: 'border', value: '#cccccc', desc: 'Default border — Grey 300' },
+  { name: 'brand', value: '#333333', desc: 'Primary brand color — Grey 700' },
 ]
 
 const usageCode = `/* Using color tokens via CSS custom properties */

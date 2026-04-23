@@ -65,7 +65,7 @@
 }
 
 .searchInput::placeholder {
-  color: var(--color-text-tertiary);
+  color: var(--color-grey-400);
 }
 
 .searchClear {

@@ -82,8 +82,8 @@
 }
 
 .triggerError {
-  border-width: 2px;
   border-color: var(--color-red-600);
+  background-color: var(--color-red-50);
 }
 
 :global(body[data-keyboard-nav]) .triggerError:focus {
@@ -122,7 +122,11 @@
 }
 
 .placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
+}
+
+.triggerError .placeholder {
+  mix-blend-mode: multiply;
 }
 
 .triggerTextDisabled {
@@ -249,7 +253,7 @@
 }
 
 .searchInput::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .searchIcon {

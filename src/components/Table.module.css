@@ -225,7 +225,7 @@
 }
 
 .searchInput::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .clearBtn {

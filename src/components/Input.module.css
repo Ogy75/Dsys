@@ -58,7 +58,7 @@
 }
 
 .input::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .input:focus:not(:disabled) {
@@ -78,17 +78,21 @@
 }
 
 .inputDisabled::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .inputError {
-  border-width: 2px;
   border-color: var(--color-red-600);
+  background-color: var(--color-red-50);
   padding-right: var(--space-8);
 }
 
 .inputError:focus:not(:disabled) {
   border-color: var(--color-red-600);
+}
+
+.inputError::placeholder {
+  mix-blend-mode: multiply;
 }
 
 .lg {

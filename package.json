@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+
+    "figma:pull": "node scripts/figma-pull.mjs",
+    "figma:pull:commit": "node scripts/figma-pull.mjs --commit",
+    "figma:push": "node scripts/figma-push.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

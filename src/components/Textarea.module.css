@@ -68,7 +68,7 @@
 .textarea::-webkit-scrollbar-thumb:hover { background-color: var(--color-gray-400); }
 
 .textarea::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .textarea:focus:not(:disabled) {
@@ -96,12 +96,16 @@
 }
 
 .textareaError {
-  border-width: 2px;
   border-color: var(--color-red-600);
+  background-color: var(--color-red-50);
 }
 
 .textareaError:focus:not(:disabled) {
   border-color: var(--color-red-600);
+}
+
+.textareaError::placeholder {
+  mix-blend-mode: multiply;
 }
 
 .textareaDisabled {
@@ -112,7 +116,7 @@
 }
 
 .textareaDisabled::placeholder {
-  color: var(--color-grey-300);
+  color: var(--color-grey-400);
 }
 
 .errorMsg {
