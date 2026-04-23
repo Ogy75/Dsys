@@ -2,7 +2,11 @@ import { useState, useRef, useEffect } from 'react'
 import { Icon } from './Icon'
 import styles from './Navigation.module.css'
 
-function SubMenu({ children, value, onSelect, onL2Click }) {
+function SubMenu({ children, value, onSelect, onL2Click, size = 'lg' }) {
+  const sizeItemCls = size === 'md' ? styles.subItemMd : size === 'sm' ? styles.subItemSm : ''
+  const sizePanelCls = size === 'md' ? styles.submenuMd : size === 'sm' ? styles.submenuSm : ''
+  const subItemCls = [styles.subItem, sizeItemCls].filter(Boolean).join(' ')
+  const panelCls = [styles.submenu, sizePanelCls].filter(Boolean).join(' ')
   const hasL3 = children.some(c => c.children?.length > 0)
 
   const defaultL2 = children.find(c => c.id === value || c.children?.some(l3 => l3.id === value)) ?? children[0]
@@ -20,13 +24,13 @@ function SubMenu({ children, value, onSelect, onL2Click }) {
 
   if (!hasL3) {
     return (
-      <div ref={panelRef} className={styles.submenu}>
+      <div ref={panelRef} className={panelCls}>
         <ul className={styles.submenuList}>
           {children.map(child => (
             <li key={child.id}>
               <button
                 type="button"
-                className={[styles.subItem, value === child.id ? styles.subItemActive : ''].filter(Boolean).join(' ')}
+                className={[subItemCls, value === child.id ? styles.subItemActive : ''].filter(Boolean).join(' ')}
                 onClick={() => onSelect(child.id)}
               >
                 {child.icon != null && (
@@ -44,7 +48,7 @@ function SubMenu({ children, value, onSelect, onL2Click }) {
   }
 
   return (
-    <div ref={panelRef} className={styles.submenu}>
+    <div ref={panelRef} className={panelCls}>
       {/* L2 column */}
       <ul className={styles.submenuList}>
         {children.map(l2 => (
@@ -52,7 +56,7 @@ function SubMenu({ children, value, onSelect, onL2Click }) {
             <button
               type="button"
               className={[
-                styles.subItem,
+                subItemCls,
                 selectedL2 === l2.id ? styles.subItemHover : '',
                 value === l2.id ? styles.subItemActive : '',
               ].filter(Boolean).join(' ')}
@@ -97,7 +101,7 @@ function SubMenu({ children, value, onSelect, onL2Click }) {
                 <li key={l3.id}>
                   <button
                     type="button"
-                    className={[styles.subItem, value === l3.id ? styles.subItemActive : ''].filter(Boolean).join(' ')}
+                    className={[subItemCls, value === l3.id ? styles.subItemActive : ''].filter(Boolean).join(' ')}
                     onClick={() => onSelect(l3.id)}
                     tabIndex={selectedL2 !== l2.id ? -1 : 0}
                   >
@@ -113,7 +117,7 @@ function SubMenu({ children, value, onSelect, onL2Click }) {
   )
 }
 
-export function Navigation({ items = [], value, onChange }) {
+export function Navigation({ items = [], value, onChange, size = 'lg' }) {
   const [openMenu, setOpenMenu] = useState(null)
   const navRef = useRef(null)
 
@@ -165,6 +169,7 @@ export function Navigation({ items = [], value, onChange }) {
                 type="button"
                 className={[
                   styles.trigger,
+                  size === 'md' ? styles.md : size === 'sm' ? styles.sm : styles.lg,
                   isActive ? styles.active : '',
                   isOpen ? styles.triggerOpen : '',
                   hasMenu ? styles.hasMenu : '',
@@ -187,6 +192,7 @@ export function Navigation({ items = [], value, onChange }) {
                   value={value}
                   onSelect={handleSubSelect}
                   onL2Click={handleL2Click}
+                  size={size}
                 />
               )}
             </li>

@@ -35,6 +35,7 @@ import BreadcrumbPage from './pages/Breadcrumb'
 import PaginationPage from './pages/Pagination'
 import TablePage from './pages/Table'
 import ListPage from './pages/List'
+import SkeletonPage from './pages/Skeleton'
 import Placeholder from './pages/Placeholder'
 
 function PlaceholderPage({ title }) {
@@ -90,7 +91,7 @@ export default function App() {
           <Route path="/stepper" element={<StepperPage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/spinner" element={<SpinnerPage />} />
-          <Route path="/skeleton" element={<PlaceholderPage title="Skeleton" />} />
+          <Route path="/skeleton" element={<SkeletonPage />} />
           <Route path="/divider" element={<PlaceholderPage title="Divider" />} />
 
           {/* Layouts */}

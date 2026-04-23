@@ -4,6 +4,7 @@ import { Textarea } from './Textarea'
 import { Button } from '../pages/Button'
 import { Pagination } from './Pagination'
 import { Icon } from './Icon'
+import { Skeleton } from './Skeleton'
 import styles from './Table.module.css'
 
 function SortAscIcon() {
@@ -111,6 +112,8 @@ export function Table({
   const [focused, setFocused] = useState({ row: 0, col: 0 })
   const [selected, setSelected] = useState(new Set())
   const [page, setPage] = useState(1)
+  const [isPaging, setIsPaging] = useState(false)
+  const firstPageRenderRef = useRef(true)
   const [editModal, setEditModal] = useState(null)
   const [editDraft, setEditDraft] = useState('')
   const [dragOverCol, setDragOverCol] = useState(null)
@@ -188,6 +191,16 @@ export function Table({
     setPage(1)
     setFocused({ row: 0, col: 0 })
   }, [searches, sort.key, sort.dir])
+
+  useEffect(() => {
+    if (firstPageRenderRef.current) {
+      firstPageRenderRef.current = false
+      return
+    }
+    setIsPaging(true)
+    const t = setTimeout(() => setIsPaging(false), 700)
+    return () => clearTimeout(t)
+  }, [page])
 
   // ── Resize ─────────────────────────────────────────────────
   function startResize(e, colKey) {
@@ -584,7 +597,53 @@ export function Table({
           >
             {colgroup}
             <tbody>
-              {filteredRows.length > 0 && (
+              {filteredRows.length > 0 && isPaging && (
+                <>
+                {Array.from({ length: pagedRows.length || pageSize }).map((_, ri) => (
+                  <tr key={`sk-${ri}`} className={styles.tr} aria-hidden="true">
+                    {selectable && (
+                      <td
+                        className={[styles.td, styles.checkboxTd, styles.stickyCell, stickyMeta.checkboxIsLastSticky ? styles.stickyLast : ''].filter(Boolean).join(' ')}
+                        style={{ position: 'sticky', left: 0, zIndex: 1 }}
+                      >
+                        <Skeleton width={16} height={16} radius={4} />
+                      </td>
+                    )}
+                    {orderedColumns.map((col, ci) => {
+                      const isSticky = col.sticky && stickyMeta.map[col.key] !== undefined
+                      const isLastSticky = col.key === stickyMeta.lastKey
+                      const widths = ['70%', '55%', '80%', '45%', '65%', '50%']
+                      const w = widths[(ri + ci) % widths.length]
+                      const hasAvatar = !!(col.avatar || col.avatarSrc)
+                      const avatarSize = density === 'compact' ? 20 : density === 'comfortable' ? 36 : 28
+                      return (
+                        <td
+                          key={col.key}
+                          className={[
+                            styles.td,
+                            col.wrap ? styles.cellWrap : styles.cellEllipsis,
+                            isSticky ? styles.stickyCell : '',
+                            isSticky && isLastSticky ? styles.stickyLast : '',
+                          ].filter(Boolean).join(' ')}
+                          style={isSticky ? { position: 'sticky', left: stickyMeta.map[col.key], zIndex: 1 } : undefined}
+                        >
+                          {hasAvatar ? (
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', width: '100%' }}>
+                              <Skeleton width={avatarSize} height={avatarSize} circle />
+                              <Skeleton width={w} height={12} />
+                            </span>
+                          ) : (
+                            <Skeleton width={w} height={12} />
+                          )}
+                        </td>
+                      )
+                    })}
+                    <td className={styles.spacerTd} />
+                  </tr>
+                ))}
+                </>
+              )}
+              {filteredRows.length > 0 && !isPaging && (
                 <>
                 {pagedRows.map((row, ri) => {
                   const origIdx = rows.indexOf(row)

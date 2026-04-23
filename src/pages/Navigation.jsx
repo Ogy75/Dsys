@@ -139,6 +139,7 @@ const navProps = [
   { name: 'items', type: 'NavItem[]', default: '[]', description: 'Array of top-level navigation items.' },
   { name: 'value', type: 'string', default: '—', description: 'Currently active item ID (L1, L2, or L3).' },
   { name: 'onChange', type: '(id: string) => void', default: '—', description: 'Called with the selected item ID on click.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'lg'", description: 'Trigger height and type size. lg 40px/16px · md 36px/15px · sm 32px/14px.' },
 ]
 
 const itemProps = [
@@ -152,6 +153,11 @@ export default function NavigationPage() {
   const [v1, setV1] = useState('overview')
   const [v2, setV2] = useState('overview')
   const [v3, setV3] = useState('overview')
+  const [vSize, setVSize] = useState('overview')
+  const [v2md, setV2md] = useState('overview')
+  const [v3md, setV3md] = useState('overview')
+  const [v2sm, setV2sm] = useState('overview')
+  const [v3sm, setV3sm] = useState('overview')
 
   return (
     <div>
@@ -167,16 +173,29 @@ export default function NavigationPage() {
         <CodeBlock code={basicCode} language="jsx" />
       </Section>
 
+      <Section title="Sizes" description="Three sizes: lg (default, 40px), md (36px, 15px font), sm (32px).">
+        <DemoCanvas style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 'var(--space-4)' }}>
+          <Navigation items={simpleItems} value={vSize} onChange={setVSize} size="lg" />
+          <Navigation items={simpleItems} value={vSize} onChange={setVSize} size="md" />
+          <Navigation items={simpleItems} value={vSize} onChange={setVSize} size="sm" />
+        </DemoCanvas>
+        <CodeBlock code={`<Navigation items={items} size="lg" />\n<Navigation items={items} size="md" />\n<Navigation items={items} size="sm" />`} language="jsx" />
+      </Section>
+
       <Section title="With submenu" description="Items with children render a chevron and open a single-column dropdown on click.">
-        <DemoCanvas style={{ paddingBottom: 220 }}>
-          <Navigation items={submenuItems} value={v2} onChange={setV2} />
+        <DemoCanvas style={{ paddingBottom: 220, flexDirection: 'column', alignItems: 'flex-start', gap: 'var(--space-4)' }}>
+          <Navigation items={submenuItems} value={v2} onChange={setV2} size="lg" />
+          <Navigation items={submenuItems} value={v2md} onChange={setV2md} size="md" />
+          <Navigation items={submenuItems} value={v2sm} onChange={setV2sm} size="sm" />
         </DemoCanvas>
         <CodeBlock code={submenuCode} language="jsx" />
       </Section>
 
       <Section title="Two-level submenu (L2 → L3)" description="When L2 items carry their own children, the panel splits into two columns. Hovering an L2 item reveals its L3 items on the right. The left column defines the right.">
-        <DemoCanvas style={{ paddingBottom: 280 }}>
-          <Navigation items={megaMenuItems} value={v3} onChange={setV3} />
+        <DemoCanvas style={{ paddingBottom: 280, flexDirection: 'column', alignItems: 'flex-start', gap: 'var(--space-4)' }}>
+          <Navigation items={megaMenuItems} value={v3} onChange={setV3} size="lg" />
+          <Navigation items={megaMenuItems} value={v3md} onChange={setV3md} size="md" />
+          <Navigation items={megaMenuItems} value={v3sm} onChange={setV3sm} size="sm" />
         </DemoCanvas>
         <CodeBlock code={megaCode} language="jsx" />
       </Section>
