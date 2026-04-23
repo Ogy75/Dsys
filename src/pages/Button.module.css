@@ -23,7 +23,6 @@
 /* Base */
 .btn {
   font-family: var(--font-sans);
-  line-height: 1;
   border: 1px solid transparent;
   border-radius: 40px;
   cursor: pointer;
@@ -90,7 +89,8 @@
   padding: 0 var(--space-6);
   font-size: var(--text-body-size);
   font-weight: var(--text-body-medium-weight);
-  letter-spacing: -0.013em;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 .md {
@@ -98,7 +98,8 @@
   padding: 0 var(--space-4);
   font-size: var(--text-body-size);
   font-weight: var(--text-body-medium-weight);
-  letter-spacing: -0.013em;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 .sm {
@@ -106,6 +107,8 @@
   padding: 0 var(--space-3);
   font-size: var(--text-small-size);
   font-weight: var(--text-body-medium-weight);
+  line-height: var(--line-height-base);
+  letter-spacing: 0;
 }
 
 /* ── Primary ──────────────────────────────── */

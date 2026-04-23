@@ -127,6 +127,7 @@ function DropdownPanel({
   const [query, setQuery] = useState('')
   const [searchActive, setSearchActive] = useState(false)
   const [focusedIdx, setFocusedIdx] = useState(-1)
+  const [lockedWidth, setLockedWidth] = useState(null)
   const inputRef = useRef(null)
   const listRef = useRef(null)
   const itemRefs = useRef([])
@@ -146,9 +147,18 @@ function DropdownPanel({
   }, [])
 
   useEffect(() => {
-    if (!open) { setQuery(''); setSearchActive(false); setFocusedIdx(-1) }
+    if (!open) { setQuery(''); setSearchActive(false); setFocusedIdx(-1); setLockedWidth(null) }
     else if (searchable) setTimeout(() => inputRef.current?.focus(), 0)
   }, [open, searchable])
+
+  // Lock panel width to its initial measured width so filtering doesn't shrink it
+  useLayoutEffect(() => {
+    if (!open || lockedWidth != null) return
+    if (panelRef.current) {
+      const w = panelRef.current.getBoundingClientRect().width
+      if (w > 0) setLockedWidth(w)
+    }
+  }, [open, lockedWidth, panelRef])
 
   // Reset focus when filtered list changes
   useEffect(() => { setFocusedIdx(-1) }, [query])
@@ -225,7 +235,9 @@ function DropdownPanel({
     <div
       ref={panelRef}
       className={[styles.panel, above ? styles.panelAbove : ''].filter(Boolean).join(' ')}
-      style={panelStyle}
+      style={lockedWidth != null
+        ? { ...panelStyle, width: lockedWidth, minWidth: lockedWidth, maxWidth: lockedWidth }
+        : panelStyle}
       role="dialog"
       onKeyDown={handleKeyDown}
     >
