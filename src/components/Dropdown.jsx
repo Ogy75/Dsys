@@ -38,24 +38,31 @@ function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect) {
     const vh = window.innerHeight
 
     // ── Vertical ────────────────────────────────────
-    const below = vh - rect.bottom - VIEWPORT_MARGIN
-    const aboveSpace = rect.top - VIEWPORT_MARGIN
-    const viewportCap = Math.floor(vh * 0.4)
+    // Subtract the 4px gap between trigger and panel from available space
+    const belowSpace = vh - rect.bottom - VIEWPORT_MARGIN - DROPDOWN_GAP
+    const aboveSpace = rect.top - VIEWPORT_MARGIN - DROPDOWN_GAP
+    const viewportCap = Math.floor(vh * 0.3)
 
     // Chrome height above the scrollable list
     const chromeH = (searchable ? SEARCH_BAR_HEIGHT : 0) + (multiselect ? MULTISELECT_HEADER_HEIGHT : 0)
     // Min panel height = chrome + enough list to show 2 items
     const minPanelH = chromeH + MIN_LIST_HEIGHT
-    const fitsBelow = below >= minPanelH
+    const fitsBelow = belowSpace >= minPanelH
     const fitsAbove = aboveSpace >= minPanelH
 
-    if (fitsBelow || (!fitsAbove && below >= aboveSpace)) {
-      setAbove(false)
-    } else {
-      setAbove(true)
-    }
-    // List maxH = total panel cap minus fixed chrome, floored at MIN_LIST_HEIGHT
-    setMaxH(Math.max(viewportCap - chromeH, MIN_LIST_HEIGHT))
+    // Pick the side that can fully display the panel; when both can (or neither can),
+    // choose whichever has more room so the dropdown is always fully visible.
+    let useAbove
+    if (fitsBelow && fitsAbove) useAbove = aboveSpace > belowSpace
+    else if (fitsBelow) useAbove = false
+    else if (fitsAbove) useAbove = true
+    else useAbove = aboveSpace > belowSpace
+    setAbove(useAbove)
+
+    // List maxH = chosen side's available space minus chrome, capped at viewportCap
+    const chosenSpace = useAbove ? aboveSpace : belowSpace
+    const listCap = Math.min(chosenSpace, viewportCap) - chromeH
+    setMaxH(Math.max(listCap, MIN_LIST_HEIGHT))
 
     // ── Horizontal ───────────────────────────────────
     // Available horizontal space on each side (from trigger edges)
@@ -73,8 +80,11 @@ function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect) {
 
     const availableW = useAlign === 'right' ? spaceLeft : spaceRight
     const isMobile = vw < 380
-    const clampedMin = isMobile ? 0 : Math.min(MIN_WIDTH, viewportW)
-    const clampedMax = Math.min(MAX_WIDTH, availableW)
+    const triggerW = rect.width
+    // Min width = trigger width, but at least MIN_WIDTH on desktop; never wider than viewport
+    const desiredMin = Math.max(triggerW, isMobile ? 0 : MIN_WIDTH)
+    const clampedMin = Math.min(desiredMin, viewportW)
+    const clampedMax = Math.max(Math.min(Math.max(MAX_WIDTH, triggerW), availableW), clampedMin)
 
     const style = {
       minWidth: clampedMin,
@@ -151,14 +161,16 @@ function DropdownPanel({
     else if (searchable) setTimeout(() => inputRef.current?.focus(), 0)
   }, [open, searchable])
 
-  // Lock panel width to its initial measured width so filtering doesn't shrink it
+  // Lock panel width to its initial measured width so filtering doesn't shrink it.
+  // Wait until placement has applied min/max width so we capture the correct value.
   useLayoutEffect(() => {
     if (!open || lockedWidth != null) return
+    if (!panelStyle || panelStyle.minWidth == null) return
     if (panelRef.current) {
       const w = panelRef.current.getBoundingClientRect().width
       if (w > 0) setLockedWidth(w)
     }
-  }, [open, lockedWidth, panelRef])
+  }, [open, lockedWidth, panelRef, panelStyle])
 
   // Reset focus when filtered list changes
   useEffect(() => { setFocusedIdx(-1) }, [query])
