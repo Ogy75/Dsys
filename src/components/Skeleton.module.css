@@ -7,12 +7,12 @@
   display: inline-block;
   background: linear-gradient(
     90deg,
-    var(--color-grey-100) 0%,
-    var(--color-grey-50) 50%,
-    var(--color-grey-100) 100%
+    var(--color-grey-50) 0%,
+    var(--color-grey-100) 50%,
+    var(--color-grey-50) 100%
   );
   background-size: 200% 100%;
-  animation: skeletonShimmer 1.4s ease-in-out infinite;
+  animation: skeletonShimmer 1.7s ease-in-out infinite;
   border-radius: var(--radius-sm);
   vertical-align: middle;
 }
