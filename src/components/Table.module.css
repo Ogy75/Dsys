@@ -17,6 +17,16 @@
   min-height: 0;
 }
 
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--color-bg-page);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
 /* ── FOOTER ──────────────────────────────────────────────────── */
 
 .footer {
@@ -62,6 +72,9 @@
 .bodyScrollEmpty {
   overflow: hidden;
   min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bodyScroll::-webkit-scrollbar { width: var(--space-0-5); height: var(--space-0-5); }
@@ -218,7 +231,7 @@
   border: none;
   outline: none;
   font-family: var(--font-sans);
-  font-size: var(--text-small-size);
+  font-size: 15px;
   font-weight: var(--text-small-weight);
   color: var(--color-grey-800);
   line-height: var(--line-height-base);
@@ -243,6 +256,139 @@
 
 .clearBtn:hover {
   color: var(--color-grey-800);
+}
+
+/* ── FILTER MODE DROPDOWN ────────────────────────────────────── */
+
+.filterDropdownPanel {
+  position: fixed;
+  z-index: 9999;
+  background: var(--color-bg-surface);
+  border: 1px solid #e6e6e6;
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  box-shadow: var(--shadow-sm);
+}
+
+.filterDropdownItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  background: var(--color-bg-surface);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px var(--space-5) 10px var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  color: var(--color-grey-800);
+  cursor: pointer;
+  line-height: var(--line-height-base);
+  white-space: nowrap;
+}
+
+.filterDropdownItem:hover {
+  background: var(--color-grey-50);
+}
+
+.filterDropdownItemActive {
+  background: var(--color-grey-700);
+  color: var(--color-grey-50);
+}
+
+.filterDropdownItemActive:hover {
+  background: var(--color-grey-700);
+}
+
+.filterDropdownItemHovered {
+  background: var(--color-grey-50);
+}
+
+/* ── VIEW MENU (density + fullscreen) ────────────────────────── */
+
+.viewMenuPanel {
+  position: fixed;
+  z-index: 9999;
+  background: var(--color-bg-surface);
+  border: 1px solid #e6e6e6;
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+}
+
+.viewMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  background: var(--color-bg-surface);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px var(--space-5) 10px var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-medium-weight);
+  color: var(--color-grey-800);
+  cursor: pointer;
+  line-height: var(--line-height-base);
+  white-space: nowrap;
+}
+
+.viewMenuItem:hover {
+  background: var(--color-grey-50);
+}
+
+.viewMenuItemActive {
+  background: var(--color-grey-700);
+  color: var(--color-grey-50);
+}
+
+.viewMenuItemActive:hover {
+  background: var(--color-grey-700);
+}
+
+.viewMenuItemIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--color-grey-400);
+}
+
+.viewMenuItemIconActive {
+  color: var(--color-white);
+}
+
+.viewMenuDivider {
+  padding: var(--space-3) 0 var(--space-1);
+}
+
+.viewMenuDivider span {
+  display: block;
+  height: 1px;
+  background-color: #e6e6e6;
+}
+
+/* ── MULTISELECT FILTER ──────────────────────────────────────── */
+
+.filterMultiSelectWrap {
+  margin: 3px var(--space-3) 3px var(--space-4);
+}
+
+.sortable .filterMultiSelectWrap {
+  margin-left: var(--space-2);
 }
 
 /* ── RESIZE HANDLE ───────────────────────────────────────────── */
@@ -277,18 +423,155 @@
   background: var(--color-gray-500) !important;
 }
 
-/* ── CHECKBOX COLUMN ─────────────────────────────────────────── */
+/* ── TOOLTIP SHORTCUT ────────────────────────────────────────── */
 
-.checkboxTh,
-.checkboxTd {
-  width: 44px;
-  padding: 14px !important; /* equal on all sides → 14+16+14 = 44px, always square */
+.tooltipShortcutRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.tooltipKbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-sm);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ── ROW NUMBER COLUMN ───────────────────────────────────────── */
+
+.rowNumTh {
+  width: 76px;
+  padding: 0 var(--space-1) !important;
   text-align: center;
   vertical-align: middle;
 }
 
+.rowNumTd {
+  width: 76px;
+  padding: 0 var(--space-1) !important;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-500);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.024em;
+}
+
+.rowNumHeader {
+  font-family: var(--font-sans);
+  font-size: var(--text-small-size);
+  font-weight: var(--text-small-weight);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-500);
+  white-space: nowrap;
+}
+
+.filterTh.rowNumTh {
+  padding: 7px var(--space-1) !important;
+}
+
+.clearFiltersBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-grey-600);
+  cursor: pointer;
+  transition: background-color 0.1s, color 0.1s;
+  line-height: 0;
+}
+
+.clearFiltersBtn:hover:not(:disabled) {
+  background-color: var(--color-grey-100);
+  color: var(--color-grey-900);
+}
+
+.clearFiltersBtn:disabled {
+  color: var(--color-grey-300);
+  cursor: not-allowed;
+}
+
+.table[data-density="compact"] .rowNumTh { height: 32px; }
+.table[data-density="comfortable"] .rowNumTh { height: 48px; }
+.rowNumTh { height: 40px; }
+
+/* ── CHECKBOX COLUMN ─────────────────────────────────────────── */
+
+.checkboxTd {
+  width: 44px;
+  padding: 14px !important;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.checkboxTh {
+  width: 44px;
+  padding: 0 !important;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 0;
+}
+
 .filterTh.checkboxTh {
   padding: 7px 14px !important;
+}
+
+.table[data-density="compact"] .checkboxTh { height: 32px; }
+.table[data-density="comfortable"] .checkboxTh { height: 48px; }
+.checkboxTh { height: 40px; }
+
+.densityStack {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.densityIcon {
+  width: 24px;
+  height: 20px;
+  display: block;
+}
+
+.densityToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-grey-500);
+  transition: background 0.12s;
+}
+
+.densityToggle:hover {
+  background: var(--color-grey-100);
 }
 
 .checkboxWrap {
@@ -372,10 +655,11 @@
   transition: background 0.1s;
   outline: none;
   position: relative;
+  font-size: 15px;
 }
 
 .tr:last-child .td {
-  border-bottom: none;
+  border-bottom: 1px solid var(--color-border);
 }
 
 
@@ -391,6 +675,10 @@
 
 .table[data-zebra] .tr .td {
   border-bottom: none;
+}
+
+.table[data-zebra] .tr:last-child .td {
+  border-bottom: 1px solid var(--color-border);
 }
 
 .table[data-zebra] .tr:nth-child(odd) .td {
@@ -410,11 +698,11 @@
 
 .table[data-density="compact"] .td {
   padding: var(--space-1-5) var(--space-4);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .table[data-density="compact"] .cellPrimary {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .table[data-density="compact"] .thInner {
@@ -464,7 +752,7 @@
 /* Primary text */
 .cellPrimary {
   display: block;
-  font-size: var(--text-small-size);
+  font-size: 15px;
   font-weight: 500;
   color: var(--color-text-primary);
   line-height: 1.4;
@@ -651,11 +939,15 @@
 }
 
 .tr:last-child .spacerTd {
-  border-bottom: none;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .table[data-zebra] .tr .spacerTd {
   border-bottom: none;
+}
+
+.table[data-zebra] .tr:last-child .spacerTd {
+  border-bottom: 1px solid var(--color-border);
 }
 
 .table[data-zebra] .tr:nth-child(odd) .spacerTd {
@@ -669,12 +961,9 @@
 /* ── EMPTY STATE ─────────────────────────────────────────────── */
 
 .emptyOverlay {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: var(--space-1);
   pointer-events: none;
 }

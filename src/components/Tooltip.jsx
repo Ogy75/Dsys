@@ -85,6 +85,7 @@ export function Tooltip({
   side = 'top',
   align = 'center',
   variant = 'dark',
+  block = false,
 }) {
   const [coords, setCoords] = useState(null)
   const [visible, setVisible] = useState(false)
@@ -159,7 +160,7 @@ export function Tooltip({
     <>
       <span
         ref={triggerRef}
-        className={styles.triggerWrap}
+        className={[styles.triggerWrap, block ? styles.triggerBlock : ''].filter(Boolean).join(' ')}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >

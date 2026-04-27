@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useLayoutEffect, useCallback, cloneElement } from 'react'
+import { createPortal } from 'react-dom'
 import styles from './Dropdown.module.css'
 import { Icon } from './Icon'
 
@@ -26,7 +27,7 @@ const MIN_LIST_HEIGHT = LIST_PADDING + MIN_VISIBLE_ITEMS * ITEM_HEIGHT + (MIN_VI
 const SEARCH_BAR_HEIGHT = 48
 const MULTISELECT_HEADER_HEIGHT = 36
 
-function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect) {
+function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect, portal) {
   const [above, setAbove] = useState(false)
   const [maxH, setMaxH] = useState(0)
   const [panelStyle, setPanelStyle] = useState({})
@@ -90,16 +91,34 @@ function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect) {
       minWidth: clampedMin,
       maxWidth: Math.max(clampedMax, clampedMin),
     }
-    if (useAlign === 'right') {
-      style.left = 'auto'
-      style.right = 0
+    if (portal) {
+      style.position = 'fixed'
+      if (useAbove) {
+        style.bottom = vh - rect.top + DROPDOWN_GAP
+        style.top = 'auto'
+      } else {
+        style.top = rect.bottom + DROPDOWN_GAP
+        style.bottom = 'auto'
+      }
+      if (useAlign === 'right') {
+        style.left = 'auto'
+        style.right = vw - rect.right
+      } else {
+        style.left = rect.left
+        style.right = 'auto'
+      }
     } else {
-      style.left = 0
-      style.right = 'auto'
+      if (useAlign === 'right') {
+        style.left = 'auto'
+        style.right = 0
+      } else {
+        style.left = 0
+        style.right = 'auto'
+      }
     }
 
     setPanelStyle(style)
-  }, [open, wrapRef, panelRef, align, searchable, multiselect])
+  }, [open, wrapRef, panelRef, align, searchable, multiselect, portal])
 
   useLayoutEffect(() => {
     if (!open) { setAbove(false); setMaxH(0); setPanelStyle({}); return }
@@ -397,6 +416,7 @@ export function Dropdown({
   open: controlledOpen,
   onOpenChange,
   className,
+  portal = false,
 }) {
   const isControlled = controlledOpen !== undefined
   const [internalOpen, setInternalOpen] = useState(false)
@@ -404,7 +424,7 @@ export function Dropdown({
 
   const rootRef = useRef(null)
   const panelRef = useRef(null)
-  const { above, maxH, panelStyle } = usePlacement(open, rootRef, panelRef, align, searchable, multiselect)
+  const { above, maxH, panelStyle } = usePlacement(open, rootRef, panelRef, align, searchable, multiselect, portal)
 
   function toggle() {
     if (disabled) return
@@ -420,7 +440,10 @@ export function Dropdown({
 
   useEffect(() => {
     function onDown(e) {
-      if (open && rootRef.current && !rootRef.current.contains(e.target)) close()
+      if (!open) return
+      if (rootRef.current?.contains(e.target)) return
+      if (panelRef.current?.contains(e.target)) return
+      close()
     }
     document.addEventListener('mousedown', onDown)
     return () => document.removeEventListener('mousedown', onDown)
@@ -453,23 +476,27 @@ export function Dropdown({
     'aria-haspopup': 'listbox',
   })
 
+  const panelEl = (
+    <DropdownPanel
+      open={open}
+      above={above}
+      panelRef={panelRef}
+      panelStyle={panelStyle}
+      items={items}
+      value={value}
+      onChange={onChange}
+      multiselect={multiselect}
+      searchable={searchable}
+      wrap={wrap}
+      maxH={maxH}
+      onClose={close}
+    />
+  )
+
   return (
     <div className={[styles.root, className].filter(Boolean).join(' ')} ref={rootRef}>
       {triggerEl}
-      <DropdownPanel
-        open={open}
-        above={above}
-        panelRef={panelRef}
-        panelStyle={panelStyle}
-        items={items}
-        value={value}
-        onChange={onChange}
-        multiselect={multiselect}
-        searchable={searchable}
-        wrap={wrap}
-        maxH={maxH}
-        onClose={close}
-      />
+      {portal ? (open ? createPortal(panelEl, document.body) : null) : panelEl}
     </div>
   )
 }

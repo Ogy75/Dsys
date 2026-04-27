@@ -67,7 +67,7 @@ export function Select({ label, required, placeholder = 'Select…', options = [
 }
 
 /* ── Multi Select ─────────────────────────────── */
-export function MultiSelect({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value = [], onChange, searchable = false, wrap = false }) {
+export function MultiSelect({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value = [], onChange, searchable = false, wrap = false, portal = false, className }) {
   const [open, setOpen] = useState(false)
 
   const triggerLabel = value.length === 0
@@ -77,7 +77,7 @@ export function MultiSelect({ label, required, placeholder = 'Select…', option
       : `${value.length} items selected`
 
   return (
-    <div className={styles.field}>
+    <div className={[styles.field, className].filter(Boolean).join(' ')}>
       {label && (
         <div className={styles.labelRow}>
           <span className={[styles.label, disabled ? styles.labelDisabled : ''].join(' ')}>{label}</span>
@@ -96,6 +96,7 @@ export function MultiSelect({ label, required, placeholder = 'Select…', option
           searchable={searchable}
           wrap={wrap}
           multiselect
+          portal={portal}
           trigger={
             <button
               type="button"

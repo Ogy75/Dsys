@@ -25,6 +25,7 @@ export function IconButton({
   onClick,
   disabled = false,
   'aria-label': ariaLabel,
+  ...rest
 }) {
   const { ripples, addRipple } = useRipple()
 
@@ -35,6 +36,7 @@ export function IconButton({
       onClick={e => { addRipple(e); onClick?.(e) }}
       disabled={disabled}
       aria-label={ariaLabel}
+      {...rest}
     >
       {ripples.map(r => (
         <span key={r.id} className={btnStyles.ripple} style={{ left: r.x, top: r.y }} />

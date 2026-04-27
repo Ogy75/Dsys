@@ -22,6 +22,7 @@
 .md {
   height: 28px;
   padding: 0 var(--space-3);
+  font-size: 13px;
 }
 
 .lg {

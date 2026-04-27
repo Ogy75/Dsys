@@ -3,6 +3,11 @@
   display: inline-block;
 }
 
+.triggerBlock {
+  display: block;
+  width: 100%;
+}
+
 /* ── Panel ──────────────────────────────────────── */
 .panel {
   position: fixed;

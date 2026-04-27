@@ -112,7 +112,7 @@
 
 .triggerText {
   flex: 1;
-  font-size: var(--text-small-size);
+  font-size: 15px;
   font-weight: var(--text-small-weight);
   line-height: var(--line-height-base);
   color: var(--color-grey-800);
@@ -156,7 +156,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  z-index: 100;
+  z-index: 9500;
   min-height: 80px;
   box-shadow: var(--shadow-xl);
   box-sizing: border-box;
@@ -245,7 +245,7 @@
   border: none;
   outline: none;
   font-family: var(--font-sans);
-  font-size: var(--text-small-size);
+  font-size: 15px;
   font-weight: var(--text-small-weight);
   line-height: var(--line-height-base);
   color: var(--color-grey-800);

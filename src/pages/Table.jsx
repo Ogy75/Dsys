@@ -106,8 +106,7 @@ const COLUMNS = [
     key: 'role',
     label: 'Role',
     sortable: true,
-    searchable: true,
-    editable: true,
+    filterSelect: true,
     width: 180,
     minWidth: 100,
   },
@@ -115,7 +114,7 @@ const COLUMNS = [
     key: 'department',
     label: 'Department',
     sortable: true,
-    searchable: true,
+    filterSelect: true,
     width: 140,
     minWidth: 100,
   },
@@ -123,6 +122,7 @@ const COLUMNS = [
     key: 'status',
     label: 'Status',
     sortable: true,
+    filterSelect: true,
     width: 120,
     minWidth: 90,
     render: (value, _row, density) => {
@@ -141,10 +141,46 @@ const COLUMNS = [
     minWidth: 100,
   },
   {
+    key: 'salary',
+    label: 'Salary',
+    sortable: true,
+    searchable: true,
+    filterFormula: true,
+    defaultFilterMode: 'calculate',
+    type: 'number',
+    width: 130,
+    minWidth: 100,
+    render: (value) => value != null
+      ? `$${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+      : '—',
+  },
+  {
+    key: 'tax',
+    label: 'Tax',
+    sortable: true,
+    type: 'number',
+    width: 110,
+    minWidth: 80,
+    render: (value) => value != null
+      ? `$${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+      : '—',
+  },
+  {
+    key: 'bonus',
+    label: 'Bonus',
+    sortable: true,
+    type: 'number',
+    width: 110,
+    minWidth: 80,
+    render: (value) => value != null
+      ? `$${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+      : '—',
+  },
+  {
     key: 'tasks',
     label: 'Tasks',
     sortable: true,
-    type: 'number',       // auto right-aligned + tabular numerals
+    type: 'number',
     width: 80,
     minWidth: 60,
   },
@@ -152,8 +188,14 @@ const COLUMNS = [
     key: 'performance',
     label: 'Performance',
     sortable: true,
+    filterSelect: true,
     width: 130,
     minWidth: 100,
+    filterOptions: [
+      { value: 'low',    label: 'Low',    match: v => v <= 2 },
+      { value: 'medium', label: 'Medium', match: v => v === 3 },
+      { value: 'high',   label: 'High',   match: v => v >= 4 },
+    ],
     render: (value) => <SegmentIndicator value={value} total={5} />,
   },
   {
@@ -173,20 +215,60 @@ const COLUMNS = [
   },
 ]
 
-const INITIAL_DATA = [
-  { name: 'Alice Johnson',  email: 'alice@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=alice@company.com',    role: 'Product Manager',     department: 'Product',     status: 'Active',   location: 'New York',  tasks: 12, performance: 5, trend: [4,6,5,8,7,9,8,11,10,13,12,14], notes: 'Leading Q2 roadmap planning. Focused on user research and feature prioritisation across mobile and web.' },
-  { name: 'Ben Carter',     email: 'ben@company.com',      avatarUrl: 'https://i.pravatar.cc/80?u=ben@company.com',      role: 'Senior Engineer',     department: 'Engineering', status: 'Active',   location: 'London',    tasks: 8,  performance: 4, trend: [10,9,11,8,10,7,9,8,10,9,8,7],  notes: 'Working on the new authentication service.' },
-  { name: 'Clara Mendes',   email: 'clara@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=clara@company.com',    role: 'UX Designer',         department: 'Design',      status: 'On Leave', location: 'São Paulo', tasks: 3,  performance: 3, trend: [8,7,9,6,8,5,7,4,6,3,5,2],     notes: 'On parental leave until end of Q3.' },
-  { name: 'Daniel Park',    email: 'daniel@company.com',   avatarUrl: 'https://i.pravatar.cc/80?u=daniel@company.com',   role: 'Data Analyst',        department: 'Analytics',   status: 'Active',   location: 'Seoul',     tasks: 6,  performance: 3, trend: [5,6,4,7,5,8,6,9,7,10,8,11],    notes: '' },
-  { name: 'Eva Schmidt',    email: 'eva@company.com',      avatarUrl: 'https://i.pravatar.cc/80?u=eva@company.com',      role: 'Engineering Manager', department: 'Engineering', status: 'Active',   location: 'Berlin',    tasks: 19, performance: 5, trend: [6,8,7,10,9,12,11,14,13,16,15,18], notes: 'Hiring two senior engineers. Interview process underway.' },
-  { name: 'Frank Liu',      email: 'frank@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=frank@company.com',    role: 'Backend Engineer',    department: 'Engineering', status: 'Pending',  location: 'Singapore', tasks: 2,  performance: 1, trend: [12,10,13,9,11,7,9,5,7,4,6,3],  notes: 'Onboarding in progress. Start date confirmed.' },
-  { name: 'Grace Kim',      email: 'grace@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=grace@company.com',    role: 'Marketing Lead',      department: 'Marketing',   status: 'Active',   location: 'Tokyo',     tasks: 9,  performance: 4, trend: [3,5,4,7,6,8,7,10,9,11,10,13],  notes: 'Running the Q3 product launch campaign.' },
-  { name: 'Hugo Silva',     email: 'hugo@company.com',     avatarUrl: 'https://i.pravatar.cc/80?u=hugo@company.com',     role: 'DevOps Engineer',     department: 'Engineering', status: 'Inactive', location: 'Lisbon',    tasks: 0,  performance: 2, trend: [9,8,10,7,9,6,8,5,7,4,6,3],     notes: 'Contract ended. Potential rehire in Q4.' },
-  { name: 'Isabelle Roy',   email: 'isabelle@company.com', avatarUrl: 'https://i.pravatar.cc/80?u=isabelle@company.com', role: 'Customer Success',    department: 'Support',     status: 'Active',   location: 'Paris',     tasks: 14, performance: 4, trend: [5,4,6,5,8,7,9,8,11,10,12,14],  notes: '' },
-  { name: 'James Wang',     email: 'james@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=james@company.com',    role: 'Frontend Engineer',   department: 'Engineering', status: 'Active',   location: 'Toronto',   tasks: 11, performance: 5, trend: [7,9,8,11,10,13,12,14,13,15,14,16], notes: 'Building the new component library.' },
-  { name: 'Kira Novak',     email: 'kira@company.com',     avatarUrl: 'https://i.pravatar.cc/80?u=kira@company.com',     role: 'Product Designer',    department: 'Design',      status: 'Active',   location: 'Prague',    tasks: 7,  performance: 3, trend: [6,8,7,6,8,7,9,8,7,9,8,7],      notes: 'Redesigning the onboarding flow. Collaborating with Alice on research synthesis.' },
-  { name: 'Luca Ferretti',  email: 'luca@company.com',     avatarUrl: 'https://i.pravatar.cc/80?u=luca@company.com',     role: 'Sales Engineer',      department: 'Sales',       status: 'Pending',  location: 'Milan',     tasks: 4,  performance: 2, trend: [11,9,12,8,10,6,9,5,8,4,7,3],    notes: 'Pending background check completion.' },
+const SEED_ROWS = [
+  { name: 'Alice Johnson',  email: 'alice@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=alice@company.com',    role: 'Product Manager',     department: 'Product',     status: 'Active',   location: 'New York',  salary: 95420.50,  tax: 21234.50,  bonus: 9500.00,  tasks: 12, performance: 5, trend: [4,6,5,8,7,9,8,11,10,13,12,14], notes: 'Leading Q2 roadmap planning. Focused on user research and feature prioritisation across mobile and web.' },
+  { name: 'Ben Carter',     email: 'ben@company.com',      avatarUrl: 'https://i.pravatar.cc/80?u=ben@company.com',      role: 'Senior Engineer',     department: 'Engineering', status: 'Active',   location: 'London',    salary: 120750.00, tax: 28980.00,  bonus: 15000.00, tasks: 8,  performance: 4, trend: [10,9,11,8,10,7,9,8,10,9,8,7],  notes: 'Working on the new authentication service.' },
+  { name: 'Clara Mendes',   email: 'clara@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=clara@company.com',    role: 'UX Designer',         department: 'Design',      status: 'On Leave', location: 'São Paulo', salary: 84320.75,  tax: 18450.25,  bonus: 7500.00,  tasks: 3,  performance: 3, trend: [8,7,9,6,8,5,7,4,6,3,5,2],     notes: 'On parental leave until end of Q3.' },
+  { name: 'Daniel Park',    email: 'daniel@company.com',   avatarUrl: 'https://i.pravatar.cc/80?u=daniel@company.com',   role: 'Data Analyst',        department: 'Analytics',   status: 'Active',   location: 'Seoul',     salary: 76500.00,  tax: 16320.00,  bonus: 5000.00,  tasks: 6,  performance: 3, trend: [5,6,4,7,5,8,6,9,7,10,8,11],    notes: '' },
+  { name: 'Eva Schmidt',    email: 'eva@company.com',      avatarUrl: 'https://i.pravatar.cc/80?u=eva@company.com',      role: 'Engineering Manager', department: 'Engineering', status: 'Active',   location: 'Berlin',    salary: 148200.25, tax: 37050.25,  bonus: 25000.00, tasks: 19, performance: 5, trend: [6,8,7,10,9,12,11,14,13,16,15,18], notes: 'Hiring two senior engineers. Interview process underway.' },
+  { name: 'Frank Liu',      email: 'frank@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=frank@company.com',    role: 'Backend Engineer',    department: 'Engineering', status: 'Pending',  location: 'Singapore', salary: 112000.00, tax: 26880.00,  bonus: 12000.00, tasks: 2,  performance: 1, trend: [12,10,13,9,11,7,9,5,7,4,6,3],  notes: 'Onboarding in progress. Start date confirmed.' },
+  { name: 'Grace Kim',      email: 'grace@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=grace@company.com',    role: 'Marketing Lead',      department: 'Marketing',   status: 'Active',   location: 'Tokyo',     salary: 91350.80,  tax: 20090.80,  bonus: 8500.00,  tasks: 9,  performance: 4, trend: [3,5,4,7,6,8,7,10,9,11,10,13],  notes: 'Running the Q3 product launch campaign.' },
+  { name: 'Hugo Silva',     email: 'hugo@company.com',     avatarUrl: 'https://i.pravatar.cc/80?u=hugo@company.com',     role: 'DevOps Engineer',     department: 'Engineering', status: 'Inactive', location: 'Lisbon',    salary: 106750.00, tax: 24352.50,  bonus: 10000.00, tasks: 0,  performance: 2, trend: [9,8,10,7,9,6,8,5,7,4,6,3],     notes: 'Contract ended. Potential rehire in Q4.' },
+  { name: 'Isabelle Roy',   email: 'isabelle@company.com', avatarUrl: 'https://i.pravatar.cc/80?u=isabelle@company.com', role: 'Customer Success',    department: 'Support',     status: 'Active',   location: 'Paris',     salary: 71200.40,  tax: 14952.40,  bonus: 4500.00,  tasks: 14, performance: 4, trend: [5,4,6,5,8,7,9,8,11,10,12,14],  notes: '' },
+  { name: 'James Wang',     email: 'james@company.com',    avatarUrl: 'https://i.pravatar.cc/80?u=james@company.com',    role: 'Frontend Engineer',   department: 'Engineering', status: 'Active',   location: 'Toronto',   salary: 118500.00, tax: 28440.00,  bonus: 14000.00, tasks: 11, performance: 5, trend: [7,9,8,11,10,13,12,14,13,15,14,16], notes: 'Building the new component library.' },
+  { name: 'Kira Novak',     email: 'kira@company.com',     avatarUrl: 'https://i.pravatar.cc/80?u=kira@company.com',     role: 'Product Designer',    department: 'Design',      status: 'Active',   location: 'Prague',    salary: 87650.20,  tax: 19083.20,  bonus: 8000.00,  tasks: 7,  performance: 3, trend: [6,8,7,6,8,7,9,8,7,9,8,7],      notes: 'Redesigning the onboarding flow. Collaborating with Alice on research synthesis.' },
+  { name: 'Luca Ferretti',  email: 'luca@company.com',     avatarUrl: 'https://i.pravatar.cc/80?u=luca@company.com',     role: 'Sales Engineer',      department: 'Sales',       status: 'Pending',  location: 'Milan',     salary: 98566.00,  tax: 22167.00,  bonus: 9800.00,  tasks: 4,  performance: 2, trend: [11,9,12,8,10,6,9,5,8,4,7,3],    notes: 'Pending background check completion.' },
 ]
+
+const FIRST_NAMES = ['Mia','Noah','Olivia','Liam','Ava','Ethan','Sophia','Mason','Amelia','Logan','Charlotte','Lucas','Harper','Jack','Evelyn','Henry','Lily','Owen','Zoe','Leo','Nora','Finn','Ruby','Felix','Ivy','Milo','Iris','Hazel','Theo','Aria','Jasper','Chloe','Eli','Maya','Axel','Luna','Reid','Sadie','Kian','Freya','June','Rex','Nina','Jude','Vera','Enzo','Tess','Cass','Otis','Rose','Ronan','Willa','Bram','Piper','Dante','Elle','Cyrus','Remy','Wren','Kai','Odin','Eden','Soren','Clio','Arlo','Nova','Caleb','Anya','Quinn','Wade','Cora','Rhys','Stella','Emil','Pia','Magnus','Ines','Tobias','Livia','Dario','Saskia','Leon','Maja','Niko','Enya','Rafa','Esme','Bjorn','Lena','Cyril']
+const LAST_NAMES = ['Adler','Bauer','Chen','Dubois','Ellis','Farkas','Garcia','Huang','Ibrahim','Jensen','Kowalski','Lindqvist','Martinez','Nakamura','Okafor','Petrov','Quinn','Rossi','Santos','Takeda','Uchida','Volkov','Weber','Xu','Yamada','Zahir','Andersen','Bianchi','Clarke','Dvorak','Ericsson','Fischer','Goncalves','Hofmann','Iglesias','Jansen','Khan','Larsen','Moretti','Novak']
+const GEN_ROLES = ['Product Manager','Senior Engineer','UX Designer','Data Analyst','Engineering Manager','Backend Engineer','Marketing Lead','DevOps Engineer','Customer Success','Frontend Engineer','Product Designer','Sales Engineer']
+const ROLE_TO_DEPT = {
+  'Product Manager':'Product','Senior Engineer':'Engineering','UX Designer':'Design','Data Analyst':'Analytics',
+  'Engineering Manager':'Engineering','Backend Engineer':'Engineering','Marketing Lead':'Marketing',
+  'DevOps Engineer':'Engineering','Customer Success':'Support','Frontend Engineer':'Engineering',
+  'Product Designer':'Design','Sales Engineer':'Sales',
+}
+const STATUSES = ['Active','Active','Active','Active','Pending','On Leave','Inactive']
+const GEN_LOCATIONS = Object.keys(LOCATION_ICONS)
+const NOTE_POOL = [
+  '', '', 'Shipping Q3 deliverables.', 'Mentoring a new hire.',
+  'Running customer interviews this week.', 'Cleaning up technical debt in the auth module.',
+  'Leading a cross-team initiative.', 'Finalising the quarterly roadmap.',
+  'Preparing the launch retrospective.', 'Rotating through on-call duty.',
+]
+
+function generatedRow(i) {
+  const fn = FIRST_NAMES[i % FIRST_NAMES.length]
+  const ln = LAST_NAMES[(i * 7 + 3) % LAST_NAMES.length]
+  const name = `${fn} ${ln}`
+  const email = `${fn.toLowerCase()}.${ln.toLowerCase()}@company.com`
+  const role = GEN_ROLES[i % GEN_ROLES.length]
+  const department = ROLE_TO_DEPT[role]
+  const status = STATUSES[i % STATUSES.length]
+  const location = GEN_LOCATIONS[i % GEN_LOCATIONS.length]
+  const salary = Math.round((62000 + ((i * 2777) % 95000)) * 100) / 100
+  const tax = Math.round(salary * (0.18 + (i % 7) * 0.01) * 100) / 100
+  // bonuses scale linearly from 0 up to above the highest salary (~170k)
+  const bonus = Math.round((i / 137) * 170000 * 100) / 100
+  const tasks = (i * 3) % 22
+  const performance = ((i * 2) % 5) + 1
+  const trend = Array.from({ length: 12 }, (_, t) => ((i + t * 3) % 14) + 2)
+  const notes = NOTE_POOL[i % NOTE_POOL.length]
+  return { name, email, avatarUrl: `https://i.pravatar.cc/80?u=${email}`, role, department, status, location, salary, tax, bonus, tasks, performance, trend, notes }
+}
+
+const INITIAL_DATA = [...SEED_ROWS, ...Array.from({ length: 150 - 12 }, (_, i) => generatedRow(i))]
 
 /* ── Demo page ──────────────────────────────────────────────── */
 
@@ -242,15 +324,23 @@ const TABLE_PROPS = [
   { name: 'maxHeight',         type: 'number',                 default: 'undefined',   description: 'Max height (px) of the body scroll area. Header always stays visible above.' },
   { name: 'onSelectionChange', type: '(rows: object[]) => void', default: 'undefined', description: 'Called with the current selected rows array.' },
   { name: 'onRowChange',       type: '(index, key, value) => void', default: 'undefined', description: 'Called when an editable cell is saved.' },
-  { name: 'pageSize',          type: 'number',                      default: '10',        description: 'Rows per page. Footer always shows item count and pagination.' },
+  { name: 'pageSize',          type: 'number',                      default: '30',        description: 'Rows per page. Footer always shows item count and pagination.' },
   { name: 'zebra',            type: 'boolean',                     default: 'false',     description: 'Alternates odd row backgrounds with grey-50 for easier row scanning.' },
+  { name: 'resizable',        type: 'boolean',                     default: 'true',      description: 'Enables the column resize handle. Set false for a locked layout.' },
+  { name: 'reorderable',      type: 'boolean',                     default: 'true',      description: 'Enables drag-to-reorder of columns. Set false to lock column order.' },
+  { name: 'stretch',          type: 'boolean',                     default: 'false',     description: 'Distributes columns evenly across the full table width instead of using fixed pixel widths.' },
+  { name: 'rowNumbers',       type: 'boolean',                     default: 'false',     description: 'Prepends a sticky "Col No" column showing the row position (1-based, across pages).' },
 ]
 
 const COLDEF_PROPS = [
   { name: 'key',       type: 'string',                    default: '—',         description: 'Maps to the property name in your data objects.' },
   { name: 'label',     type: 'string',                    default: '—',         description: 'Column header text.' },
   { name: 'sortable',  type: 'boolean',                   default: 'false',     description: 'Enables click-to-sort. Icon appears on header hover; persists when active.' },
-  { name: 'searchable',type: 'boolean',                   default: 'false',     description: 'Shows a real-time filter input beneath the header label.' },
+  { name: 'searchable',     type: 'boolean', default: 'false', description: 'Shows a real-time find (substring match) input beneath the header label.' },
+  { name: 'filterFormula',  type: 'boolean', default: 'false', description: 'Shows a Find / Calculate filter. Calculate mode accepts expressions: > 100, <= 5, = "active", != "x", between 1 and 10, contains text, starts text, ends text, empty, !empty.' },
+  { name: 'defaultFilterMode', type: "'find'|'calculate'", default: "'find'", description: 'Initial mode for filterFormula columns.' },
+  { name: 'filterSelect',   type: 'boolean', default: 'false', description: 'Shows a multiselect dropdown filter. Options are the column\'s distinct values, or use filterOptions to define custom buckets.' },
+  { name: 'filterOptions',  type: '{value,label,match}[]', default: 'undefined', description: 'Custom filter buckets for filterSelect. match(rawValue, row) => boolean decides which rows pass each selected option.' },
   { name: 'editable',  type: 'boolean',                   default: 'false',     description: 'Click or Enter to edit the cell value in a modal.' },
   { name: 'wrap',      type: 'boolean',                   default: 'false',     description: 'false = single line with ellipsis. true = multiline.' },
   { name: 'type',      type: "'text'|'number'",           default: "'text'",    description: "number auto right-aligns and uses tabular numerals." },
@@ -265,10 +355,57 @@ const COLDEF_PROPS = [
   { name: 'sticky',   type: 'boolean',                   default: 'false',     description: 'Freezes the column to the left edge while the table scrolls horizontally.' },
 ]
 
+const SIMPLE_COLUMNS = [
+  { key: 'name',       label: 'Name' },
+  { key: 'role',       label: 'Role' },
+  { key: 'department', label: 'Department' },
+  { key: 'location',   label: 'Location' },
+]
+
+function SimpleTableDemo() {
+  const [density, setDensity] = useState('default')
+  return (
+    <>
+      <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
+        {['compact', 'default', 'comfortable'].map(d => (
+          <button
+            key={d}
+            onClick={() => setDensity(d)}
+            style={{
+              padding: '4px 12px',
+              borderRadius: 'var(--radius-full)',
+              border: '1px solid',
+              borderColor: density === d ? 'var(--color-grey-700)' : 'var(--color-border)',
+              background: density === d ? 'var(--color-grey-700)' : 'transparent',
+              color: density === d ? '#fff' : 'var(--color-text-secondary)',
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: 'pointer',
+              fontFamily: 'var(--font-sans)',
+              textTransform: 'capitalize',
+            }}
+          >
+            {d}
+          </button>
+        ))}
+      </div>
+      <DemoCanvas style={{ padding: 'var(--space-4)', display: 'block', background: 'var(--color-bg-page)' }}>
+        <Table
+          columns={SIMPLE_COLUMNS}
+          data={INITIAL_DATA.slice(0, 6)}
+          density={density}
+          resizable={false}
+          reorderable={false}
+          stretch
+        />
+      </DemoCanvas>
+    </>
+  )
+}
+
 export default function TablePage() {
   const [selection, setSelection] = useState([])
   const [lastChange, setLastChange] = useState(null)
-  const [density, setDensity] = useState('default')
 
   return (
     <div>
@@ -282,39 +419,13 @@ export default function TablePage() {
         title="Full-featured table"
         description="Headers use uppercase labels for visual hierarchy. Sort icon appears on hover, persists when active. Editable columns (Role, Location, Notes) show a pencil on hover. Name column shows email as secondary text."
       >
-        {/* Density toggle */}
-        <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
-          {['compact', 'default', 'comfortable'].map(d => (
-            <button
-              key={d}
-              onClick={() => setDensity(d)}
-              style={{
-                padding: '4px 12px',
-                borderRadius: 'var(--radius-full)',
-                border: '1px solid',
-                borderColor: density === d ? 'var(--color-brand)' : 'var(--color-border)',
-                background: density === d ? 'var(--color-brand)' : 'transparent',
-                color: density === d ? '#fff' : 'var(--color-text-secondary)',
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontFamily: 'var(--font-sans)',
-                textTransform: 'capitalize',
-              }}
-            >
-              {d}
-            </button>
-          ))}
-        </div>
-
         <DemoCanvas style={{ padding: 'var(--space-4)', display: 'block', background: 'var(--color-bg-page)' }}>
           <Table
             columns={COLUMNS}
             data={INITIAL_DATA}
             selectable
-            density={density}
+            rowNumbers
             maxHeight={440}
-            pageSize={8}
             onSelectionChange={setSelection}
             onRowChange={(row, key, value) => setLastChange({ row, key, value })}
           />
@@ -339,15 +450,39 @@ export default function TablePage() {
         </div>
       </Section>
 
+      <Section
+        title="Simple table"
+        description="The most basic table — no sorting, filtering, column resizing, drag-to-reorder, or selection. Only the row density (size) is configurable."
+      >
+        <SimpleTableDemo />
+        <CodeBlock
+          code={`const columns = [
+  { key: 'name',       label: 'Name' },
+  { key: 'role',       label: 'Role' },
+  { key: 'department', label: 'Department' },
+  { key: 'location',   label: 'Location' },
+]
+
+<Table
+  columns={columns}
+  data={data}
+  density="default"       // 'compact' | 'default' | 'comfortable'
+  resizable={false}
+  reorderable={false}
+  stretch
+/>`}
+          language="jsx"
+        />
+      </Section>
+
       <Section title="Zebra stripes" description="Alternates odd row backgrounds with grey-50 to improve row scanning in dense tables.">
         <DemoCanvas style={{ padding: 'var(--space-4)', display: 'block', background: 'var(--color-bg-page)' }}>
           <Table
             columns={COLUMNS.slice(0, 5)}
             data={INITIAL_DATA}
-            selectable
+            rowNumbers
             zebra
             maxHeight={440}
-            pageSize={8}
           />
         </DemoCanvas>
         <CodeBlock code={`<Table columns={columns} data={data} selectable zebra />`} language="jsx" />
