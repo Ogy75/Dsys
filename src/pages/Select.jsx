@@ -46,6 +46,7 @@ export function Select({ label, required, placeholder = 'Select…', options = [
           disabled={disabled}
           searchable={searchable}
           wrap={wrap}
+          size={size}
           trigger={
             <button
               type="button"
@@ -97,6 +98,7 @@ export function MultiSelect({ label, required, placeholder = 'Select…', option
           wrap={wrap}
           multiselect
           portal={portal}
+          size={size}
           trigger={
             <button
               type="button"

@@ -11,8 +11,10 @@ import { Icon } from '../components/Icon'
 const ICON_NAMES = ['person', 'favorite', 'star', 'home', 'mail', 'bookmark', 'settings', 'group', 'account_circle', 'grid_view']
 
 const ICONS_24 = ICON_NAMES.map(name => <Icon key={name} name={name} size={24} />)
+const ICONS_20 = ICON_NAMES.map(name => <Icon key={name} name={name} size={20} />)
 
 function icon24(i) { return ICONS_24[i % ICONS_24.length] }
+function icon20(i) { return ICONS_20[i % ICONS_20.length] }
 
 /* ── Sample data ──────────────────────────────────── */
 const BADGE_VARIANTS = ['purple', 'red', 'green', 'yellow', 'blue', 'cyan', 'lime']
@@ -23,6 +25,12 @@ const LABELS = [
   'Data Science', 'Infrastructure', 'Security', 'Analytics', 'Research',
   'Enterprise Resource Planning and Supply Chain Optimisation',
 ]
+
+const iconItemsMd = LABELS.map((label, i) => ({
+  value: label.toLowerCase().replace(/\s+/g, '-'),
+  label,
+  icon: icon20(i),
+}))
 
 const plainItems = LABELS.map((label, i) => ({
   value: label.toLowerCase().replace(/\s+/g, '-'),
@@ -124,6 +132,14 @@ const scrollCode = `<Dropdown
   maxHeight={200}
 />`
 
+const sizeCode = `<Dropdown
+  trigger={<Button variant="secondary">Open menu</Button>}
+  items={items}
+  value={value}
+  onChange={setValue}
+  size="md"
+/>`
+
 const wrapCode = `<Dropdown
   trigger={<Button variant="secondary">Open menu</Button>}
   items={items}
@@ -141,6 +157,10 @@ const dropdownProps = [
   { name: 'searchable', type: 'boolean', default: 'false', description: 'Shows a find input at the top. Grey bg default, white bg when active/typing.' },
   { name: 'wrap', type: 'boolean', default: 'false', description: 'Allows item labels to wrap to multiple lines instead of truncating. Line-height is set to 1 for a tight appearance.' },
   { name: 'maxHeight', type: 'number', default: '280', description: 'Max height in px of the scrollable list. Panel chrome (search, header) stays fixed.' },
+  { name: 'size', type: '"md" | "lg"', default: '"lg"', description: 'Item density. lg uses 16px label + 24px icon slot (default). md uses 14px label + 20px icon slot for compact menus.' },
+  { name: 'minWidth', type: 'number', default: '320', description: 'Minimum panel width in px. Pass 0 to size the panel to its content (useful for short menus like an avatar dropdown).' },
+  { name: 'align', type: '"left" | "right"', default: '"left"', description: 'Horizontal alignment relative to the trigger. Flips automatically if there is not enough space on the chosen side.' },
+  { name: 'portal', type: 'boolean', default: 'false', description: 'Render the panel via React portal into document.body. Use when the trigger is inside a clipped/overflow:hidden container.' },
   { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents the panel from opening.' },
   { name: 'open', type: 'boolean', default: '—', description: 'Controlled open state. Pair with onOpenChange for fully controlled usage.' },
   { name: 'onOpenChange', type: '(open: boolean) => void', default: '—', description: 'Called when open state changes (controlled mode).' },
@@ -179,6 +199,12 @@ export default function DropdownPage() {
   const [scroll2, setScroll2] = useState([])
   const [srch1, setSrch1] = useState('')
   const [srch2, setSrch2] = useState([])
+  const [size1, setSize1] = useState('')
+  const [size2, setSize2] = useState('')
+  const [sizeMdPlain, setSizeMdPlain] = useState('')
+  const [sizeMdIcon, setSizeMdIcon] = useState('')
+  const [sizeMdMulti, setSizeMdMulti] = useState([])
+  const [sizeMdSearch, setSizeMdSearch] = useState('')
 
   return (
     <div>
@@ -249,6 +275,47 @@ export default function DropdownPage() {
           <div>
             <DemoLabel>Multi</DemoLabel>
             <Dropdown trigger={<Button variant="secondary">Open menu</Button>} items={iconBadgeItems} value={srch2} onChange={setSrch2} searchable multiselect />
+          </div>
+        </DemoCanvas>
+      </Section>
+
+      <Section
+        title="Size"
+        description="Use size=&quot;md&quot; for a compact menu — 14px label and 20px icon slot. Default size=&quot;lg&quot; uses 16px label + 24px icon slot. Pass smaller icons (e.g. size={20}) on the items when using md."
+      >
+        <DemoCanvas style={{ flexWrap: 'wrap', alignItems: 'flex-start', gap: 24 }}>
+          <div>
+            <DemoLabel>Lg (default)</DemoLabel>
+            <Dropdown trigger={<Button variant="secondary">Open menu</Button>} items={iconItems} value={size1} onChange={setSize1} />
+          </div>
+          <div>
+            <DemoLabel>Md — with icon</DemoLabel>
+            <Dropdown trigger={<Button variant="secondary" size="sm">Open menu</Button>} items={iconItemsMd} value={size2} onChange={setSize2} size="md" />
+          </div>
+        </DemoCanvas>
+        <CodeBlock code={sizeCode} language="jsx" />
+      </Section>
+
+      <Section
+        title="Md — full set"
+        description="The md size works with every variant: plain, icons, multiselect, sections, search."
+      >
+        <DemoCanvas style={{ flexWrap: 'wrap', alignItems: 'flex-start', gap: 24 }}>
+          <div>
+            <DemoLabel>Plain</DemoLabel>
+            <Dropdown trigger={<Button variant="secondary" size="sm">Open menu</Button>} items={plainItems} value={sizeMdPlain} onChange={setSizeMdPlain} size="md" />
+          </div>
+          <div>
+            <DemoLabel>With icon</DemoLabel>
+            <Dropdown trigger={<Button variant="secondary" size="sm">Open menu</Button>} items={iconItemsMd} value={sizeMdIcon} onChange={setSizeMdIcon} size="md" />
+          </div>
+          <div>
+            <DemoLabel>Multiselect</DemoLabel>
+            <Dropdown trigger={<Button variant="secondary" size="sm">Open menu</Button>} items={iconItemsMd} value={sizeMdMulti} onChange={setSizeMdMulti} size="md" multiselect />
+          </div>
+          <div>
+            <DemoLabel>Searchable</DemoLabel>
+            <Dropdown trigger={<Button variant="secondary" size="sm">Open menu</Button>} items={iconItemsMd} value={sizeMdSearch} onChange={setSizeMdSearch} size="md" searchable />
           </div>
         </DemoCanvas>
       </Section>

@@ -202,10 +202,14 @@ pre, code {
   font-family: var(--font-mono);
 }
 
-/* Scrollbar */
+/* Scrollbar — thinnest possible everywhere */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) transparent;
+}
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 2px;
+  height: 2px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

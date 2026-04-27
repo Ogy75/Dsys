@@ -452,14 +452,14 @@
 /* ── ROW NUMBER COLUMN ───────────────────────────────────────── */
 
 .rowNumTh {
-  width: 76px;
+  width: 40px;
   padding: 0 var(--space-1) !important;
   text-align: center;
   vertical-align: middle;
 }
 
 .rowNumTd {
-  width: 76px;
+  width: 40px;
   padding: 0 var(--space-1) !important;
   text-align: center;
   vertical-align: middle;

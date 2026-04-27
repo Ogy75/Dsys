@@ -153,6 +153,7 @@ function DropdownPanel({
   maxH,
   onClose,
   wrap,
+  size = 'lg',
 }) {
   const [query, setQuery] = useState('')
   const [searchActive, setSearchActive] = useState(false)
@@ -268,7 +269,7 @@ function DropdownPanel({
   return (
     <div
       ref={panelRef}
-      className={[styles.panel, above ? styles.panelAbove : ''].filter(Boolean).join(' ')}
+      className={[styles.panel, above ? styles.panelAbove : '', size === 'md' ? styles.panelMd : ''].filter(Boolean).join(' ')}
       style={{
         ...panelStyle,
         ...(lockedWidth != null ? { width: lockedWidth, minWidth: lockedWidth, maxWidth: lockedWidth } : {}),
@@ -419,6 +420,7 @@ export function Dropdown({
   className,
   portal = false,
   minWidth,
+  size = 'lg',
 }) {
   const isControlled = controlledOpen !== undefined
   const [internalOpen, setInternalOpen] = useState(false)
@@ -492,6 +494,7 @@ export function Dropdown({
       wrap={wrap}
       maxH={maxH}
       onClose={close}
+      size={size}
     />
   )
 

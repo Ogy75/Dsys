@@ -9,6 +9,7 @@ import { Icon } from './Icon'
 import { Tooltip } from './Tooltip'
 import { Skeleton } from './Skeleton'
 import { MultiSelect } from '../pages/Select'
+import { Dropdown } from './Dropdown'
 import styles from './Table.module.css'
 
 function SortAscIcon() {
@@ -106,63 +107,6 @@ const VIEW_MENU_ITEMS = [
   { value: 'comfortable', label: 'Comfortable view', Icon: DensityLargeIcon },
   { value: 'fullscreen',  label: 'Full Screen',      Icon: FullscreenEnterIcon },
 ]
-
-function ViewMenu({ open, pos, activeValue, onSelect, onClose }) {
-  const panelRef = useRef(null)
-
-  useEffect(() => {
-    if (!open) return
-    function handleClick(e) {
-      if (panelRef.current?.contains(e.target)) return
-      onClose()
-    }
-    function handleKey(e) {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('mousedown', handleClick)
-    document.addEventListener('keydown', handleKey)
-    return () => {
-      document.removeEventListener('mousedown', handleClick)
-      document.removeEventListener('keydown', handleKey)
-    }
-  }, [open, onClose])
-
-  if (!open) return null
-
-  return createPortal(
-    <div
-      ref={panelRef}
-      className={styles.viewMenuPanel}
-      style={{ top: pos.top, left: pos.left }}
-    >
-      {VIEW_MENU_ITEMS.map(item => {
-        const isActive = activeValue === item.value
-        return (
-          <div key={item.value} style={{ display: 'contents' }}>
-            {item.value === 'fullscreen' && (
-              <div className={styles.viewMenuDivider} aria-hidden="true"><span /></div>
-            )}
-            <button
-              type="button"
-              className={[
-                styles.viewMenuItem,
-                isActive ? styles.viewMenuItemActive : '',
-              ].filter(Boolean).join(' ')}
-              onMouseDown={e => { e.preventDefault(); onSelect(item.value) }}
-            >
-              <span className={[styles.viewMenuItemIcon, isActive ? styles.viewMenuItemIconActive : ''].filter(Boolean).join(' ')}>
-                <item.Icon />
-              </span>
-              {item.label}
-            </button>
-          </div>
-        )
-      })}
-    </div>,
-    document.body
-  )
-}
-
 
 function TableCheckbox({ checked, indeterminate, onChange, ariaLabel }) {
   return (
@@ -462,17 +406,6 @@ export function Table({
     onDensityChange?.(next)
   }
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [viewMenuOpen, setViewMenuOpen] = useState(false)
-  const [viewMenuPos, setViewMenuPos] = useState({ top: 0, left: 0 })
-  const viewMenuAnchorRef = useRef(null)
-  function openViewMenu() {
-    const anchor = viewMenuAnchorRef.current
-    if (anchor) {
-      const r = anchor.getBoundingClientRect()
-      setViewMenuPos({ top: r.bottom + 4, left: r.left })
-    }
-    setViewMenuOpen(true)
-  }
   useEffect(() => {
     function onKey(e) {
       const mod = e.metaKey || e.ctrlKey
@@ -520,7 +453,7 @@ export function Table({
     })
   }, [columns])
   const [colWidths, setColWidths] = useState(() => ({
-    __rowNum__: 76,
+    __rowNum__: 40,
     ...Object.fromEntries(columns.map(c => {
       // overhead: padding (16+22) + drag handle (16) + sort icon+gap (22 if sortable)
       const overhead = 54 + 16 + (c.sortable ? 22 : 0)
@@ -570,7 +503,7 @@ export function Table({
   }
 
   const checkboxColWidth = 44
-  const rowNumColWidth = colWidths['__rowNum__'] ?? 76
+  const rowNumColWidth = colWidths['__rowNum__'] ?? 40
 
   const orderedColumns = useMemo(
     () => columnOrder.map(key => columns.find(c => c.key === key)).filter(Boolean),
@@ -780,7 +713,7 @@ export function Table({
     function onMove(mv) {
       if (!resizingRef.current) return
       const { colKey: k, startX: sx, startWidth: sw } = resizingRef.current
-      const minW = k === '__rowNum__' ? 50 : (columns.find(c => c.key === k)?.minWidth ?? 80)
+      const minW = k === '__rowNum__' ? 32 : (columns.find(c => c.key === k)?.minWidth ?? 80)
       setColWidths(prev => ({ ...prev, [k]: Math.max(minW, sw + (mv.clientX - sx)) }))
     }
     function onUp() {
@@ -840,19 +773,19 @@ export function Table({
 
   // ── Selection ──────────────────────────────────────────────
   const allFilteredSelected =
-    filteredRows.length > 0 &&
-    filteredRows.every(r => selected.has(rows.indexOf(r)))
+    pagedRows.length > 0 &&
+    pagedRows.every(r => selected.has(rows.indexOf(r)))
 
   const someFilteredSelected =
     !allFilteredSelected &&
-    filteredRows.some(r => selected.has(rows.indexOf(r)))
+    pagedRows.some(r => selected.has(rows.indexOf(r)))
 
   function toggleSelectAll(e) {
     const next = new Set(selected)
     if (e.target.checked) {
-      filteredRows.forEach(r => next.add(rows.indexOf(r)))
+      pagedRows.forEach(r => next.add(rows.indexOf(r)))
     } else {
-      filteredRows.forEach(r => next.delete(rows.indexOf(r)))
+      pagedRows.forEach(r => next.delete(rows.indexOf(r)))
     }
     setSelected(next)
     onSelectionChange?.(rows.filter((_, i) => next.has(i)))
@@ -998,42 +931,56 @@ export function Table({
                   ].filter(Boolean).join(' ')}
                   style={{ position: 'sticky', left: 0, zIndex: 3 }}
                 >
-                  <Tooltip
-                    content={isFullscreen ? (
-                      <span className={styles.tooltipShortcutRow}>
-                        <span>Exit fullscreen</span>
-                        <kbd className={styles.tooltipKbd}>Esc</kbd>
+                  {isFullscreen ? (
+                    <Tooltip
+                      content={(
+                        <span className={styles.tooltipShortcutRow}>
+                          <span>Exit fullscreen</span>
+                          <kbd className={styles.tooltipKbd}>Esc</kbd>
+                        </span>
+                      )}
+                      side="top"
+                      align="start"
+                    >
+                      <span style={{ display: 'inline-flex' }}>
+                        <IconButton
+                          variant="ghost"
+                          size="sm"
+                          icon={<FullscreenExitIcon />}
+                          onClick={() => setIsFullscreen(false)}
+                          aria-label="Exit fullscreen"
+                        />
                       </span>
-                    ) : 'View options'}
-                    side="top"
-                    align="start"
-                  >
-                    <span ref={viewMenuAnchorRef} style={{ display: 'inline-flex' }}>
-                      <IconButton
-                        variant="ghost"
-                        size="sm"
-                        icon={isFullscreen ? <FullscreenExitIcon /> : <MoreVertIcon />}
-                        onClick={() => {
-                          if (isFullscreen) { setIsFullscreen(false); return }
-                          viewMenuOpen ? setViewMenuOpen(false) : openViewMenu()
-                        }}
-                        aria-label={isFullscreen ? 'Exit fullscreen' : 'View options'}
-                        aria-haspopup={isFullscreen ? undefined : 'menu'}
-                        aria-expanded={isFullscreen ? undefined : viewMenuOpen}
-                      />
-                    </span>
-                  </Tooltip>
-                  <ViewMenu
-                    open={viewMenuOpen}
-                    pos={viewMenuPos}
-                    activeValue={isFullscreen ? 'fullscreen' : density}
-                    onSelect={val => {
-                      if (val === 'fullscreen') { setIsFullscreen(v => !v) }
-                      else { updateDensity(val); setIsFullscreen(false) }
-                      setViewMenuOpen(false)
-                    }}
-                    onClose={() => setViewMenuOpen(false)}
-                  />
+                    </Tooltip>
+                  ) : (
+                    <Dropdown
+                      align="left"
+                      portal
+                      minWidth={0}
+                      size={density === 'comfortable' ? 'lg' : 'md'}
+                      value={density}
+                      onChange={val => {
+                        if (val === 'fullscreen') { setIsFullscreen(v => !v) }
+                        else { updateDensity(val); setIsFullscreen(false) }
+                      }}
+                      items={VIEW_MENU_ITEMS.map(item => (
+                        item.value === 'fullscreen'
+                          ? [{ type: 'divider' }, { value: item.value, label: item.label, icon: <item.Icon /> }]
+                          : [{ value: item.value, label: item.label, icon: <item.Icon /> }]
+                      )).flat()}
+                      trigger={
+                        <span style={{ display: 'inline-flex' }}>
+                          <IconButton
+                            variant="ghost"
+                            size="sm"
+                            icon={<MoreVertIcon />}
+                            aria-label="View options"
+                            aria-haspopup="menu"
+                          />
+                        </span>
+                      }
+                    />
+                  )}
                   {resizable && (
                     <div
                       className={styles.resizeHandle}
@@ -1223,7 +1170,7 @@ export function Table({
                           return (
                             <div className={styles.filterMultiSelectWrap}>
                               <MultiSelect
-                                size="md"
+                                size={density === 'comfortable' ? 'lg' : 'md'}
                                 placeholder="All"
                                 options={options}
                                 value={selArr}
