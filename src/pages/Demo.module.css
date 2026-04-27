@@ -1,0 +1,117 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-surface);
+  height: 100vh;
+  max-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.topbar {
+  width: 100%;
+  padding: var(--space-3) var(--space-6);
+  flex-shrink: 0;
+}
+
+.topbarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+}
+
+.topbarLeft {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-10-5);
+}
+
+.brand {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--color-grey-700);
+  white-space: nowrap;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.avatarTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+}
+
+.avatarTrigger:focus-visible {
+  outline: 2px solid var(--color-grey-700);
+  outline-offset: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  min-height: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.title {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--color-grey-800);
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.tableWrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive — collapse navigation on narrow viewports */
+@media (max-width: 900px) {
+  .brand { font-size: 20px; }
+  .topbarLeft { gap: var(--space-2); }
+  .body { padding: var(--space-4); }
+  .title { font-size: 20px; }
+}
+
+@media (max-width: 720px) {
+  .navHide { display: none; }
+}

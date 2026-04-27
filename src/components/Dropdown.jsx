@@ -27,7 +27,8 @@ const MIN_LIST_HEIGHT = LIST_PADDING + MIN_VISIBLE_ITEMS * ITEM_HEIGHT + (MIN_VI
 const SEARCH_BAR_HEIGHT = 48
 const MULTISELECT_HEADER_HEIGHT = 36
 
-function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect, portal) {
+function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect, portal, minWidthOverride) {
+  const minWidth = minWidthOverride != null ? minWidthOverride : MIN_WIDTH
   const [above, setAbove] = useState(false)
   const [maxH, setMaxH] = useState(0)
   const [panelStyle, setPanelStyle] = useState({})
@@ -76,14 +77,14 @@ function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect, p
 
     // Decide alignment: prefer requested align, flip if it overflows
     let useAlign = align
-    if (align === 'left'  && spaceRight < MIN_WIDTH) useAlign = 'right'
-    if (align === 'right' && spaceLeft  < MIN_WIDTH) useAlign = 'left'
+    if (align === 'left'  && spaceRight < minWidth) useAlign = 'right'
+    if (align === 'right' && spaceLeft  < minWidth) useAlign = 'left'
 
     const availableW = useAlign === 'right' ? spaceLeft : spaceRight
     const isMobile = vw < 380
     const triggerW = rect.width
     // Min width = trigger width, but at least MIN_WIDTH on desktop; never wider than viewport
-    const desiredMin = Math.max(triggerW, isMobile ? 0 : MIN_WIDTH)
+    const desiredMin = Math.max(minWidthOverride != null ? minWidth : triggerW, isMobile ? 0 : minWidth)
     const clampedMin = Math.min(desiredMin, viewportW)
     const clampedMax = Math.max(Math.min(Math.max(MAX_WIDTH, triggerW), availableW), clampedMin)
 
@@ -118,7 +119,7 @@ function usePlacement(open, wrapRef, panelRef, align, searchable, multiselect, p
     }
 
     setPanelStyle(style)
-  }, [open, wrapRef, panelRef, align, searchable, multiselect, portal])
+  }, [open, wrapRef, panelRef, align, searchable, multiselect, portal, minWidthOverride])
 
   useLayoutEffect(() => {
     if (!open) { setAbove(false); setMaxH(0); setPanelStyle({}); return }
@@ -417,6 +418,7 @@ export function Dropdown({
   onOpenChange,
   className,
   portal = false,
+  minWidth,
 }) {
   const isControlled = controlledOpen !== undefined
   const [internalOpen, setInternalOpen] = useState(false)
@@ -424,7 +426,7 @@ export function Dropdown({
 
   const rootRef = useRef(null)
   const panelRef = useRef(null)
-  const { above, maxH, panelStyle } = usePlacement(open, rootRef, panelRef, align, searchable, multiselect, portal)
+  const { above, maxH, panelStyle } = usePlacement(open, rootRef, panelRef, align, searchable, multiselect, portal, minWidth)
 
   function toggle() {
     if (disabled) return

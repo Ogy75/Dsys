@@ -62,6 +62,12 @@ export const navSections = [
     ],
   },
   {
+    label: 'Examples',
+    items: [
+      { label: 'Demo Page', path: '/examples/demo' },
+    ],
+  },
+  {
     label: 'Patterns',
     items: [
       { label: 'Page Layout', path: '/page-layout' },

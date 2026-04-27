@@ -37,6 +37,7 @@ import TablePage from './pages/Table'
 import ListPage from './pages/List'
 import SkeletonPage from './pages/Skeleton'
 import Placeholder from './pages/Placeholder'
+import DemoPage from './pages/Demo'
 
 function PlaceholderPage({ title }) {
   return <Placeholder title={title} />
@@ -101,6 +102,9 @@ export default function App() {
           <Route path="/stack" element={<PlaceholderPage title="Stack" />} />
           <Route path="/sidebar-layout" element={<PlaceholderPage title="Sidebar Layout" />} />
           <Route path="/split-layout" element={<PlaceholderPage title="Split Layout" />} />
+
+          {/* Examples */}
+          <Route path="/examples/demo" element={<DemoPage />} />
 
           {/* Patterns */}
           <Route path="/page-layout" element={<PageLayoutPage />} />
