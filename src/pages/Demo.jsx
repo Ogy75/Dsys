@@ -166,7 +166,6 @@ export default function DemoPage() {
               selectable
               rowNumbers
               fill
-              density="compact"
             />
           </div>
         )}
