@@ -7,15 +7,15 @@ import { Icon } from '../components/Icon'
 const VARIANTS = ['gray', 'green', 'red', 'yellow', 'purple', 'blue', 'cyan', 'lime']
 
 function IconStar() {
-  return <Icon name="star" size={12} />
+  return <Icon name="star" size={16} />
 }
 
 function IconCheck() {
-  return <Icon name="check" size={12} />
+  return <Icon name="check" size={16} />
 }
 
 function IconDot() {
-  return <Icon name="circle" size={8} />
+  return <Icon name="circle" size={16} />
 }
 
 const usageCode = `import { Badge } from '@/components/Badge'
@@ -34,8 +34,8 @@ const iconCode = `{/* Icon before label */}
 const badgeProps = [
   { name: 'variant', type: "'gray' | 'green' | 'red' | 'yellow' | 'purple' | 'blue' | 'cyan' | 'lime'", default: "'gray'", description: 'Color variant of the badge.' },
   { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'SM: 24px height, 8px h-padding. MD: 28px height, 12px h-padding. LG: 32px height, 12px h-padding.' },
-  { name: 'iconLeft', type: 'ReactNode', default: '—', description: 'Icon rendered before the label. Mutually exclusive with iconRight — if both are provided, iconLeft wins.' },
-  { name: 'iconRight', type: 'ReactNode', default: '—', description: 'Icon rendered after the label. Ignored when iconLeft is also set.' },
+  { name: 'iconLeft', type: 'ReactNode', default: '—', description: 'Icon rendered before the label. Use 16×16 SVGs. Mutually exclusive with iconRight — if both are provided, iconLeft wins.' },
+  { name: 'iconRight', type: 'ReactNode', default: '—', description: 'Icon rendered after the label. Use 16×16 SVGs. Ignored when iconLeft is also set.' },
   { name: 'children', type: 'ReactNode', default: '—', description: 'Badge label.' },
 ]
 
@@ -72,7 +72,7 @@ export default function BadgePage() {
         </DemoCanvas>
       </Section>
 
-      <Section title="With icons" description="Pass a 12×12 SVG to iconLeft or iconRight — mutually exclusive, never both. Shown at all sizes.">
+      <Section title="With icons" description="Pass a 16×16 SVG to iconLeft or iconRight — mutually exclusive, never both. Shown at all sizes.">
         <DemoCanvas style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-grey-500)', minWidth: 28 }}>SM</span>
