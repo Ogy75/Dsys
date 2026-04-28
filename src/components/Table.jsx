@@ -1001,7 +1001,7 @@ export function Table({
                         value: item.value,
                         label: isFs && isFullscreen ? 'Exit Full Screen' : item.label,
                         icon: isFs ? <FsIcon /> : <item.Icon />,
-                        badge: <ShortcutHint value={item.value} />,
+                        badge: isFs && isFullscreen ? <Kbd>Esc</Kbd> : <ShortcutHint value={item.value} />,
                       }
                       return isFs ? [{ type: 'divider' }, entry] : [entry]
                     }).flat()}
