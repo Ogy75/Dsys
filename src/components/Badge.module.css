@@ -19,15 +19,54 @@
   font-size: 13px;
 }
 
+.sm:has(.iconLeft) .label,
+.sm:has(.iconRight) .label,
+.md:has(.iconLeft) .label,
+.md:has(.iconRight) .label {
+  transform: translateY(-1px);
+}
+
+.sm:has(.iconLeft) {
+  padding: var(--space-1) var(--space-2-5) var(--space-1) var(--space-1);
+}
+
+.sm:has(.iconRight) {
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2-5);
+}
+
+.md:has(.iconLeft) {
+  padding: var(--space-1-5) var(--space-3) var(--space-1-5) var(--space-1-5);
+}
+
+.md:has(.iconRight) {
+  padding: var(--space-1-5) var(--space-1-5) var(--space-1-5) var(--space-3);
+}
+
+.lg:has(.iconLeft) {
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
+}
+
+.lg:has(.iconRight) {
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+}
+
 .md {
   height: 28px;
   padding: 0 var(--space-3);
   font-size: 13px;
 }
 
+.md:not(:has(.iconLeft)):not(:has(.iconRight)) {
+  padding: 0 var(--space-2-5);
+}
+
 .lg {
   height: var(--space-8);
   padding: 0 var(--space-3);
+}
+
+.lg:not(:has(.iconLeft)):not(:has(.iconRight)) {
+  padding: 0 var(--space-2-5);
 }
 
 /* Icon slots */

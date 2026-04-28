@@ -9,7 +9,7 @@
   position: absolute;
   top: calc(100% + var(--space-1));
   background-color: var(--color-white);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-grey-200);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   display: flex;
@@ -118,7 +118,10 @@ button.searchAction:hover {
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
+  /* Right padding is reduced by the scrollbar width so the visible gap to
+     the panel edge matches the left padding. */
   padding: var(--space-1);
+  padding-right: calc(var(--space-1) - var(--space-0-5));
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -168,8 +171,21 @@ button.searchAction:hover {
   min-width: 0;
 }
 
-.item:hover:not(.itemDisabled):not(.itemActive),
-.itemFocused:not(.itemDisabled):not(.itemActive) {
+.item:has(.itemBadge) {
+  padding-right: var(--space-2);
+}
+
+.panelMd .item:has(.itemBadge) {
+  padding-right: var(--space-2);
+}
+
+.item:hover:not(.itemDisabled):not(.itemActive) {
+  background-color: var(--color-grey-100);
+}
+
+/* Only show focused-item highlight when the user is navigating by keyboard.
+   Otherwise the auto-focused first item looks like a phantom hover on mouse-open. */
+:global(body[data-keyboard-nav]) .itemFocused:not(.itemDisabled):not(.itemActive) {
   background-color: var(--color-grey-100);
 }
 

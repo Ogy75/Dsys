@@ -12,12 +12,12 @@ function TriggerBtn({ children }) {
       style={{
         padding: '6px 14px',
         borderRadius: 6,
-        border: '1px solid #e6e6e6',
-        background: '#fff',
+        border: '1px solid var(--color-border)',
+        background: 'var(--color-bg-surface)',
         fontFamily: 'var(--font-sans)',
         fontSize: 'var(--text-small-size)',
         fontWeight: 600,
-        color: 'var(--color-grey-600)',
+        color: 'var(--color-text-secondary)',
         cursor: 'default',
         whiteSpace: 'nowrap',
       }}

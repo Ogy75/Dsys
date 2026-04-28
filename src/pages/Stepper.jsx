@@ -3,6 +3,7 @@ import PageHeader from '../components/PageHeader'
 import Section from '../components/Section'
 import { DemoCanvas, CodeBlock, UsageSection, PropsTable } from '../components/Demo'
 import { Stepper } from '../components/Stepper'
+import { Button } from './Button'
 
 const STEPS = [
   { label: 'Personal info', description: 'Name, email and phone number' },
@@ -16,22 +17,22 @@ const STEPS_NO_DESC = STEPS.map(s => ({ label: s.label }))
 function Controls({ active, setActive, total }) {
   return (
     <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
-      <button
-        type="button"
-        onClick={() => setActive(a => Math.max(0, a - 1))}
+      <Button
+        variant="secondary"
+        size="sm"
         disabled={active === 0}
-        style={{ padding: '6px 16px', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, borderRadius: 6, border: '1px solid var(--color-grey-300)', background: 'white', cursor: active === 0 ? 'not-allowed' : 'pointer', color: active === 0 ? 'var(--color-grey-300)' : 'var(--color-brand)' }}
+        onClick={() => setActive(a => Math.max(0, a - 1))}
       >
         Back
-      </button>
-      <button
-        type="button"
-        onClick={() => setActive(a => Math.min(total, a + 1))}
+      </Button>
+      <Button
+        variant="primary"
+        size="sm"
         disabled={active === total}
-        style={{ padding: '6px 16px', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, borderRadius: 6, border: 'none', background: active === total ? 'var(--color-grey-300)' : 'var(--color-brand)', cursor: active === total ? 'not-allowed' : 'pointer', color: 'white' }}
+        onClick={() => setActive(a => Math.min(total, a + 1))}
       >
         {active === total ? 'Done' : 'Next'}
-      </button>
+      </Button>
     </div>
   )
 }

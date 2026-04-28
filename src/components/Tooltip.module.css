@@ -33,13 +33,15 @@
 
 /* ── Variants ───────────────────────────────────── */
 .dark {
-  --tooltip-text: var(--color-grey-50);
-  background-color: var(--color-grey-800);
+  --tooltip-text: #f7f7f7;
+  background-color: #1a1a1a;
+  color: var(--tooltip-text);
 }
 
 .light {
-  --tooltip-text: var(--color-grey-800);
-  background-color: var(--color-grey-50);
+  --tooltip-text: #1a1a1a;
+  background-color: #f7f7f7;
+  color: var(--tooltip-text);
 }
 
 /* ── Arrow ──────────────────────────────────────── */

@@ -48,7 +48,7 @@ export default function PaginationPage() {
           <select
             value={pageSize}
             onChange={e => { setPageSize(Number(e.target.value)); setRppPage(1) }}
-            style={{ height: 32, padding: '0 12px', border: '1px solid var(--color-grey-300)', borderRadius: 'var(--radius-full)', fontFamily: 'var(--font-sans)', fontSize: 'var(--text-small-size)', color: 'var(--color-grey-800)', cursor: 'pointer', outline: 'none', background: 'white' }}
+            style={{ height: 32, padding: '0 12px', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-full)', fontFamily: 'var(--font-sans)', fontSize: 'var(--text-small-size)', color: 'var(--color-text-primary)', cursor: 'pointer', outline: 'none', background: 'var(--color-bg-surface)' }}
           >
             {[10, 25, 50, 100].map(o => <option key={o} value={o}>{o}</option>)}
           </select>

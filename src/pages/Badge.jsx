@@ -33,9 +33,9 @@ const iconCode = `{/* Icon before label */}
 
 const badgeProps = [
   { name: 'variant', type: "'gray' | 'green' | 'red' | 'yellow' | 'purple' | 'blue' | 'cyan' | 'lime'", default: "'gray'", description: 'Color variant of the badge.' },
-  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'SM: 24px height, 8px h-padding. MD: 28px height, 12px h-padding. LG: 32px height, 12px h-padding.' },
-  { name: 'iconLeft', type: 'ReactNode', default: '—', description: 'Icon rendered before the label. Use 16×16 SVGs. Mutually exclusive with iconRight — if both are provided, iconLeft wins.' },
-  { name: 'iconRight', type: 'ReactNode', default: '—', description: 'Icon rendered after the label. Use 16×16 SVGs. Ignored when iconLeft is also set.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'SM: 24px height, 8px h-padding. MD: 28px height, 12px h-padding. LG: 32px height, 12px h-padding. When an icon is present, the icon-side padding tightens to keep the icon close to the badge edge: SM 4/10/4/4, MD 6/12/6/6, LG 8/12/8/8 (top/right/bottom/left, mirrored for iconRight).' },
+  { name: 'iconLeft', type: 'ReactNode', default: '—', description: 'Icon rendered before the label. Use 16×16 SVGs. Mutually exclusive with iconRight — if both are provided, iconLeft wins. Triggers tighter left padding so the icon sits close to the edge.' },
+  { name: 'iconRight', type: 'ReactNode', default: '—', description: 'Icon rendered after the label. Use 16×16 SVGs. Ignored when iconLeft is also set. Triggers tighter right padding so the icon sits close to the edge.' },
   { name: 'children', type: 'ReactNode', default: '—', description: 'Badge label.' },
 ]
 

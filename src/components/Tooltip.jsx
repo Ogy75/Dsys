@@ -10,7 +10,7 @@ const VM = 8            // minimum distance from viewport edge
 
 /* ── Arrow SVG ──────────────────────────────────── */
 function ArrowSVG({ direction, variant }) {
-  const fill = variant === 'dark' ? 'var(--color-grey-800)' : 'var(--color-grey-50)'
+  const fill = variant === 'dark' ? '#1a1a1a' : '#f7f7f7'
   const horiz = direction === 'up' || direction === 'down'
   const w = horiz ? ARROW_MAJOR : ARROW_MINOR
   const h = horiz ? ARROW_MINOR : ARROW_MAJOR

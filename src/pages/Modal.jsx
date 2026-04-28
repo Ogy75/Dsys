@@ -5,6 +5,7 @@ import { DemoCanvas, CodeBlock, UsageSection, PropsTable } from '../components/D
 import { Modal } from '../components/Modal'
 import { Table } from '../components/Table'
 import { SegmentIndicator } from '../components/SegmentIndicator'
+import { Badge } from '../components/Badge'
 import { Button } from './Button'
 
 const SHORT_BODY = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'
@@ -47,24 +48,15 @@ const modalProps = [
   { name: 'stretch', type: 'boolean', default: 'false', description: 'Makes the modal panel fill the full available viewport height.' },
 ]
 
+const STATUS_VARIANT = {
+  Active:     'green',
+  Inactive:   'gray',
+  Pending:    'yellow',
+  'On Leave': 'blue',
+}
+
 function StatusBadge({ value }) {
-  const map = {
-    Active:     { bg: 'var(--color-green-100)',  color: 'var(--color-green-700)' },
-    Inactive:   { bg: 'var(--color-gray-100)',   color: 'var(--color-gray-600)'  },
-    Pending:    { bg: 'var(--color-yellow-100)', color: 'var(--color-yellow-700)' },
-    'On Leave': { bg: 'var(--color-blue-100)',   color: 'var(--color-blue-700)'  },
-  }
-  const { bg, color } = map[value] ?? map.Inactive
-  return (
-    <span style={{
-      display: 'inline-flex', alignItems: 'center',
-      padding: '2px 8px', borderRadius: 100,
-      fontSize: 12, fontWeight: 600,
-      background: bg, color,
-    }}>
-      {value}
-    </span>
-  )
+  return <Badge variant={STATUS_VARIANT[value] ?? 'gray'}>{value}</Badge>
 }
 
 const TABLE_COLUMNS = [

@@ -13,7 +13,7 @@ export function Badge({
   return (
     <span className={[styles.badge, styles[variant], styles[size]].join(' ')}>
       {icon && isLeft && <span className={styles.iconLeft} aria-hidden="true">{icon}</span>}
-      {children}
+      <span className={styles.label}>{children}</span>
       {icon && !isLeft && <span className={styles.iconRight} aria-hidden="true">{icon}</span>}
     </span>
   )
