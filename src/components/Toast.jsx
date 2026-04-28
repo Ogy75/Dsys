@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useRef, useCallback, useEffect } from 'react'
 import styles from './Toast.module.css'
 import { Icon } from './Icon'
+import { IconButton } from './IconButton'
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
 const STATUS_ICONS = {
-  info:    { name: 'info',         color: '#06b6d4' },
-  warning: { name: 'warning',      color: '#f59e0b' },
+  info:    { name: 'info',         color: '#0e7490' },
+  warning: { name: 'warning',      color: '#b45309' },
   success: { name: 'check_circle', color: '#5CB335' },
   danger:  { name: 'cancel',       color: '#DC2626' },
 }
@@ -103,14 +104,15 @@ function ToastItem({ id, variant, title, message, dismissible, action, position,
       </div>
 
       {dismissible && (
-        <button
-          type="button"
-          className={styles.close}
-          onClick={dismiss}
-          aria-label="Dismiss notification"
-        >
-          <Icon name="close" size={20} />
-        </button>
+        <div className={styles.closeWrap}>
+          <IconButton
+            variant="ghost"
+            size="sm"
+            icon={<Icon name="close" size={20} />}
+            onClick={dismiss}
+            aria-label="Dismiss notification"
+          />
+        </div>
       )}
 
       {dismissible && action && (

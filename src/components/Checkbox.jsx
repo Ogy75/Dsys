@@ -5,7 +5,7 @@ import { Icon } from './Icon'
 function CheckIcon() {
   return (
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-      <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }
@@ -13,7 +13,7 @@ function CheckIcon() {
 function IndeterminateIcon() {
   return (
     <svg width="10" height="2" viewBox="0 0 10 2" fill="none" aria-hidden="true">
-      <path d="M0 1h10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M0 1h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   )
 }
@@ -31,6 +31,7 @@ export function Checkbox({
   value,
 }) {
   const id = useId()
+  const helperId = useId()
   const isChecked = indeterminate ? false : checked
 
   return (
@@ -53,6 +54,7 @@ export function Checkbox({
           className={styles.input}
           aria-checked={indeterminate ? 'mixed' : checked}
           aria-invalid={error || undefined}
+          aria-describedby={helperText ? helperId : undefined}
         />
         <span
           className={[
@@ -84,6 +86,7 @@ export function Checkbox({
           </span>
           {helperText && (
             <span
+              id={helperId}
               className={[
                 styles.helperText,
                 disabled ? styles.helperTextDisabled : '',

@@ -7,9 +7,9 @@
   font-size: var(--text-small-size);
   font-weight: var(--text-label-weight);
   line-height: 1;
-  color: var(--color-grey-800);
+  color: inherit;
   white-space: nowrap;
-  background-color: var(--color-white);
+  background-color: transparent;
 }
 
 /* Sizes */

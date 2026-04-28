@@ -112,7 +112,7 @@
 
 .triggerText {
   flex: 1;
-  font-size: 15px;
+  font-size: var(--text-small-size);
   font-weight: var(--text-small-weight);
   line-height: var(--line-height-base);
   color: var(--color-grey-800);
@@ -127,6 +127,13 @@
 
 .triggerError .placeholder {
   mix-blend-mode: multiply;
+}
+
+/* In dark mode, multiply makes text disappear against the dark surface —
+   drop the blend mode and use the standard placeholder color. */
+:global([data-theme="dark"]) .triggerError .placeholder {
+  mix-blend-mode: normal;
+  color: var(--color-grey-400);
 }
 
 .triggerTextDisabled {

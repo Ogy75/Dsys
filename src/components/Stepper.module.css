@@ -223,3 +223,9 @@
 .nameWarning {
   color: var(--color-yellow-600);
 }
+
+:global(body[data-keyboard-nav]) .circleBtn:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-full);
+}

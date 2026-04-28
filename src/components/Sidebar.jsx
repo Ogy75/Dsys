@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { navSections } from '../nav'
 import { Icon } from './Icon'
+import { ThemeToggle } from './ThemeToggle'
 import styles from './Sidebar.module.css'
 
 export default function Sidebar() {
@@ -24,6 +25,8 @@ export default function Sidebar() {
         <span className={styles.brandName}>Design System</span>
       </div>
 
+      <ThemeToggle />
+
       <div className={styles.search}>
         <span className={styles.searchIcon}>
           <Icon name="search" size={16} />
@@ -32,6 +35,7 @@ export default function Sidebar() {
           className={styles.searchInput}
           type="text"
           placeholder="Find component…"
+          aria-label="Search components"
           value={query}
           onChange={e => setQuery(e.target.value)}
         />

@@ -18,6 +18,7 @@ export function Textarea({
   inputRef,
 }) {
   const id = useId()
+  const errorId = `${id}-error`
   const labelText = fieldLabel ?? label ?? 'Label'
   const showRequired = required && !disabled
 
@@ -57,9 +58,10 @@ export function Textarea({
             aria-label={hideLabel ? labelText : undefined}
             aria-invalid={!!error}
             aria-required={required}
+            aria-describedby={error ? errorId : undefined}
           />
         </div>
-        {error && <p className={styles.errorMsg}>{error}</p>}
+        {error && <p id={errorId} className={styles.errorMsg}>{error}</p>}
       </div>
     </div>
   )

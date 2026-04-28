@@ -76,7 +76,7 @@ export function ListItem({
       role={onClick ? 'button' : undefined}
       tabIndex={onClick && !disabled ? 0 : undefined}
       aria-disabled={disabled || undefined}
-      aria-current={selected ? 'true' : undefined}
+      aria-pressed={onClick ? !!selected : undefined}
     >
       <div className={styles.inner}>
         {resolvedLeading && (

@@ -47,3 +47,9 @@
 .md .current {
   font-size: var(--text-small-size);
 }
+
+:global(body[data-keyboard-nav]) .link:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}

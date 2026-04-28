@@ -92,5 +92,11 @@
 
 /* Disabled thumb */
 .thumbDisabled {
-  background-color: #e6e6e6;
+  background-color: var(--color-grey-200);
+}
+
+/* In dark mode, --color-white resolves to #1a1a1a (dark) — make the active
+   thumb light so it's visible. Disabled thumb stays dark. */
+:global([data-theme="dark"]) .thumb:not(.thumbDisabled) {
+  background-color: var(--color-grey-900);
 }

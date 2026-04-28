@@ -68,3 +68,8 @@
   font-size: 14px;
   padding: 0;
 }
+
+:global(body[data-keyboard-nav]) .btn:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

@@ -4,11 +4,11 @@ import { DemoCanvas, CodeBlock, UsageSection } from '../components/Demo'
 import styles from './Shadows.module.css'
 
 const shadows = [
-  { token: '--shadow-xs', value: '0 1px 2px 0 rgba(0,0,0,0.05)', label: 'XS' },
-  { token: '--shadow-sm', value: '0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1)', label: 'SM' },
-  { token: '--shadow-md', value: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)', label: 'MD' },
-  { token: '--shadow-lg', value: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)', label: 'LG' },
-  { token: '--shadow-xl', value: '0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)', label: 'XL' },
+  { token: '--shadow-xs', label: 'XS' },
+  { token: '--shadow-sm', label: 'SM' },
+  { token: '--shadow-md', label: 'MD' },
+  { token: '--shadow-lg', label: 'LG' },
+  { token: '--shadow-xl', label: 'XL' },
 ]
 
 const usageCode = `/* Apply via CSS custom properties */
@@ -24,7 +24,7 @@ export default function ShadowsPage() {
       <Section title="Scale">
         <DemoCanvas style={{ flexWrap: 'wrap', gap: 32, padding: '48px' }}>
           {shadows.map((s) => (
-            <div key={s.token} className={styles.card} style={{ boxShadow: s.value }}>
+            <div key={s.token} className={styles.card} style={{ boxShadow: `var(${s.token})` }}>
               <span className={styles.label}>{s.label}</span>
               <code className={styles.token}>{s.token}</code>
             </div>

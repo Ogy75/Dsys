@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   border-radius: var(--radius-full);
-  background-color: #e6e6e6;
+  background-color: var(--color-grey-200);
   font-family: var(--font-sans);
   font-size: var(--text-small-size);
   font-weight: var(--text-small-weight);
@@ -70,4 +70,10 @@
 
 .dismissBtn:disabled {
   cursor: not-allowed;
+}
+
+:global(body[data-keyboard-nav]) .dismissBtn:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-full);
 }

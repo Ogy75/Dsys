@@ -181,6 +181,12 @@ function DropdownPanel({
   useEffect(() => {
     if (!open) { setQuery(''); setSearchActive(false); setFocusedIdx(-1); setLockedWidth(null); setLockedHeight(null) }
     else if (searchable) setTimeout(() => inputRef.current?.focus(), 0)
+    else if (navigableIndices.length > 0) {
+      const first = navigableIndices[0]
+      setFocusedIdx(first)
+      setTimeout(() => itemRefs.current[first]?.focus(), 0)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, searchable])
 
   // Lock panel width + height to their initial measured values so filtering doesn't resize them.
@@ -198,10 +204,11 @@ function DropdownPanel({
   // Reset focus when filtered list changes
   useEffect(() => { setFocusedIdx(-1) }, [query])
 
-  // Scroll focused item into view
+  // Scroll + move DOM focus to focused item
   useEffect(() => {
     if (focusedIdx >= 0 && itemRefs.current[focusedIdx]) {
       itemRefs.current[focusedIdx].scrollIntoView({ block: 'nearest' })
+      itemRefs.current[focusedIdx].focus({ preventScroll: true })
     }
   }, [focusedIdx])
 
@@ -240,6 +247,17 @@ function DropdownPanel({
       return
     }
 
+    if (e.key === 'Home') {
+      e.preventDefault()
+      if (navigableIndices.length > 0) setFocusedIdx(navigableIndices[0])
+      return
+    }
+    if (e.key === 'End') {
+      e.preventDefault()
+      if (navigableIndices.length > 0) setFocusedIdx(navigableIndices[navigableIndices.length - 1])
+      return
+    }
+
     const focusedItem = focusedIdx >= 0 ? filteredItems[focusedIdx] : null
     if (!focusedItem || focusedItem.type || focusedItem.disabled) return
 
@@ -275,7 +293,7 @@ function DropdownPanel({
         ...(lockedWidth != null ? { width: lockedWidth, minWidth: lockedWidth, maxWidth: lockedWidth } : {}),
         ...(lockedHeight != null ? { height: lockedHeight } : {}),
       }}
-      role="dialog"
+      role="presentation"
       onKeyDown={handleKeyDown}
     >
       {/* Search bar */}
@@ -286,6 +304,7 @@ function DropdownPanel({
             type="text"
             className={styles.searchInput}
             placeholder="Find"
+            aria-label="Filter options"
             value={query}
             onChange={e => setQuery(e.target.value)}
             onFocus={() => setSearchActive(true)}
@@ -428,6 +447,7 @@ export function Dropdown({
 
   const rootRef = useRef(null)
   const panelRef = useRef(null)
+  const wasOpen = useRef(false)
   const { above, maxH, panelStyle } = usePlacement(open, rootRef, panelRef, align, searchable, multiselect, portal, minWidth)
 
   function toggle() {
@@ -441,6 +461,15 @@ export function Dropdown({
     if (!isControlled) setInternalOpen(false)
     onOpenChange?.(false)
   }
+
+  // When dropdown closes, return focus to the trigger
+  useEffect(() => {
+    if (wasOpen.current && !open && rootRef.current) {
+      const trigger = rootRef.current.querySelector('[aria-haspopup]')
+      trigger?.focus?.()
+    }
+    wasOpen.current = open
+  }, [open])
 
   useEffect(() => {
     function onDown(e) {
@@ -466,6 +495,17 @@ export function Dropdown({
     }
   }
 
+  const triggerProps = trigger?.props ?? {}
+  const triggerHasName = Boolean(
+    triggerProps['aria-label'] ||
+    triggerProps['aria-labelledby'] ||
+    (typeof triggerProps.children === 'string' && triggerProps.children.trim())
+  )
+
+  if (import.meta.env.DEV && !triggerHasName) {
+    console.warn('Dropdown: trigger has no accessible name — pass aria-label or visible text on the trigger element. Falling back to "Open menu".')
+  }
+
   const triggerEl = cloneElement(trigger, {
     ...trigger.props,
     onClick: (e) => {
@@ -478,6 +518,7 @@ export function Dropdown({
     },
     'aria-expanded': open,
     'aria-haspopup': 'listbox',
+    ...(triggerHasName ? {} : { 'aria-label': 'Open menu' }),
   })
 
   const panelEl = (

@@ -10,6 +10,7 @@ import { Tooltip } from './Tooltip'
 import { Skeleton } from './Skeleton'
 import { MultiSelect } from '../pages/Select'
 import { Dropdown } from './Dropdown'
+import { Kbd } from './Kbd'
 import styles from './Table.module.css'
 
 function SortAscIcon() {
@@ -107,6 +108,18 @@ const VIEW_MENU_ITEMS = [
   { value: 'comfortable', label: 'Comfortable view', Icon: DensityLargeIcon },
   { value: 'fullscreen',  label: 'Full Screen',      Icon: FullscreenEnterIcon },
 ]
+
+const IS_MAC = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
+const SHORTCUT_LABEL = {
+  compact:     IS_MAC ? '⌘⌥1' : 'Ctrl+Alt+1',
+  default:     IS_MAC ? '⌘⌥2' : 'Ctrl+Alt+2',
+  comfortable: IS_MAC ? '⌘⌥3' : 'Ctrl+Alt+3',
+  fullscreen:  IS_MAC ? '⌘⌥F' : 'Ctrl+Alt+F',
+}
+
+function ShortcutHint({ value }) {
+  return <Kbd>{SHORTCUT_LABEL[value]}</Kbd>
+}
 
 function TableCheckbox({ checked, indeterminate, onChange, ariaLabel }) {
   return (
@@ -395,7 +408,9 @@ export function Table({
   reorderable = true,
   stretch = false,
   rowNumbers = false,
+  caption,
 }) {
+  const [sortAnnouncement, setSortAnnouncement] = useState('')
   const [rows, setRows] = useState(() => dataProp)
   useEffect(() => { setRows(dataProp) }, [dataProp])
 
@@ -406,6 +421,7 @@ export function Table({
     onDensityChange?.(next)
   }
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const containerRef = useRef(null)
   useEffect(() => {
     function onKey(e) {
       const mod = e.metaKey || e.ctrlKey
@@ -419,9 +435,40 @@ export function Table({
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
+  // View shortcuts: ⌘⇧A/S/D switch density, ⌘⇧F toggles fullscreen.
+  // Active when focus is inside this table or this table is fullscreen.
+  useEffect(() => {
+    function onKey(e) {
+      const mod = e.metaKey || e.ctrlKey
+      if (!mod || !e.altKey) return
+      // Active when focus is inside this table, on body (no specific focus), or table is fullscreen
+      const ae = document.activeElement
+      const inside =
+        isFullscreen ||
+        ae === document.body ||
+        ae === null ||
+        containerRef.current?.contains(ae)
+      if (!inside) return
+      // Alt on Mac alters the produced character (e.g. ⌥A → "å"), so prefer e.code
+      const code = e.code
+      if (code === 'Digit1' || code === 'Numpad1')      { e.preventDefault(); e.stopPropagation(); updateDensity('compact') }
+      else if (code === 'Digit2' || code === 'Numpad2') { e.preventDefault(); e.stopPropagation(); updateDensity('default') }
+      else if (code === 'Digit3' || code === 'Numpad3') { e.preventDefault(); e.stopPropagation(); updateDensity('comfortable') }
+      else if (code === 'KeyF')                         { e.preventDefault(); e.stopPropagation(); setIsFullscreen(v => !v) }
+    }
+    // Capture phase so we run before any browser/app keybinding (Cmd+Alt+S is mapped by some browsers)
+    document.addEventListener('keydown', onKey, true)
+    return () => document.removeEventListener('keydown', onKey, true)
+  }, [isFullscreen]) // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (!isFullscreen) return
-    function onKey(e) { if (e.key === 'Escape') setIsFullscreen(false) }
+    function onKey(e) {
+      if (e.key !== 'Escape') return
+      // If a modal/drawer is open above the fullscreen table, let it handle Escape.
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) return
+      setIsFullscreen(false)
+    }
     document.addEventListener('keydown', onKey)
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -728,9 +775,14 @@ export function Table({
   // ── Sort ───────────────────────────────────────────────────
   function handleSort(colKey) {
     setSort(prev => {
-      if (prev.key !== colKey) return { key: colKey, dir: 'asc' }
-      if (prev.dir === 'asc') return { key: colKey, dir: 'desc' }
-      return { key: null, dir: 'asc' }
+      const colLabel = columns.find(c => c.key === colKey)?.label ?? colKey
+      let next
+      if (prev.key !== colKey) next = { key: colKey, dir: 'asc' }
+      else if (prev.dir === 'asc') next = { key: colKey, dir: 'desc' }
+      else next = { key: null, dir: 'asc' }
+      if (next.key == null) setSortAnnouncement(`Sorting cleared`)
+      else setSortAnnouncement(`Sorted by ${colLabel}, ${next.dir === 'asc' ? 'ascending' : 'descending'}`)
+      return next
     })
   }
 
@@ -905,7 +957,8 @@ export function Table({
   )
 
   return (
-    <div className={[styles.container, fill ? styles.fill : '', isFullscreen ? styles.fullscreen : ''].filter(Boolean).join(' ')}>
+    <div ref={containerRef} className={[styles.container, fill ? styles.fill : '', isFullscreen ? styles.fullscreen : ''].filter(Boolean).join(' ')}>
+      <span className={styles.srOnly} aria-live="polite" aria-atomic="true">{sortAnnouncement}</span>
       <div
         className={[styles.tableWrapper, fill || isFullscreen ? styles.fillWrapper : ''].filter(Boolean).join(' ')}
         style={!isFullscreen && maxHeight ? { height: maxHeight } : undefined}
@@ -931,56 +984,39 @@ export function Table({
                   ].filter(Boolean).join(' ')}
                   style={{ position: 'sticky', left: 0, zIndex: 3 }}
                 >
-                  {isFullscreen ? (
-                    <Tooltip
-                      content={(
-                        <span className={styles.tooltipShortcutRow}>
-                          <span>Exit fullscreen</span>
-                          <kbd className={styles.tooltipKbd}>Esc</kbd>
-                        </span>
-                      )}
-                      side="top"
-                      align="start"
-                    >
+                  <Dropdown
+                    align="left"
+                    portal
+                    minWidth={0}
+                    size={density === 'comfortable' ? 'lg' : 'md'}
+                    value={density}
+                    onChange={val => {
+                      if (val === 'fullscreen') setIsFullscreen(v => !v)
+                      else updateDensity(val)
+                    }}
+                    items={VIEW_MENU_ITEMS.map(item => {
+                      const isFs = item.value === 'fullscreen'
+                      const FsIcon = isFullscreen ? FullscreenExitIcon : FullscreenEnterIcon
+                      const entry = {
+                        value: item.value,
+                        label: isFs && isFullscreen ? 'Exit Full Screen' : item.label,
+                        icon: isFs ? <FsIcon /> : <item.Icon />,
+                        badge: <ShortcutHint value={item.value} />,
+                      }
+                      return isFs ? [{ type: 'divider' }, entry] : [entry]
+                    }).flat()}
+                    trigger={
                       <span style={{ display: 'inline-flex' }}>
                         <IconButton
                           variant="ghost"
                           size="sm"
-                          icon={<FullscreenExitIcon />}
-                          onClick={() => setIsFullscreen(false)}
-                          aria-label="Exit fullscreen"
+                          icon={<MoreVertIcon />}
+                          aria-label="View options"
+                          aria-haspopup="menu"
                         />
                       </span>
-                    </Tooltip>
-                  ) : (
-                    <Dropdown
-                      align="left"
-                      portal
-                      minWidth={0}
-                      size={density === 'comfortable' ? 'lg' : 'md'}
-                      value={density}
-                      onChange={val => {
-                        if (val === 'fullscreen') { setIsFullscreen(v => !v) }
-                        else { updateDensity(val); setIsFullscreen(false) }
-                      }}
-                      items={VIEW_MENU_ITEMS.map(item => (
-                        item.value === 'fullscreen'
-                          ? [{ type: 'divider' }, { value: item.value, label: item.label, icon: <item.Icon /> }]
-                          : [{ value: item.value, label: item.label, icon: <item.Icon /> }]
-                      )).flat()}
-                      trigger={
-                        <span style={{ display: 'inline-flex' }}>
-                          <IconButton
-                            variant="ghost"
-                            size="sm"
-                            icon={<MoreVertIcon />}
-                            aria-label="View options"
-                            aria-haspopup="menu"
-                          />
-                        </span>
-                      }
-                    />
-                  )}
+                    }
+                  />
                   {resizable && (
                     <div
                       className={styles.resizeHandle}
@@ -1019,6 +1055,7 @@ export function Table({
                 return (
                   <th
                     key={col.key}
+                    scope="col"
                     className={[
                       styles.th,
                       col.sortable ? styles.sortable : '',
@@ -1103,7 +1140,7 @@ export function Table({
                           content={
                             <span className={styles.tooltipShortcutRow}>
                               <span>Clear filters</span>
-                              <kbd className={styles.tooltipKbd}>{shortcutLabel}</kbd>
+                              <Kbd inverse>{shortcutLabel}</Kbd>
                             </span>
                           }
                           side="top"
@@ -1370,6 +1407,7 @@ export function Table({
             data-density={density}
             data-zebra={zebra || undefined}
             role="grid"
+            aria-label={caption}
             aria-rowcount={filteredRows.length + 1}
             aria-colcount={orderedColumns.length}
             style={stretch ? { width: '100%' } : { minWidth: totalTableWidth }}

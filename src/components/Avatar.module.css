@@ -18,12 +18,12 @@
 }
 
 .default {
-  background: #333333;
-  color: #ffffff;
+  background: var(--color-brand);
+  color: var(--color-text-inverse);
 }
 
 .inverse {
-  background: var(--color-grey-300);
+  background: var(--color-grey-200);
   color: var(--color-grey-800);
 }
 
@@ -97,7 +97,7 @@
   bottom: 0;
   right: 0;
   border-radius: 50%;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--color-bg-surface);
   box-sizing: content-box;
 }
 

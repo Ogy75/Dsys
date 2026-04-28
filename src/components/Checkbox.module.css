@@ -67,6 +67,7 @@
 .boxChecked {
   background-color: var(--color-grey-700);
   border-color: var(--color-grey-700);
+  color: var(--color-text-inverse);
 }
 
 /* Error (unchecked only) */

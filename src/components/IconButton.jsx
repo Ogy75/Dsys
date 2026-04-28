@@ -29,6 +29,10 @@ export function IconButton({
 }) {
   const { ripples, addRipple } = useRipple()
 
+  if (import.meta.env.DEV && !ariaLabel) {
+    console.warn('IconButton: missing aria-label — icon-only buttons must have an accessible name.')
+  }
+
   return (
     <button
       type="button"

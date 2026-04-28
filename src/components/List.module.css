@@ -153,3 +153,9 @@
   opacity: 1;
   pointer-events: all;
 }
+
+:global(body[data-keyboard-nav]) .item.interactive:focus,
+:global(body[data-keyboard-nav]) .item.interactive:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

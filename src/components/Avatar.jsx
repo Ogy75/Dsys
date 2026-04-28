@@ -27,11 +27,15 @@ export function Avatar({
 
   return (
     <div className={[styles.wrapper, sizeClass].join(' ')}>
-      <div className={[styles.avatar, colorClass].join(' ')} aria-label={alt} role="img">
+      <div
+        className={[styles.avatar, colorClass].join(' ')}
+        role="img"
+        aria-label={alt}
+      >
         {showImage ? (
           <img className={styles.image} src={src} alt={alt} />
         ) : showIcon ? (
-          <span className={styles.iconWrapper}>{icon}</span>
+          <span className={styles.iconWrapper} aria-hidden="true">{icon}</span>
         ) : (
           <span className={styles.initials}>{initials}</span>
         )}
@@ -39,7 +43,8 @@ export function Avatar({
       {status && (
         <span
           className={[styles.badge, BADGE_SIZE_CLASS[resolvedSize], styles[status]].join(' ')}
-          aria-label={status}
+          role="img"
+          aria-label={`Status: ${status}`}
         />
       )}
     </div>

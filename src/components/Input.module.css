@@ -95,6 +95,13 @@
   mix-blend-mode: multiply;
 }
 
+/* In dark mode, multiply makes placeholder disappear against dark surface —
+   drop the blend mode and use the standard placeholder color. */
+:global([data-theme="dark"]) .inputError::placeholder {
+  mix-blend-mode: normal;
+  color: var(--color-grey-400);
+}
+
 .lg {
   height: 40px;
   padding: 0 var(--space-2-5);
@@ -161,4 +168,10 @@
   font-weight: var(--text-small-weight);
   line-height: var(--line-height-base);
   color: var(--color-text-secondary);
+}
+
+:global(body[data-keyboard-nav]) .passwordToggle:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
 }

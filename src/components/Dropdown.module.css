@@ -31,7 +31,7 @@
   align-items: center;
   gap: var(--space-2-5);
   padding: var(--space-3);
-  background-color: var(--color-grey-50);
+  background-color: var(--color-grey-100);
   flex-shrink: 0;
   transition: background-color 0.12s;
 }
@@ -241,6 +241,16 @@ button.searchAction:hover {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
+  margin-left: auto;
+  padding-left: 50px;
+}
+
+/* Badge content inside an active item — flip to light for contrast on dark bg */
+.itemActive .itemBadge {
+  color: var(--color-white);
+}
+.itemActive .itemBadge > * {
+  color: var(--color-white);
 }
 
 /* ── Section title ───────────────────────────────── */
@@ -266,7 +276,8 @@ button.searchAction:hover {
 .divider span {
   display: block;
   height: 1px;
-  background-color: #e6e6e6;
+  background-color: var(--color-border);
+  opacity: 0.6;
 }
 
 /* ── No results ──────────────────────────────────── */

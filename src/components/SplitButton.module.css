@@ -38,9 +38,28 @@
   transform: translateY(-50%);
 }
 
-.sep_primary   { background-color: rgba(255, 255, 255, .6); }
+.sep_primary   { background-color: rgba(0, 0, 0, .4); }
 .sep_secondary { background-color: rgba(255, 255, 255, .6); }
 .sep_outline   { background-color: var(--color-grey-400); }
+
+/* In dark mode, secondary becomes outline-style with a 2px grey-300 border —
+   make the separator match (transparent fill, 2px cap borders, grey-400 line). */
+:global([data-theme="dark"]) .sepWrap_secondary {
+  background-color: transparent;
+  border-top: 2px solid var(--color-grey-300);
+  border-bottom: 2px solid var(--color-grey-300);
+}
+:global([data-theme="dark"]) .sep_secondary {
+  background-color: var(--color-grey-400);
+}
+
+/* Outline split in dark mode uses a 2px border on the buttons —
+   make the separator caps match. */
+:global([data-theme="dark"]) .sepWrap_outline {
+  background-color: transparent;
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+}
 
 /* ── Right half (chevron) ────────────────────────── */
 .right {
@@ -74,7 +93,7 @@
   right: 0;
   min-width: 180px;
   background: var(--color-white);
-  border: 1px solid #e6e6e6;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   z-index: 200;
@@ -107,7 +126,7 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2-5) var(--space-5) var(--space-2-5) var(--space-2);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background-color: var(--color-white);
   cursor: pointer;
   transition: background-color 0.1s;
@@ -134,11 +153,11 @@
   flex-shrink: 0;
   width: 24px;
   height: 24px;
-  color: #999999;
+  color: var(--color-grey-400);
 }
 
 .itemIconActive {
-  color: #fffafa;
+  color: var(--color-white);
 }
 
 .itemLabel {
@@ -147,7 +166,7 @@
   font-size: var(--text-body-size);
   font-weight: 500;
   line-height: 1.375;
-  color: var(--color-grey-600);
+  color: var(--color-grey-800);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -155,4 +174,9 @@
 
 .itemLabelActive {
   color: var(--color-white);
+}
+
+:global(body[data-keyboard-nav]) .item:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }

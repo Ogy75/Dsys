@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useId } from 'react'
 import { Icon } from './Icon'
 import styles from './Accordion.module.css'
 
@@ -14,6 +14,24 @@ export function Accordion({
 }) {
   const computedDefault = defaultValue ?? items.filter(i => i.defaultOpen).map(i => i.id)
   const [openIds, setOpenIds] = useState(computedDefault)
+  const idPrefix = useId()
+  const headerRefs = useRef([])
+
+  function focusHeader(idx) {
+    const el = headerRefs.current[idx]
+    if (el) el.focus()
+  }
+
+  function onHeaderKeyDown(e, idx) {
+    const last = items.length - 1
+    switch (e.key) {
+      case 'ArrowDown': e.preventDefault(); focusHeader(idx === last ? 0 : idx + 1); break
+      case 'ArrowUp': e.preventDefault(); focusHeader(idx === 0 ? last : idx - 1); break
+      case 'Home': e.preventDefault(); focusHeader(0); break
+      case 'End': e.preventDefault(); focusHeader(last); break
+      default:
+    }
+  }
 
   const controlled = value !== undefined
   const currentOpen = controlled ? value : openIds
@@ -49,15 +67,21 @@ export function Accordion({
           <button type="button" className={styles.toggleBtn} onClick={collapseAll}>Collapse all</button>
         </div>
       )}
-      {items.map((item) => {
+      {items.map((item, idx) => {
         const isOpen = currentOpen.includes(item.id)
+        const panelId = `${idPrefix}-panel-${idx}`
+        const headerId = `${idPrefix}-header-${idx}`
         return (
           <div key={item.id} className={styles.item}>
             <button
+              ref={el => headerRefs.current[idx] = el}
+              id={headerId}
               type="button"
               className={[styles.header, styles[size], isOpen ? styles.headerOpen : ''].filter(Boolean).join(' ')}
               onClick={() => toggle(item.id)}
+              onKeyDown={e => onHeaderKeyDown(e, idx)}
               aria-expanded={isOpen}
+              aria-controls={panelId}
             >
               {chevronPosition === 'left' && (
                 <span className={[styles.chevron, isOpen ? styles.chevronOpen : ''].filter(Boolean).join(' ')}>
@@ -72,6 +96,9 @@ export function Accordion({
               )}
             </button>
             <div
+              id={panelId}
+              role="region"
+              aria-labelledby={headerId}
               className={[styles.body, isOpen ? styles.bodyOpen : ''].filter(Boolean).join(' ')}
               aria-hidden={!isOpen}
             >

@@ -108,6 +108,13 @@
   mix-blend-mode: multiply;
 }
 
+/* In dark mode, multiply makes placeholder disappear against dark surface —
+   drop the blend mode and use the standard placeholder color. */
+:global([data-theme="dark"]) .textareaError::placeholder {
+  mix-blend-mode: normal;
+  color: var(--color-grey-400);
+}
+
 .textareaDisabled {
   background-color: var(--color-grey-100);
   border-color: var(--color-grey-300);

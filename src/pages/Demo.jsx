@@ -79,7 +79,7 @@ function row(i) {
   return {
     name,
     email,
-    avatarUrl: `https://i.pravatar.cc/80?u=${email}`,
+    avatarUrl: null,
     role,
     department: ROLE_DEPT[role],
     status: STATUSES[i % STATUSES.length],

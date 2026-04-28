@@ -14,7 +14,7 @@ export function SegmentIndicator({ value = 0, total = 5 }) {
   const colorClass = COLOR_MAP[clamped] ?? styles.colorGreen
 
   return (
-    <span className={styles.root} aria-label={`${clamped} of ${total}`}>
+    <span className={styles.root} role="img" aria-label={`${clamped} of ${total}`}>
       {Array.from({ length: total }, (_, i) => (
         <span
           key={i}

@@ -187,3 +187,40 @@
   border-color: var(--color-grey-300);
   color: var(--color-grey-300);
 }
+
+/* In dark mode, secondary takes the outline treatment for contrast */
+:global([data-theme="dark"]) .secondary {
+  background-color: transparent;
+  border: 2px solid var(--color-grey-300);
+  color: var(--color-grey-800);
+}
+:global([data-theme="dark"]) .secondary:hover:not(:disabled) {
+  background-color: var(--color-grey-100);
+  border-color: var(--color-grey-300);
+}
+:global([data-theme="dark"]) .secondary:disabled {
+  background-color: transparent;
+  border-color: var(--color-grey-300);
+  color: var(--color-grey-300);
+}
+
+/* In dark mode, outline button uses a thicker border */
+:global([data-theme="dark"]) .outline {
+  border-width: 2px;
+}
+:global([data-theme="dark"]) .outline:hover:not(:disabled) {
+  background-color: var(--color-grey-100);
+  border-color: var(--color-grey-500);
+}
+
+/* In dark mode, the disabled danger button text was too bright against
+   the dark-red background — use a muted darker red. */
+:global([data-theme="dark"]) .danger:disabled {
+  color: #7a3a3a;
+}
+
+/* In dark mode, ghost/outline ripple needs to be light to be visible */
+:global([data-theme="dark"]) .ghost .ripple,
+:global([data-theme="dark"]) .outline .ripple {
+  background-color: rgba(255, 255, 255, 0.18);
+}

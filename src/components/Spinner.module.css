@@ -36,6 +36,11 @@
   animation: dash 1.4s ease-in-out infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; }
+  .arc { animation: none; }
+}
+
 /* ── Group (spinner + text) ──────────────────── */
 
 .group {
@@ -64,8 +69,8 @@
   border-radius: inherit;
 }
 
-.backdrop-white { background: rgba(255, 255, 255, 0.4); }
-.backdrop-black { background: rgba(0, 0, 0, 0.4); }
+.backdrop-white { background: rgba(255, 255, 255, 0.65); }
+.backdrop-black { background: rgba(0, 0, 0, 0.65); }
 
 /* ── Color variants ──────────────────────────── */
 

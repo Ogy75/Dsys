@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import styles from './Alert.module.css'
 import { Icon } from './Icon'
+import { IconButton } from './IconButton'
 
 const STATUS_ICONS = {
-  info:    { name: 'info',         color: '#06B6D4' },
-  warning: { name: 'warning',      color: '#F59E0B' },
+  info:    { name: 'info',         color: '#0e7490' },
+  warning: { name: 'warning',      color: '#b45309' },
   success: { name: 'check_circle', color: '#5CB335' },
   danger:  { name: 'cancel',       color: '#DC2626' },
 }
@@ -48,9 +49,13 @@ export function Alert({
           {title && <span className={styles.title}>{title}</span>}
         </div>
         {dismissable && (
-          <button className={styles.close} onClick={handleDismiss} aria-label="Dismiss alert">
-            <Icon name="close" size={20} />
-          </button>
+          <IconButton
+            variant="ghost"
+            size="sm"
+            icon={<Icon name="close" size={20} />}
+            onClick={handleDismiss}
+            aria-label="Dismiss alert"
+          />
         )}
       </div>
       {(children || link) && (

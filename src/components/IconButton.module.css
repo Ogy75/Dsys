@@ -24,3 +24,8 @@
 .lg .iconWrap span {
   font-size: 22px !important;
 }
+
+:global(body[data-keyboard-nav]) .iconBtn:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

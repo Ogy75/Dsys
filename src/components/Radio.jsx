@@ -13,6 +13,7 @@ export function Radio({
   value,
 }) {
   const id = useId()
+  const helperId = useId()
 
   return (
     <label
@@ -33,6 +34,7 @@ export function Radio({
           onChange={e => onChange?.(e.target.value)}
           className={styles.input}
           aria-invalid={error || undefined}
+          aria-describedby={helperText ? helperId : undefined}
         />
         <span
           className={[
@@ -59,6 +61,7 @@ export function Radio({
           </span>
           {helperText && (
             <span
+              id={helperId}
               className={[
                 styles.helperText,
                 disabled ? styles.helperTextDisabled : '',

@@ -38,6 +38,8 @@ export function Input({
   passwordToggle = true,
 }) {
   const id = useId()
+  const errorId = `${id}-error`
+  const helperId = `${id}-helper`
   const [showPassword, setShowPassword] = useState(false)
 
   const isPassword = type === 'password'
@@ -92,6 +94,7 @@ export function Input({
             aria-invalid={!!error}
             aria-required={required}
             aria-label={!labelText ? ariaLabel : undefined}
+            aria-describedby={error ? errorId : (helperText ? helperId : undefined)}
             autoComplete={autoComplete}
           />
           {error && (
@@ -107,14 +110,14 @@ export function Input({
               className={styles.passwordToggle}
               onClick={() => setShowPassword(v => !v)}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
-              tabIndex={-1}
+              aria-pressed={showPassword}
             >
               {showPassword ? <EyeOffIcon /> : <EyeIcon />}
             </button>
           )}
         </div>
-        {error && <p className={styles.errorMsg}>{error}</p>}
-        {helperText && !error && <p className={styles.helperText}>{helperText}</p>}
+        {error && <p id={errorId} className={styles.errorMsg}>{error}</p>}
+        {helperText && !error && <p id={helperId} className={styles.helperText}>{helperText}</p>}
       </div>
     </div>
   )
