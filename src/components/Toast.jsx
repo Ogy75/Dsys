@@ -58,10 +58,10 @@ const ToastContext = createContext(null)
 
 // ─── Individual toast item ────────────────────────────────────────────────────
 
-function ToastItem({ id, variant, title, message, dismissible, action, position, onClose }) {
+function ToastItem({ id, variant, title, message, dismissible, action, duration: durationProp, position, onClose }) {
   const [closing, setClosing] = useState(false)
   const closingRef = useRef(false)
-  const duration = readingDuration(title, message)
+  const duration = durationProp ?? readingDuration(title, message)
 
   const dismiss = useCallback(() => {
     if (closingRef.current) return
@@ -148,9 +148,9 @@ export function ToastProvider({ children, position = 'top-right' }) {
     setToasts(prev => prev.filter(t => t.id !== id))
   }, [])
 
-  const toast = useCallback(({ variant = 'info', title, message, dismissible = false, action }) => {
+  const toast = useCallback(({ variant = 'info', title, message, dismissible = false, action, duration }) => {
     const id = nextId.current++
-    setToasts(prev => [...prev, { id, variant, title, message, dismissible, action }])
+    setToasts(prev => [...prev, { id, variant, title, message, dismissible, action, duration }])
   }, [])
 
   // Bottom positions stack newest at bottom (reverse column), top/center stack newest at top

@@ -11,6 +11,7 @@ import { Skeleton } from './Skeleton'
 import { MultiSelect } from '../pages/Select'
 import { Dropdown } from './Dropdown'
 import { Kbd } from './Kbd'
+import { useToast } from './Toast'
 import styles from './Table.module.css'
 
 function BufferedFilterMultiSelect({ value, onCommit, options, size }) {
@@ -554,6 +555,7 @@ export function Table({
   const [formulaSuggestionMeta, setFormulaSuggestionMeta] = useState(null)
   const [activeSuggestionIdx, setActiveSuggestionIdx] = useState(0)
   const [focused, setFocused] = useState({ row: 0, col: 0 })
+  const { toast } = useToast()
   const [selected, setSelected] = useState(new Set())
   const [page, setPage] = useState(1)
   const [isPaging, setIsPaging] = useState(false)
@@ -894,6 +896,28 @@ export function Table({
     onSelectionChange?.(rows.filter((_, i) => next.has(i)))
   }
 
+
+  // ── Copy-to-clipboard notice ──────────────────────────────
+  function getFocusedCellText() {
+    const colOffset = selectable ? 1 : 0
+    if (focused.col < colOffset) return ''
+    const col = orderedColumns[focused.col - colOffset]
+    const row = pagedRows[focused.row]
+    if (!col || !row) return ''
+    const raw = row[col.key]
+    return raw == null ? '' : String(raw)
+  }
+
+  function handleTableCopy(e) {
+    const sel = typeof window !== 'undefined' ? window.getSelection?.()?.toString() ?? '' : ''
+    if (!sel) {
+      const text = getFocusedCellText()
+      if (!text) return
+      e.preventDefault()
+      e.clipboardData?.setData('text/plain', text)
+    }
+    toast({ variant: 'info', title: 'Info', message: 'Cell data copied to clipboard', duration: 1500 })
+  }
 
   // ── Keyboard nav ───────────────────────────────────────────
   function handleCellKeyDown(e, ri, ci) {
@@ -1428,6 +1452,7 @@ export function Table({
           className={[styles.bodyScroll, filteredRows.length === 0 ? styles.bodyScrollEmpty : ''].filter(Boolean).join(' ')}
           ref={tableWrapperRef}
           onScroll={handleBodyScroll}
+          onCopy={handleTableCopy}
         >
           {filteredRows.length === 0 && (
             <div className={styles.emptyOverlay}>

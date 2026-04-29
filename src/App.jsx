@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
+import { ToastProvider } from './components/Toast'
 import Typography from './pages/Typography'
 import Colors from './pages/Colors'
 import Spacing from './pages/Spacing'
@@ -46,6 +47,7 @@ function PlaceholderPage({ title }) {
 export default function App() {
   return (
     <BrowserRouter>
+     <ToastProvider position="top-right">
       <Layout>
         <Routes>
           <Route path="/" element={<Navigate to="/typography" replace />} />
@@ -116,6 +118,7 @@ export default function App() {
           <Route path="/error-state" element={<PlaceholderPage title="Error State" />} />
         </Routes>
       </Layout>
+     </ToastProvider>
     </BrowserRouter>
   )
 }
