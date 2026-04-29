@@ -23,7 +23,7 @@
 }
 
 .item:hover {
-  background-color: var(--color-grey-50);
+  background-color: var(--color-grey-100);
 }
 
 .interactive {
@@ -35,12 +35,29 @@
 }
 
 .selected {
-  background-color: var(--color-grey-50);
+  background-color: var(--color-grey-100);
 }
 
 .selected.interactive:hover,
 .selected:hover {
   background-color: var(--color-grey-100);
+}
+
+:global([data-theme="dark"]) .item:hover {
+  background-color: color-mix(in srgb, var(--color-text-primary) 4%, transparent);
+}
+
+:global([data-theme="dark"]) .interactive:hover {
+  background-color: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+}
+
+:global([data-theme="dark"]) .selected {
+  background-color: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+}
+
+:global([data-theme="dark"]) .selected.interactive:hover,
+:global([data-theme="dark"]) .selected:hover {
+  background-color: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
 }
 
 .disabled {

@@ -103,7 +103,7 @@ const avatarCode = `<List>
   <ListItem
     label="Alice Johnson"
     description="alice@example.com"
-    leading={<Avatar initials="AJ" size="sm" />}
+    leading={<Avatar initials="AJ" />}
     trailing="Admin"
   />
 </List>`
@@ -278,7 +278,7 @@ export default function ListPage() {
                   key={item.id}
                   label={item.label}
                   description={item.description}
-                  leading={<Avatar initials={item.initials} size="sm" />}
+                  leading={<Avatar initials={item.initials} />}
                   trailing={<ChevronIcon />}
                 />
               ))}

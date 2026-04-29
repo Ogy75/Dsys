@@ -10,7 +10,9 @@ function CorporateIcon() {
   return <Icon name="corporate_fare" size={24} />
 }
 
-const SIZES = ['xsm', 'sm', 'md', 'xl', 'xxl']
+const SIZES = ['xsm', 'sm', 'md', 'lg', 'xl']
+
+const SIZE_PX = { xsm: 20, sm: 24, md: 32, lg: 40, xl: 48 }
 
 const usageCode = `import { Avatar } from '@/components/Avatar'
 
@@ -20,7 +22,7 @@ const usageCode = `import { Avatar } from '@/components/Avatar'
 <Avatar size="md" icon={<CorporateIcon />} status="busy" />`
 
 const avatarProps = [
-  { name: 'size', type: "'xsm' | 'sm' | 'md' | 'xl' | 'xxl'", default: "'md'", description: 'Avatar diameter.' },
+  { name: 'size', type: "'xsm' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: 'Avatar diameter — xsm (20px), sm (24px), md (32px), lg (40px), xl (48px).' },
   { name: 'src', type: 'string', default: '—', description: 'Image URL for a photo avatar.' },
   { name: 'alt', type: 'string', default: '"Avatar"', description: 'Accessible label for photo avatars and icons.' },
   { name: 'initials', type: 'string', default: '"JD"', description: 'Text shown when no image or icon is provided.' },
@@ -36,6 +38,19 @@ export default function AvatarPage() {
         title="Avatar"
         description="Circle avatars for user photos, initials, and company icons. Five sizes with a default dark style and an inverse light style."
       />
+
+      <Section title="Sizes" description="Five sizes ranging from 20px (xsm) to 48px (xl). Use smaller sizes inline with text and larger sizes for profile headers.">
+        <DemoCanvas style={{ display: 'flex', gap: 32, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+          {SIZES.map((size) => (
+            <div key={size} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <Avatar size={size} src={IMAGE_SRC} alt="User photo" />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-text-secondary)' }}>
+                {size} · {SIZE_PX[size]}px
+              </span>
+            </div>
+          ))}
+        </DemoCanvas>
+      </Section>
 
       <Section title="User photos">
         <DemoCanvas style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>

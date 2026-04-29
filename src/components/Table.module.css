@@ -46,8 +46,8 @@
 /* ── TABLE WRAPPER ───────────────────────────────────────────── */
 
 .tableWrapper {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--radius-sm);
   background: var(--color-bg-surface);
   overflow: hidden;
   display: flex;
@@ -100,8 +100,8 @@
 
 .th {
   position: relative;
-  background: var(--color-gray-50);
-  border-bottom: 1.5px solid var(--color-gray-200);
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-grey-200);
   vertical-align: top;
   padding: 0;
   overflow: visible;
@@ -185,7 +185,7 @@
 /* Filter row cells */
 .filterTh {
   background: var(--color-gray-50);
-  border-bottom: 1.5px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-grey-200);
   padding: 0;
   vertical-align: middle;
 }
@@ -633,7 +633,7 @@
 
 .td {
   padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-grey-200);
   background: var(--color-bg-surface);
   vertical-align: middle;
   transition: background 0.1s;
@@ -643,7 +643,7 @@
 }
 
 .tr:last-child .td {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-grey-200);
 }
 
 
@@ -662,7 +662,7 @@
 }
 
 .table[data-zebra] .tr:last-child .td {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-grey-200);
 }
 
 .table[data-zebra] .tr:nth-child(odd) .td {
@@ -872,7 +872,10 @@
 }
 
 /* Header sticky cells must use the header background */
-.th.stickyCell,
+.th.stickyCell {
+  background: var(--color-bg-surface);
+}
+
 .filterTh.stickyCell {
   background: var(--color-gray-50);
 }
@@ -892,20 +895,24 @@
 
 /* Separator on the rightmost sticky column */
 .stickyLast {
-  border-right: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-grey-200);
 }
 
 /* ── SPACER COLUMN ───────────────────────────────────────────── */
 
 .spacerTh {
-  background: var(--color-gray-50);
-  border-bottom: 1.5px solid var(--color-gray-200);
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-grey-200);
   padding: 0;
+}
+
+.spacerThFilter {
+  background: var(--color-gray-50);
 }
 
 .spacerTd {
   background: var(--color-bg-surface);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-grey-200);
   padding: 0;
   transition: background 0.1s;
 }
@@ -923,7 +930,7 @@
 }
 
 .tr:last-child .spacerTd {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-grey-200);
 }
 
 .table[data-zebra] .tr .spacerTd {
@@ -931,7 +938,7 @@
 }
 
 .table[data-zebra] .tr:last-child .spacerTd {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-grey-200);
 }
 
 .table[data-zebra] .tr:nth-child(odd) .spacerTd {

@@ -1,13 +1,13 @@
 import styles from './Avatar.module.css'
 
-const SIZES = ['xsm', 'sm', 'md', 'xl', 'xxl']
+const SIZES = ['xsm', 'sm', 'md', 'lg', 'xl']
 
 const BADGE_SIZE_CLASS = {
   xsm: styles.badgeXsm,
   sm:  styles.badgeSm,
   md:  styles.badgeMd,
+  lg:  styles.badgeLg,
   xl:  styles.badgeXl,
-  xxl: styles.badgeXxl,
 }
 
 export function Avatar({

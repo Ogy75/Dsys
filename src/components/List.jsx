@@ -2,8 +2,10 @@ import React from 'react'
 import styles from './List.module.css'
 import { IconButton } from './IconButton'
 import { Icon } from './Icon'
+import { Avatar } from './Avatar'
 
 const leadingIconSize = { sm: 20, md: 24, lg: 32 }
+const leadingAvatarSize = { sm: 'sm', md: 'md', lg: 'lg' }
 
 export function List({
   items = [],
@@ -49,10 +51,13 @@ export function ListItem({
 }) {
   const hasActions = actions && actions.length > 0
 
-  const resolvedLeading =
-    React.isValidElement(leading) && leading.type === Icon
+  const resolvedLeading = React.isValidElement(leading)
+    ? leading.type === Icon
       ? React.cloneElement(leading, { size: leadingIconSize[size] })
-      : leading
+      : leading.type === Avatar
+        ? React.cloneElement(leading, { size: leadingAvatarSize[size] })
+        : leading
+    : leading
 
   function handleKeyDown(e) {
     if (!onClick || disabled) return

@@ -13,6 +13,31 @@ import { Dropdown } from './Dropdown'
 import { Kbd } from './Kbd'
 import styles from './Table.module.css'
 
+function BufferedFilterMultiSelect({ value, onCommit, options, size }) {
+  const [draft, setDraft] = useState(value)
+  const draftRef = useRef(draft)
+  draftRef.current = draft
+  function handleOpenChange(open) {
+    if (open) {
+      setDraft(value)
+      draftRef.current = value
+    } else {
+      onCommit(draftRef.current)
+    }
+  }
+  return (
+    <MultiSelect
+      size={size}
+      placeholder="All"
+      options={options}
+      value={draft}
+      onChange={setDraft}
+      onOpenChange={handleOpenChange}
+      portal
+    />
+  )
+}
+
 function SortAscIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -684,8 +709,25 @@ export function Table({
       return
     }
     setIsPaging(true)
+    let rafId = null
+    const wrapper = tableWrapperRef.current
+    if (wrapper && wrapper.scrollTop > 0) {
+      const startTop = wrapper.scrollTop
+      const duration = 300
+      const startTime = performance.now()
+      const easeOutCubic = (k) => 1 - Math.pow(1 - k, 3)
+      const step = (now) => {
+        const k = Math.min(1, (now - startTime) / duration)
+        wrapper.scrollTop = startTop * (1 - easeOutCubic(k))
+        if (k < 1) rafId = requestAnimationFrame(step)
+      }
+      rafId = requestAnimationFrame(step)
+    }
     const t = setTimeout(() => setIsPaging(false), 700)
-    return () => clearTimeout(t)
+    return () => {
+      clearTimeout(t)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
   }, [page])
 
   function applyFormulaSuggestion(colKey) {
@@ -1206,13 +1248,11 @@ export function Table({
                             : (columnFilterTypes.distincts[col.key] ?? []).map(v => ({ value: v, label: v }))
                           return (
                             <div className={styles.filterMultiSelectWrap}>
-                              <MultiSelect
+                              <BufferedFilterMultiSelect
                                 size={density === 'comfortable' ? 'lg' : 'md'}
-                                placeholder="All"
                                 options={options}
                                 value={selArr}
-                                onChange={arr => setMultiFilters(prev => ({ ...prev, [col.key]: arr }))}
-                                portal
+                                onCommit={arr => setMultiFilters(prev => ({ ...prev, [col.key]: arr }))}
                               />
                             </div>
                           )
@@ -1377,7 +1417,7 @@ export function Table({
                     </th>
                   )
                 })}
-                {!stretch && <th className={styles.spacerTh} />}
+                {!stretch && <th className={`${styles.spacerTh} ${styles.spacerThFilter}`} />}
               </tr>
             )}
             </thead>

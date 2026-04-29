@@ -68,8 +68,9 @@ export function Select({ label, required, placeholder = 'Select…', options = [
 }
 
 /* ── Multi Select ─────────────────────────────── */
-export function MultiSelect({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value = [], onChange, searchable = false, wrap = false, portal = false, className }) {
+export function MultiSelect({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value = [], onChange, onOpenChange, searchable = false, wrap = false, portal = false, className }) {
   const [open, setOpen] = useState(false)
+  function handleOpenChange(next) { setOpen(next); onOpenChange?.(next) }
 
   const triggerLabel = value.length === 0
     ? placeholder
@@ -89,7 +90,7 @@ export function MultiSelect({ label, required, placeholder = 'Select…', option
         <Dropdown
           className={styles.controlWrap}
           open={open}
-          onOpenChange={setOpen}
+          onOpenChange={handleOpenChange}
           items={options}
           value={value}
           onChange={onChange}

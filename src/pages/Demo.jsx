@@ -137,7 +137,7 @@ export default function DemoPage() {
             onChange={() => {}}
             trigger={
               <button type="button" className={styles.avatarTrigger} aria-label="Account menu">
-                <Avatar size="xl" initials="JD" />
+                <Avatar size="lg" initials="JD" />
               </button>
             }
           />

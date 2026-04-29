@@ -33,11 +33,13 @@
   padding: var(--space-3);
   background-color: var(--color-grey-100);
   flex-shrink: 0;
-  transition: background-color 0.12s;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.12s, border-color 0.12s;
 }
 
 .searchBarActive {
   background-color: var(--color-white);
+  border-bottom-color: var(--color-grey-100);
 }
 
 .searchInput {
@@ -84,7 +86,8 @@ button.searchAction:hover {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: var(--space-2) var(--space-1-5);
+  justify-content: flex-end;
+  padding: var(--space-2) var(--space-2) var(--space-0-5) var(--space-1);
 }
 
 /* Ghost/small/default: pill shape, no bg, blue text */
@@ -98,14 +101,14 @@ button.searchAction:hover {
   font-size: var(--text-small-size);
   font-weight: var(--text-small-weight);
   line-height: 1;
-  color: var(--color-blue-600);
+  color: var(--color-text-primary);
   cursor: pointer;
   transition: background-color 0.1s;
   white-space: nowrap;
 }
 
 .ghostBtn:hover {
-  background-color: var(--color-blue-50);
+  background-color: var(--color-grey-100);
 }
 
 /* ── List wrapper ────────────────────────────────── */

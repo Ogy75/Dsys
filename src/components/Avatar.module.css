@@ -53,14 +53,14 @@
   font-weight: 600;
 }
 
-.xl {
+.lg {
   width: 40px;
   height: 40px;
   font-size: 16px;
   font-weight: 700;
 }
 
-.xxl {
+.xl {
   width: 48px;
   height: 48px;
   font-size: 18px;
@@ -88,8 +88,8 @@
 .xsm .iconWrapper > span { font-size: 12px !important; }
 .sm  .iconWrapper > span { font-size: 14px !important; }
 .md  .iconWrapper > span { font-size: 19px !important; }
-.xl  .iconWrapper > span { font-size: 24px !important; }
-.xxl .iconWrapper > span { font-size: 29px !important; }
+.lg  .iconWrapper > span { font-size: 24px !important; }
+.xl  .iconWrapper > span { font-size: 29px !important; }
 
 /* Status badge */
 .badge {
@@ -104,8 +104,8 @@
 .badgeXsm { width: 5px;  height: 5px;  border-width: 1.5px; }
 .badgeSm  { width: 6px;  height: 6px;  border-width: 1.5px; }
 .badgeMd  { width: 8px;  height: 8px;  border-width: 2px; }
-.badgeXl  { width: 10px; height: 10px; border-width: 2px; }
-.badgeXxl { width: 13px; height: 13px; border-width: 2px; }
+.badgeLg  { width: 10px; height: 10px; border-width: 2px; }
+.badgeXl  { width: 13px; height: 13px; border-width: 2px; }
 
 .online  { background: #84cc16; }
 .away    { background: #f59e0b; }
