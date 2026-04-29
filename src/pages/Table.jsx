@@ -21,12 +21,14 @@ function Sparkline({ data }) {
   const polyline = pts.join(' ')
   const area = `${pad},${h - pad} ${polyline} ${w - pad},${h - pad}`
   const up = data[data.length - 1] >= data[0]
-  const stroke = up ? '#16a34a' : '#dc2626'
-  const fill = up ? 'rgba(22,163,74,0.10)' : 'rgba(220,38,38,0.10)'
+  const stroke = up ? 'var(--color-green-ap-600)' : 'var(--color-red-600)'
+  const fill = up
+    ? 'color-mix(in srgb, var(--color-green-ap-600) 10%, transparent)'
+    : 'color-mix(in srgb, var(--color-red-600) 10%, transparent)'
   return (
     <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" style={{ display: 'block' }}>
-      <polygon points={area} fill={fill} />
-      <polyline points={polyline} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points={area} style={{ fill }} />
+      <polyline points={polyline} fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ stroke }} />
     </svg>
   )
 }
@@ -377,7 +379,7 @@ function SimpleTableDemo() {
               border: '1px solid',
               borderColor: density === d ? 'var(--color-grey-700)' : 'var(--color-border)',
               background: density === d ? 'var(--color-grey-700)' : 'transparent',
-              color: density === d ? '#fff' : 'var(--color-text-secondary)',
+              color: density === d ? 'var(--color-white)' : 'var(--color-text-secondary)',
               fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',

@@ -91,5 +91,5 @@
 .yellow { border-color: var(--color-yellow-600); }
 .purple { border-color: var(--color-purple-600); }
 .blue   { border-color: var(--color-blue-600); }
-.cyan   { border-color: #0891b2; }
+.cyan   { border-color: var(--color-cyan-600); }
 .lime   { border-color: var(--color-lime-400); }

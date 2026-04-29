@@ -19,7 +19,7 @@ function ChevronIcon({ open }) {
 }
 
 function ChevronIconDisabled() {
-  return <Icon name="keyboard_arrow_down" size={16} style={{ color: '#cccccc' }} className={styles.chevron} />
+  return <Icon name="keyboard_arrow_down" size={16} style={{ color: 'var(--color-grey-300)' }} className={styles.chevron} />
 }
 
 /* ── Single Select ────────────────────────────── */

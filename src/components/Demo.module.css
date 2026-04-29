@@ -35,8 +35,8 @@
 }
 
 .pre {
-  background-color: #171717;
-  color: #e2e8f0;
+  background-color: var(--color-gray-900);
+  color: var(--color-slate-200);
   padding: var(--space-6);
   overflow-x: auto;
   font-size: 13px;

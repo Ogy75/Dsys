@@ -10,7 +10,7 @@ const VM = 8            // minimum distance from viewport edge
 
 /* ── Arrow SVG ──────────────────────────────────── */
 function ArrowSVG({ direction, variant }) {
-  const fill = variant === 'dark' ? '#1a1a1a' : '#f7f7f7'
+  const fill = variant === 'dark' ? 'var(--color-grey-800)' : 'var(--color-grey-50)'
   const horiz = direction === 'up' || direction === 'down'
   const w = horiz ? ARROW_MAJOR : ARROW_MINOR
   const h = horiz ? ARROW_MINOR : ARROW_MAJOR
@@ -21,7 +21,7 @@ function ArrowSVG({ direction, variant }) {
   if (direction === 'right') path = `M0,0 L${w},${h / 2} L0,${h} Z`
   return (
     <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" style={{ display: 'block' }}>
-      <path d={path} fill={fill} />
+      <path d={path} style={{ fill }} />
     </svg>
   )
 }

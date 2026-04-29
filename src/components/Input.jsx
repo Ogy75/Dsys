@@ -4,7 +4,7 @@ import { Tooltip } from './Tooltip'
 import { Icon } from './Icon'
 
 function ErrorIcon({ size = 24 }) {
-  return <Icon name="error" size={size} style={{ color: '#DC2626' }} />
+  return <Icon name="error" size={size} style={{ color: 'var(--color-red-600)' }} />
 }
 
 function EyeIcon() {

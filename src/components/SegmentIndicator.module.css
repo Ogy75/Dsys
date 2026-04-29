@@ -18,13 +18,13 @@
 }
 
 .colorRed {
-  background: #dc2626;
+  background: var(--color-red-600);
 }
 
 .colorAmber {
-  background: #f59e0b;
+  background: var(--color-amber-500);
 }
 
 .colorGreen {
-  background: #488929;
+  background: var(--color-green-ap-600);
 }

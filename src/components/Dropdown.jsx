@@ -5,7 +5,7 @@ import { Icon } from './Icon'
 
 /* ── Icons ──────────────────────────────────────── */
 function SearchIcon() {
-  return <Icon name="search" style={{ color: 'rgb(115,115,115)' }} />
+  return <Icon name="search" style={{ color: 'var(--color-grey-500)' }} />
 }
 
 function CloseIcon() {

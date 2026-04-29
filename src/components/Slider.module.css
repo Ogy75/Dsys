@@ -40,7 +40,7 @@
 }
 
 .fillDisabled {
-  background-color: #999999;
+  background-color: var(--color-grey-400);
 }
 
 /* Thumb — column of [tooltip, circle], circle centered on track */
@@ -78,7 +78,7 @@
 }
 
 .tooltipDisabled {
-  background-color: #999999;
+  background-color: var(--color-grey-400);
 }
 
 /* Circle */
@@ -92,7 +92,7 @@
 }
 
 .circleDisabled {
-  background-color: #999999;
+  background-color: var(--color-grey-400);
   box-shadow: none;
 }
 
@@ -176,6 +176,6 @@
 }
 
 .inputBoxDisabled {
-  color: #999999;
+  color: var(--color-grey-400);
   cursor: not-allowed;
 }

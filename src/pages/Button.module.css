@@ -15,7 +15,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.56);
+  background-color: color-mix(in srgb, var(--color-white) 56%, transparent);
   pointer-events: none;
   animation: ripple 0.6s ease-out forwards;
 }
@@ -149,14 +149,14 @@
 }
 .danger:disabled {
   background-color: var(--color-red-100);
-  color: #fca5a5;
+  color: var(--color-red-300);
   border-color: transparent;
 }
 
 /* ── Ghost ───────────────────────────────── */
 .ghost .ripple,
 .outline .ripple {
-  background-color: rgba(0, 0, 0, 0.10);
+  background-color: color-mix(in srgb, var(--color-black) 10%, transparent);
 }
 
 .ghost {
@@ -216,11 +216,11 @@
 /* In dark mode, the disabled danger button text was too bright against
    the dark-red background — use a muted darker red. */
 :global([data-theme="dark"]) .danger:disabled {
-  color: #7a3a3a;
+  color: color-mix(in srgb, var(--color-red-700) 50%, var(--color-grey-900));
 }
 
 /* In dark mode, ghost/outline ripple needs to be light to be visible */
 :global([data-theme="dark"]) .ghost .ripple,
 :global([data-theme="dark"]) .outline .ripple {
-  background-color: rgba(255, 255, 255, 0.18);
+  background-color: color-mix(in srgb, var(--color-white) 18%, transparent);
 }

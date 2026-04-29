@@ -89,7 +89,7 @@
 
 /* Inverted track & fill */
 .trackInverted {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: color-mix(in srgb, var(--color-white) 20%, transparent);
 }
 
 .fillInverted {
@@ -193,7 +193,7 @@
   0% {
     left: -35%;
     right: 100%;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: color-mix(in srgb, var(--color-white) 40%, transparent);
   }
   50%, 100% {
     left: 100%;
@@ -206,7 +206,7 @@
   0% {
     left: -200%;
     right: 100%;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: color-mix(in srgb, var(--color-white) 40%, transparent);
   }
   50%, 100% {
     left: 107%;

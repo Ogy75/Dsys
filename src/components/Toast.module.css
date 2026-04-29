@@ -66,9 +66,7 @@
   width: 360px;
   background: var(--color-bg-surface);
   border-radius: 6px;
-  box-shadow:
-    0 8px 10px -6px rgba(0, 0, 0, 0.1),
-    0 16px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   opacity: 1;
   transition: opacity 120ms ease;
@@ -190,10 +188,10 @@
 }
 
 /* Variant colors */
-.loaderBar.info    { background: #06b6d4; }
-.loaderBar.success { background: var(--color-green-ap-500); }
-.loaderBar.warning { background: #f59e0b; }
-.loaderBar.danger  { background: var(--color-red-600); }
+.loaderBar.info    { background: var(--color-cyan-500); }
+.loaderBar.success { background: var(--color-status-success); }
+.loaderBar.warning { background: var(--color-status-warning); }
+.loaderBar.danger  { background: var(--color-status-danger); }
 
 /* ─── Directional enter animations ──────────────────────────────────────────── */
 

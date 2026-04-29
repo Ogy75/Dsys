@@ -82,13 +82,13 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: color-mix(in srgb, var(--color-black) 10%, transparent);
   pointer-events: none;
   animation: ripple 0.6s ease-out forwards;
 }
 
 .rippleActive {
-  background-color: rgba(255, 255, 255, 0.28);
+  background-color: color-mix(in srgb, var(--color-white) 28%, transparent);
 }
 
 /* ── Panel ───────────────────────────────────── */

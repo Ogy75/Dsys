@@ -38,8 +38,8 @@
   transform: translateY(-50%);
 }
 
-.sep_primary   { background-color: rgba(0, 0, 0, .4); }
-.sep_secondary { background-color: rgba(255, 255, 255, .6); }
+.sep_primary   { background-color: color-mix(in srgb, var(--color-black) 40%, transparent); }
+.sep_secondary { background-color: color-mix(in srgb, var(--color-white) 60%, transparent); }
 .sep_outline   { background-color: var(--color-grey-400); }
 
 /* In dark mode, secondary becomes outline-style with a 2px grey-300 border —

@@ -4,10 +4,10 @@ import { Icon } from './Icon'
 import { IconButton } from './IconButton'
 
 const STATUS_ICONS = {
-  info:    { name: 'info',         color: '#0e7490' },
-  warning: { name: 'warning',      color: '#b45309' },
-  success: { name: 'check_circle', color: '#5CB335' },
-  danger:  { name: 'cancel',       color: '#DC2626' },
+  info:    { name: 'info',         color: 'var(--color-status-info)' },
+  warning: { name: 'warning',      color: 'var(--color-status-warning)' },
+  success: { name: 'check_circle', color: 'var(--color-status-success)' },
+  danger:  { name: 'cancel',       color: 'var(--color-status-danger)' },
 }
 
 function StatusIcon({ variant }) {

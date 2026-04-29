@@ -107,6 +107,6 @@
 .badgeLg  { width: 10px; height: 10px; border-width: 2px; }
 .badgeXl  { width: 13px; height: 13px; border-width: 2px; }
 
-.online  { background: #84cc16; }
-.away    { background: #f59e0b; }
-.busy    { background: #ef4444; }
+.online  { background: var(--color-lime-500); }
+.away    { background: var(--color-amber-500); }
+.busy    { background: var(--color-red-500); }

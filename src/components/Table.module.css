@@ -320,13 +320,13 @@
   position: fixed;
   z-index: 9999;
   background: var(--color-bg-surface);
-  border: 1px solid #e6e6e6;
+  border: 1px solid var(--color-grey-200);
   border-radius: var(--radius-md);
   padding: var(--space-1);
   display: flex;
   flex-direction: column;
   gap: 1px;
-  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   min-width: 180px;
 }
 
@@ -383,7 +383,7 @@
 .viewMenuDivider span {
   display: block;
   height: 1px;
-  background-color: #e6e6e6;
+  background-color: var(--color-grey-200);
 }
 
 /* ── MULTISELECT FILTER ──────────────────────────────────────── */
@@ -609,7 +609,7 @@
 
 .checkboxInput:focus-visible + .checkboxBox {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-blue-500) 25%, transparent);
   border-color: var(--color-blue-500);
 }
 
@@ -631,7 +631,7 @@
 
 
 .trSelected:hover .td {
-  background: #dbeafe !important; /* blue-100 */
+  background: var(--color-blue-100) !important;
 }
 
 /* ── DATA CELLS ──────────────────────────────────────────────── */
@@ -891,7 +891,7 @@
 }
 
 .trSelected:hover .stickyCell {
-  background: #dbeafe !important;
+  background: var(--color-blue-100) !important;
 }
 
 .tr:hover .stickyCell {
@@ -931,7 +931,7 @@
 }
 
 .trSelected:hover .spacerTd {
-  background: #dbeafe !important;
+  background: var(--color-blue-100) !important;
 }
 
 .tr:last-child .spacerTd {

@@ -33,14 +33,14 @@
 
 /* ── Variants ───────────────────────────────────── */
 .dark {
-  --tooltip-text: #f7f7f7;
-  background-color: #1a1a1a;
+  --tooltip-text: var(--color-grey-50);
+  background-color: var(--color-grey-800);
   color: var(--tooltip-text);
 }
 
 .light {
-  --tooltip-text: #1a1a1a;
-  background-color: #f7f7f7;
+  --tooltip-text: var(--color-grey-800);
+  background-color: var(--color-grey-50);
   color: var(--tooltip-text);
 }
 

@@ -67,10 +67,10 @@
 }
 
 /* Variant border colors */
-.info    { border-color: #0e7490; }
-.warning { border-color: #b45309; }
-.success { border-color: var(--color-green-ap-500); }
-.danger  { border-color: var(--color-red-600); }
+.info    { border-color: var(--color-status-info); }
+.warning { border-color: var(--color-status-warning); }
+.success { border-color: var(--color-status-success); }
+.danger  { border-color: var(--color-status-danger); }
 
 :global(body[data-keyboard-nav]) .link:focus {
   outline: none;

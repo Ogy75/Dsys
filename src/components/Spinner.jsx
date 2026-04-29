@@ -42,7 +42,7 @@ export function Spinner({ size = 'md', color = 'dark', backdrop, text, label = '
     </svg>
   )
 
-  const textColor = backdrop === 'black' ? '#ffffff' : '#1a1a1a'
+  const textColor = backdrop === 'black' ? 'var(--color-white)' : 'var(--color-grey-800)'
 
   const inner = text ? (
     <div className={styles.group}>

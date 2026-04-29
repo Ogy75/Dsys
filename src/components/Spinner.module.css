@@ -69,8 +69,8 @@
   border-radius: inherit;
 }
 
-.backdrop-white { background: rgba(255, 255, 255, 0.65); }
-.backdrop-black { background: rgba(0, 0, 0, 0.65); }
+.backdrop-white { background: color-mix(in srgb, var(--color-white) 65%, transparent); }
+.backdrop-black { background: color-mix(in srgb, var(--color-black) 65%, transparent); }
 
 /* ── Color variants ──────────────────────────── */
 
@@ -80,8 +80,8 @@
 .gray .track { stroke: var(--color-grey-100); }
 .gray .arc   { stroke: var(--color-grey-400); }
 
-.white .track { stroke: rgba(255, 255, 255, 0.25); }
-.white .arc   { stroke: #ffffff; }
+.white .track { stroke: color-mix(in srgb, var(--color-white) 25%, transparent); }
+.white .arc   { stroke: var(--color-white); }
 
 .blue .track   { stroke: var(--color-blue-100); }
 .blue .arc     { stroke: var(--color-blue-700); }
