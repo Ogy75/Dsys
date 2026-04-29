@@ -10,8 +10,9 @@ export default function Layout({ children }) {
 
   return (
     <div className={styles.root}>
+      <a href="#main-content" className={styles.skipLink}>Skip to main content</a>
       <Sidebar />
-      <main className={styles.main}>
+      <main id="main-content" className={styles.main} tabIndex={-1}>
         {fullBleed ? children : <div className={styles.content}>{children}</div>}
       </main>
     </div>

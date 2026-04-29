@@ -7,6 +7,7 @@ export function Toggle({
   label,
   labelPosition = 'right',
   variant = 'rounded',
+  'aria-label': ariaLabel,
 }) {
   const trackClass = [
     styles.track,
@@ -27,6 +28,7 @@ export function Toggle({
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={!label ? (ariaLabel || 'Toggle') : undefined}
       disabled={disabled}
       className={trackClass}
       onClick={() => !disabled && onChange?.(!checked)}

@@ -33,8 +33,14 @@
   --text-label-weight: 600;
   --line-height-base: 1.4;
 
-  /* Focus ring — app-specific, not a Figma variable */
-  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #0284c7, 0 0 12px 3px rgba(2, 132, 199, 0.45);
+  /* Focus ring — app-specific, not a Figma variable.
+     --focus-ring-bg is the inner offset color (matches the surface behind the ring);
+     components on dark surfaces can override it locally. */
+  --focus-ring-bg: var(--color-bg-surface);
+  --focus-ring-color: var(--color-blue-600);
+  --focus-ring: 0 0 0 2px var(--focus-ring-bg),
+                0 0 0 4px var(--focus-ring-color),
+                0 0 12px 3px color-mix(in srgb, var(--focus-ring-color) 45%, transparent);
 
   /* Shadows — app-specific, not Figma variables */
   --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.12);

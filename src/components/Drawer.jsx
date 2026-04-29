@@ -11,6 +11,7 @@ export function Drawer({
   title,
   children,
   footer,
+  'aria-label': ariaLabel,
 }) {
   const [mounted, setMounted] = useState(false)
   const [visible, setVisible] = useState(false)
@@ -100,6 +101,7 @@ export function Drawer({
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? 'drawer-title' : undefined}
+        aria-label={!title ? (ariaLabel || 'Drawer') : undefined}
         aria-describedby={hintId}
         tabIndex={-1}
       >
