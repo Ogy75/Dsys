@@ -901,6 +901,9 @@ export function Table({
   function getFocusedCellText() {
     const colOffset = selectable ? 1 : 0
     if (focused.col < colOffset) return ''
+    const el = cellRefs.current[`${focused.row}-${focused.col}`]
+    const domText = el?.innerText?.replace(/\s+/g, ' ').trim()
+    if (domText) return domText
     const col = orderedColumns[focused.col - colOffset]
     const row = pagedRows[focused.row]
     if (!col || !row) return ''
@@ -1462,7 +1465,7 @@ export function Table({
               <button
                 className={styles.emptyResetBtn}
                 style={{ pointerEvents: 'auto' }}
-                onClick={() => setSearches({})}
+                onClick={() => { setSearches({}); setMultiFilters({}) }}
               >
                 Clear filters
               </button>
@@ -1674,10 +1677,18 @@ export function Table({
 
       <div className={styles.footer}>
         <span className={styles.footerCount}>
-          {selected.size > 0
-            ? `${selected.size} of ${filteredRows.length} selected`
-            : `${rows.length} total item${rows.length !== 1 ? 's' : ''}`
-          }
+          {(() => {
+            const hasActiveFilters =
+              Object.values(searches).some(v => v) ||
+              Object.values(multiFilters).some(arr => arr && arr.length > 0)
+            if (selected.size > 0) {
+              return `${selected.size} of ${filteredRows.length} selected`
+            }
+            if (hasActiveFilters) {
+              return `${filteredRows.length} item${filteredRows.length !== 1 ? 's' : ''} shown`
+            }
+            return `${rows.length} total item${rows.length !== 1 ? 's' : ''}`
+          })()}
         </span>
         <Pagination page={page} total={totalPages} onChange={setPage} size="md" />
       </div>
