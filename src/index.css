@@ -205,6 +205,10 @@
   --color-status-warning: var(--color-amber-500);
   --color-status-success: var(--color-green-ap-500);
   --color-status-danger: var(--color-red-600);
+
+  /* Code block surface — stays dark in both themes for legibility */
+  --color-code-bg: #171717;
+  --color-code-fg: #e2e8f0;
 }
 
 /* Dark theme — overrides token values when [data-theme="dark"] is set on <html> */

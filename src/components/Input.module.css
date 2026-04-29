@@ -88,6 +88,10 @@
   background-color: transparent;
 }
 
+.borderless:hover:not(:disabled):not(:focus) {
+  background-color: var(--color-grey-100);
+}
+
 .inputError {
   border-color: var(--color-red-600);
   background-color: var(--color-red-50);

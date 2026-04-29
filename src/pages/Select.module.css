@@ -93,6 +93,10 @@
   background-color: transparent;
 }
 
+.borderless:hover:not(.triggerDisabled):not(.triggerOpen) {
+  background-color: var(--color-grey-100);
+}
+
 :global(body[data-keyboard-nav]) .triggerError:focus {
   outline: none;
   border-color: var(--color-red-600);
