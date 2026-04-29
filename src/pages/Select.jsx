@@ -23,7 +23,7 @@ function ChevronIconDisabled() {
 }
 
 /* ── Single Select ────────────────────────────── */
-export function Select({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value, onChange, searchable = false, wrap = false }) {
+export function Select({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value, onChange, searchable = false, wrap = false, borderless = false }) {
   const [open, setOpen] = useState(false)
   const selected = options.find(o => o.value === value)
 
@@ -50,7 +50,7 @@ export function Select({ label, required, placeholder = 'Select…', options = [
           trigger={
             <button
               type="button"
-              className={[styles.trigger, styles[size], open ? styles.triggerOpen : '', disabled ? styles.triggerDisabled : '', error ? styles.triggerError : ''].filter(Boolean).join(' ')}
+              className={[styles.trigger, styles[size], open ? styles.triggerOpen : '', disabled ? styles.triggerDisabled : '', error ? styles.triggerError : '', borderless ? styles.borderless : ''].filter(Boolean).join(' ')}
               disabled={disabled}
               aria-invalid={!!error}
             >
@@ -68,7 +68,7 @@ export function Select({ label, required, placeholder = 'Select…', options = [
 }
 
 /* ── Multi Select ─────────────────────────────── */
-export function MultiSelect({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value = [], onChange, onOpenChange, searchable = false, wrap = false, portal = false, className }) {
+export function MultiSelect({ label, required, placeholder = 'Select…', options = [], disabled = false, size = 'lg', error, value = [], onChange, onOpenChange, searchable = false, wrap = false, portal = false, className, borderless = false }) {
   const [open, setOpen] = useState(false)
   function handleOpenChange(next) { setOpen(next); onOpenChange?.(next) }
 
@@ -103,7 +103,7 @@ export function MultiSelect({ label, required, placeholder = 'Select…', option
           trigger={
             <button
               type="button"
-              className={[styles.trigger, styles[size], open ? styles.triggerOpen : '', disabled ? styles.triggerDisabled : '', error ? styles.triggerError : ''].filter(Boolean).join(' ')}
+              className={[styles.trigger, styles[size], open ? styles.triggerOpen : '', disabled ? styles.triggerDisabled : '', error ? styles.triggerError : '', borderless ? styles.borderless : ''].filter(Boolean).join(' ')}
               disabled={disabled}
               aria-invalid={!!error}
               aria-multiselectable="true"
@@ -203,6 +203,7 @@ const selectProps = [
   { name: 'onChange', type: '(value) => void', default: '—', description: 'Called with the new value on selection.' },
   { name: 'searchable', type: 'boolean', default: 'false', description: 'Shows a find input at the top of the dropdown. Filters options by label. Search clears on close.' },
   { name: 'wrap', type: 'boolean', default: 'false', description: 'Allows option labels to wrap to multiple lines instead of truncating. Useful for long option text.' },
+  { name: 'borderless', type: 'boolean', default: 'false', description: 'Renders the trigger without a border or background. Dropdown panel is unchanged.' },
   { name: 'error', type: 'string', default: '—', description: 'Error message. Shows red border and red right-aligned message below.' },
   { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the entire select.' },
 ]
@@ -232,6 +233,10 @@ export default function SelectPage() {
   const [errorMd, setErrorMd] = useState(true)
   const [wrapSingle, setWrapSingle] = useState('')
   const [wrapMulti, setWrapMulti] = useState([])
+  const [borderlessSingleLg, setBorderlessSingleLg] = useState('')
+  const [borderlessSingleMd, setBorderlessSingleMd] = useState('')
+  const [borderlessMultiLg, setBorderlessMultiLg] = useState([])
+  const [borderlessMultiMd, setBorderlessMultiMd] = useState([])
 
   return (
     <div>
@@ -341,6 +346,30 @@ export default function SelectPage() {
           <div style={{ width: 300 }}>
             <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Multi</p>
             <MultiSelect label="Label" placeholder="Select items…" options={iconOptions} value={wrapMulti} onChange={setWrapMulti} wrap />
+          </div>
+        </DemoCanvas>
+      </Section>
+
+      <Section
+        title="Borderless"
+        description="Pass borderless to render the trigger without a border or background. Useful for embedding selects inline in toolbars or headings. The dropdown panel stays the same."
+      >
+        <DemoCanvas style={{ flexWrap: 'wrap', alignItems: 'flex-start', gap: 24 }}>
+          <div style={{ width: 300 }}>
+            <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Single — LG</p>
+            <Select label="Label" placeholder="Select…" options={sampleOptions} value={borderlessSingleLg} onChange={setBorderlessSingleLg} borderless />
+          </div>
+          <div style={{ width: 300 }}>
+            <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Single — MD</p>
+            <Select label="Label" size="md" placeholder="Select…" options={sampleOptions} value={borderlessSingleMd} onChange={setBorderlessSingleMd} borderless />
+          </div>
+          <div style={{ width: 300 }}>
+            <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Multi — LG</p>
+            <MultiSelect label="Label" placeholder="Select items…" options={multiOptions} value={borderlessMultiLg} onChange={setBorderlessMultiLg} borderless />
+          </div>
+          <div style={{ width: 300 }}>
+            <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Multi — MD</p>
+            <MultiSelect label="Label" size="md" placeholder="Select items…" options={multiOptions} value={borderlessMultiMd} onChange={setBorderlessMultiMd} borderless />
           </div>
         </DemoCanvas>
       </Section>

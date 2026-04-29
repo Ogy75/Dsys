@@ -129,7 +129,7 @@ button.searchAction:hover {
   flex-direction: column;
   gap: 1px;
   scrollbar-width: thin;
-  scrollbar-color: #c4c4c4 transparent;
+  scrollbar-color: var(--color-gray-300) transparent;
   box-sizing: border-box;
 }
 
@@ -212,6 +212,11 @@ button.searchAction:hover {
 
 .itemActive:hover {
   background-color: var(--color-grey-700);
+}
+
+:global([data-theme="dark"]) .itemActive,
+:global([data-theme="dark"]) .itemActive:hover {
+  background-color: var(--color-grey-500);
 }
 
 .itemDisabled {

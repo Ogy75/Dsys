@@ -81,6 +81,13 @@
   color: var(--color-grey-400);
 }
 
+.borderless,
+.borderless:focus:not(:disabled),
+.borderless.inputDisabled {
+  border-color: transparent;
+  background-color: transparent;
+}
+
 .inputError {
   border-color: var(--color-red-600);
   background-color: var(--color-red-50);

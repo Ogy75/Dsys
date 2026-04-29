@@ -65,7 +65,7 @@
   overflow-x: auto;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #c4c4c4 transparent;
+  scrollbar-color: var(--color-gray-300) transparent;
   position: relative;
 }
 
@@ -204,8 +204,8 @@
   height: var(--space-8);
   padding: 0 var(--space-2);
   margin: 3px var(--space-3) 3px var(--space-4);
-  background: var(--color-white);
-  border: 1px solid var(--color-grey-300);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   transition: border-color 0.15s;
 }
@@ -215,7 +215,7 @@
 }
 
 .searchRow:focus-within {
-  border-color: var(--color-grey-700);
+  border-color: transparent;
 }
 
 .searchIconWrap {
@@ -264,13 +264,13 @@
   position: fixed;
   z-index: 9999;
   background: var(--color-bg-surface);
-  border: 1px solid #e6e6e6;
+  border: 1px solid var(--color-grey-200);
   border-radius: var(--radius-md);
   padding: var(--space-1);
   display: flex;
   flex-direction: column;
   gap: 1px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .filterDropdownItem {
@@ -282,31 +282,36 @@
   background: var(--color-bg-surface);
   border: none;
   border-radius: var(--radius-sm);
-  padding: 10px var(--space-5) 10px var(--space-2);
+  padding: var(--space-2-5) var(--space-5) var(--space-2-5) var(--space-2);
   font-family: var(--font-sans);
-  font-size: var(--text-small-size);
-  font-weight: var(--text-small-weight);
+  font-size: var(--text-body-size);
+  font-weight: 500;
   color: var(--color-grey-800);
   cursor: pointer;
-  line-height: var(--line-height-base);
+  line-height: 1.375;
   white-space: nowrap;
 }
 
 .filterDropdownItem:hover {
-  background: var(--color-grey-50);
+  background: var(--color-grey-100);
 }
 
 .filterDropdownItemActive {
   background: var(--color-grey-700);
-  color: var(--color-grey-50);
+  color: var(--color-white);
 }
 
 .filterDropdownItemActive:hover {
   background: var(--color-grey-700);
 }
 
+:global([data-theme="dark"]) .filterDropdownItemActive,
+:global([data-theme="dark"]) .filterDropdownItemActive:hover {
+  background: var(--color-grey-500);
+}
+
 .filterDropdownItemHovered {
-  background: var(--color-grey-50);
+  background: var(--color-grey-100);
 }
 
 /* ── VIEW MENU (density + fullscreen) ────────────────────────── */

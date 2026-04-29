@@ -8,6 +8,11 @@
   overflow: hidden;
 }
 
+:global([data-theme="dark"]) .page,
+:global([data-theme="dark"]) .body {
+  background: var(--color-black);
+}
+
 .topbar {
   width: 100%;
   padding: var(--space-3) var(--space-6);

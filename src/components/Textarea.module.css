@@ -57,7 +57,7 @@
   resize: none;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #c4c4c4 transparent;
+  scrollbar-color: var(--color-gray-300) transparent;
   transition: border-color 0.15s;
   display: block;
 }

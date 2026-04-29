@@ -36,6 +36,7 @@ export function Input({
   onChange,
   autoComplete = 'off',
   passwordToggle = true,
+  borderless = false,
 }) {
   const id = useId()
   const errorId = `${id}-error`
@@ -64,6 +65,7 @@ export function Input({
     error ? styles.inputError : '',
     showToggle ? styles.inputPassword : '',
     disabled ? styles.inputDisabled : '',
+    borderless ? styles.borderless : '',
   ].filter(Boolean).join(' ')
 
   const showRequired = required && !disabled

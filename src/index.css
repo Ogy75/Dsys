@@ -257,11 +257,11 @@
   --focus-ring: 0 0 0 2px #0d0d0d, 0 0 0 4px #38bdf8, 0 0 12px 3px rgba(56, 189, 248, 0.5);
 
   /* Shadows — stronger on dark */
-  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.18);
-  --shadow-sm: 0 2px 4px 0 rgba(0,0,0,0.32), 0 1px 2px 0 rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.18);
-  --shadow-md: 0 6px 12px -2px rgba(0,0,0,0.34), 0 3px 6px -2px rgba(0,0,0,0.26), 0 0 0 1px rgba(0,0,0,0.18);
-  --shadow-lg: 0 14px 24px -4px rgba(0,0,0,0.36), 0 6px 12px -4px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.18);
-  --shadow-xl: 0 28px 40px -8px rgba(0,0,0,0.4), 0 14px 20px -10px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.18);
+  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.21);
+  --shadow-sm: 0 2px 4px 0 rgba(0,0,0,0.37), 0 1px 2px 0 rgba(0,0,0,0.29), 0 0 0 1px rgba(0,0,0,0.21);
+  --shadow-md: 0 6px 12px -2px rgba(0,0,0,0.39), 0 3px 6px -2px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.21);
+  --shadow-lg: 0 14px 24px -4px rgba(0,0,0,0.41), 0 6px 12px -4px rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.21);
+  --shadow-xl: 0 28px 40px -8px rgba(0,0,0,0.46), 0 14px 20px -10px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.21);
 
   color-scheme: dark;
 }
@@ -306,6 +306,18 @@ pre, code {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-gray-400);
+  background-clip: content-box;
+}
+
+[data-theme="dark"] * {
+  scrollbar-color: var(--color-gray-50) transparent;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--color-gray-50);
+  background-clip: content-box;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-100);
   background-clip: content-box;
 }
 

@@ -63,6 +63,7 @@ const inputProps = [
   { name: 'disabled', type: 'boolean', default: 'false', description: 'Disabled state: grey bg, grey border, grey text.' },
   { name: 'autoComplete', type: 'string', default: "'off'", description: "HTML autocomplete attribute. Set to 'on' or a specific token (e.g. 'email', 'name') to enable browser suggestions." },
   { name: 'passwordToggle', type: 'boolean', default: 'true', description: "When type='password', shows an eye icon button on the right to reveal/hide the value. Set false to disable." },
+  { name: 'borderless', type: 'boolean', default: 'false', description: 'Renders the input without a border or background. Useful for inline editing or filter inputs.' },
 ]
 
 function ErrorToggle({ on, onToggle }) {
@@ -148,6 +149,18 @@ export default function InputPage() {
           </div>
         </DemoCanvas>
         <CodeBlock code={stateCode} />
+      </Section>
+
+      <Section
+        title="Borderless"
+        description="Pass borderless to render the input without a border or background. Useful for inline editing or for filter inputs embedded inside table cells."
+      >
+        <DemoCanvas style={{ flexDirection: 'column', alignItems: 'stretch', maxWidth: 360, gap: 12 }}>
+          <Input fieldLabel="Label" size="lg" placeholder="Placeholder" borderless />
+          <Input fieldLabel="Label" size="lg" value="Input Text" onChange={() => {}} borderless />
+          <Input fieldLabel="Label" size="md" placeholder="Placeholder" borderless />
+          <Input fieldLabel="Label" size="md" value="Input Text" disabled borderless />
+        </DemoCanvas>
       </Section>
 
       <UsageSection title="Usage">

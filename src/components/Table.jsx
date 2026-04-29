@@ -34,6 +34,7 @@ function BufferedFilterMultiSelect({ value, onCommit, options, size }) {
       onChange={setDraft}
       onOpenChange={handleOpenChange}
       portal
+      borderless
     />
   )
 }
